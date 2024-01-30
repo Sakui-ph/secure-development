@@ -1,11 +1,11 @@
-import express, { Application, Request, Response, NextFunction } from 'express';
+import express, { Application } from 'express';
+import { UserRoutes } from './routes/User';
 
 const app: Application = express();
 const port = 5000;
 
-app.use('/', (req: Request, res: Response, next: NextFunction) => {
-    res.status(200).send({data: "Hello World"})
-})
+app.use('/user', UserRoutes);
+
 
 app.listen(port, () => {
     console.log(`Server running on port ${port}`)

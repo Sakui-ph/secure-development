@@ -1,5 +1,4 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import './signup.css';
 
 export default function Form() {
@@ -7,6 +6,8 @@ export default function Form() {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [number, setNumber] = useState("");
+	const [profileImage, setProfileImage] = useState(null);
+	const [imagePreview, setImagePreview] = useState(null);
 
 	const [submitted, setSubmitted] = useState(false);
 	const [error, setError] = useState(false);
@@ -31,9 +32,30 @@ export default function Form() {
 		setSubmitted(false);
 	};
 
+	const handleImageChange = (e) => {
+		const imageFile = e.target.files[0];
+		setProfileImage(imageFile);
+		setSubmitted(false);
+		
+		const reader = new FileReader();
+		reader.onloadend = () => {
+			setImagePreview(reader.result);
+		};
+		if (imageFile) {
+			reader.readAsDataURL(imageFile);
+		} else {
+			setImagePreview(null);
+		}
+	};	
+    /*
+	const removeImage = () => {
+        setProfileImage(null);
+        setImagePreview(null);
+    };
+	*/
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		if (name === "" || email === "" || password === "" || number === "") {
+		if (name === "" || email === "" || password === "" || number === "" || profileImage === null) {
 			setError(true);
 		} else {
 			setSubmitted(true);
@@ -105,6 +127,23 @@ export default function Form() {
 					value={password}
 					type="password"
 				/>
+
+				<label className="label">Profile Photo</label>
+				<input
+					onChange={handleImageChange}
+					className="input"
+					type="file"
+					accept="image/*"
+				/>
+
+				{imagePreview && (
+                    <div className="image-preview-container">
+                        <div className="image-preview">
+                            <img src={imagePreview} alt="Preview" />
+                            {/*<button onClick={removeImage} className="remove-image-btn">Remove</button>*/}
+                        </div>
+                    </div>
+                )}
 
 				<div className="messages">
 					{errorMessage()}

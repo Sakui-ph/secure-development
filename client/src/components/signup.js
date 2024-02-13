@@ -11,6 +11,7 @@ export default function Form() {
 
 	const [submitted, setSubmitted] = useState(false);
 	const [error, setError] = useState(false);
+	const [emailError, setEmailError] = useState(false);
 
 	const handleName = (e) => {
 		setName(e.target.value);
@@ -18,9 +19,21 @@ export default function Form() {
 	};
 
 	const handleEmail = (e) => {
-		setEmail(e.target.value);
+		const emailValue = e.target.value;
+		setEmail(emailValue);
 		setSubmitted(false);
+
+		if (!validateEmail(emailValue)) {
+            setEmailError(true);
+        } else {
+            setEmailError(false);
+        }
 	};
+
+	const validateEmail = (email) => {
+        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // temp regex for email validation
+        return regex.test(email);
+    };
 
 	const handleNumber = (e) => {
 		setNumber(e.target.value);
@@ -55,13 +68,16 @@ export default function Form() {
 	*/
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		if (name === "" || email === "" || password === "" || number === "" || profileImage === null) {
+		if (name === "" || password === "" || number === "" || profileImage === null) {
 			setError(true);
+		} else if (!validateEmail(email)) {
+			setEmailError(true);
+			setError(false);
 		} else {
 			setSubmitted(true);
 			setError(false);
 		}
-	};
+	};	
 
 	const successMessage = () => {
 		return (
@@ -111,6 +127,10 @@ export default function Form() {
 					value={email}
 					type="email"
 				/>
+
+				{emailError && (
+					<p className="error">Please enter a valid email address</p>
+				)}
 
 				<label className="label">Phone Number</label>
 				<input

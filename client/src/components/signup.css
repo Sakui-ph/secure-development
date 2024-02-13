@@ -8,9 +8,9 @@ body {
 
 .form {
     text-align: center;
-    width: 100%; /* Increase the width of the form */
-    max-width: 900px; /* Set a maximum width to ensure it doesn't become too wide */
-    height: auto; /* Set the height to auto to allow it to expand vertically if needed */
+    width: 100%; 
+    /* max-width: 900px;  */
+    height: auto; 
     border-radius: 20px;
     padding: 40px;
     background-color: rgba(255, 255, 255, 0.9);

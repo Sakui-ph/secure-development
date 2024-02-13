@@ -4,16 +4,22 @@ import { Connection } from "mysql2/typings/mysql/lib/Connection";
 
 export const makeConnection = async () => {
     let connection = null
-    try {
-        connection = await mysqlPromise.createConnection(connectionString)
-    }
-    catch (e : unknown) {
-        if (e instanceof Error)
-        {
-            console.log(e.message);
+    if (connectionString !== undefined) {
+        try {
+            connection = await mysqlPromise.createConnection(connectionString as string)
+        }
+        catch (e : unknown) {
+            if (e instanceof Error)
+            {
+                console.log(e.message);
+            }
         }
     }
+    else { 
+        throw new Error("Connection string is undefined")
+    }
 
+   
     return connection;
 }
 

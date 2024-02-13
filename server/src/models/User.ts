@@ -3,9 +3,9 @@ export default interface User {
     readonly prefix_id: number; // 000 for admin, 001 for user ig
     //readonly id: string; // (7) 7 digit unique id INT
 
-    //username: string; // varchar(30)
-    //first_name: string; // varchar(50)
-    //last_name: string; // varchar(50)
+    username: string; // varchar(30)
+    first_name: string; // varchar(50)
+    last_name: string; // varchar(50)
     full_name: string //varchar(255)
 
     email: string; // varchar(62)

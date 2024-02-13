@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import './signup.css';
+import ReadUser from "./models/readUser";
 
 export default function Form() {
 	const [email, setEmail] = useState("");
@@ -20,6 +21,7 @@ export default function Form() {
 	};
 
 	const handleSubmit = (e) => {
+		ReadUser();
 		e.preventDefault();
 		if (email === "" || password === "") {
 			setError(true);
@@ -86,7 +88,7 @@ export default function Form() {
 					Login
 				</button>
 
-				<p>Don't have an account? <a href="/">Sign up</a></p>
+				<p>Don&apos;t have an account? <a href="/">Sign up</a></p>
 			</form>
 		</div>
 	);

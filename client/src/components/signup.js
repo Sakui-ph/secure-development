@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import './signup.css';
+import GetUser from "./models/readUser";
 
 export default function Form() {
 	const [name, setName] = useState("");
@@ -192,6 +193,8 @@ export default function Form() {
 				<button onClick={handleSubmit} className="btn" type="submit">
 					Sign up
 				</button>
+
+				<GetUser />
 
 				<p>Already have an account? <a href="/login">Login</a></p>
 			</form>

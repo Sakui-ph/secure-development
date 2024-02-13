@@ -12,6 +12,7 @@ export default function Form() {
 	const [submitted, setSubmitted] = useState(false);
 	const [error, setError] = useState(false);
 	const [emailError, setEmailError] = useState(false);
+	const [phoneNumberError, setNumberError] = useState(false);
 
 	const handleName = (e) => {
 		setName(e.target.value);
@@ -36,9 +37,21 @@ export default function Form() {
     };
 
 	const handleNumber = (e) => {
-		setNumber(e.target.value);
+		const numberValue = e.target.value;
+		setNumber(numberValue);
 		setSubmitted(false);
+
+		if (!validateNumber(numberValue)) {
+            setNumberError(true);
+        } else {
+            setNumberError(false);
+        }
 	};
+
+	const validateNumber = (phoneNumber) => {
+        const regex = /^(\+?63|0)9\d{9}$/;
+        return regex.test(phoneNumber);
+    };
 
 	const handlePassword = (e) => {
 		setPassword(e.target.value);
@@ -68,12 +81,15 @@ export default function Form() {
 	*/
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		if (name === "" || password === "" || number === "" || profileImage === null) {
+		if (name === "" || email === "" || password === "" || number === "" || profileImage === null) {
 			setError(true);
 		} else if (!validateEmail(email)) {
 			setEmailError(true);
 			setError(false);
-		} else {
+		} else if (!validateNumber(number)) {
+            setNumberError(true);
+            setError(false);
+        } else {
 			setSubmitted(true);
 			setError(false);
 		}
@@ -100,7 +116,7 @@ export default function Form() {
 					display: error ? "" : "none",
 				}}
 			>
-				<h1>Please enter all the fields</h1>
+				<h1>Please enter all the fields.</h1>
 			</div>
 		);
 	};
@@ -129,7 +145,7 @@ export default function Form() {
 				/>
 
 				{emailError && (
-					<p className="error">Please enter a valid email address</p>
+					<p className="error">Please enter a valid email address.</p>
 				)}
 
 				<label className="label">Phone Number</label>
@@ -139,6 +155,9 @@ export default function Form() {
 					value={number}
 					type="text"
 				/>
+				{phoneNumberError && (
+                    <p className="error">Please enter a valid phone number (Philippines).</p>
+                )}
 
 				<label className="label">Password</label>
 				<input

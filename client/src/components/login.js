@@ -85,6 +85,8 @@ export default function Form() {
 				<button onClick={handleSubmit} className="btn" type="submit">
 					Login
 				</button>
+
+				<p>Don't have an account? <a href="/">Sign up</a></p>
 			</form>
 		</div>
 	);

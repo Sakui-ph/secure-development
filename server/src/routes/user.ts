@@ -14,6 +14,11 @@ router.get('/', (req: Request, res: Response, next: NextFunction) => {
     })
 })
 
+router.get('/read', (req: Request, res: Response, next: NextFunction) => {
+    var result = user.getUser(req, res)
+    console.log(res.status);
+})
+
 router.get('/test', (req: Request, res: Response, next: NextFunction) => {
     var result = user.createUser(req, res)
     console.log(res.status);

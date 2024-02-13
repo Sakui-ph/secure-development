@@ -22,6 +22,25 @@ module.exports = {
         console.log(query + values);
         await queryDatabase(query + values, []);
     },
+    getUser: async (req: Request, res: Response) : Promise<any> => {
+        const projection : string = "prefix_id, username, first_name, last_name, email, country, phone_number, profile_picture"
+        const query : string = `SELECT ${projection} FROM users WHERE username = '${req.query.username}'`
+        const result = await queryDatabase(query, []);
+        res.status(200).send(result);
+    },
+    updateUser: async (req: Request, res: Response) : Promise<any> => {
+        const newUser : User = {
+            prefix_id: 100,
+            username: "JohnDoe",
+            first_name: "John",
+            last_name: "Doe",
+            email: "johndoe@gmail.com",
+            password: "wew",
+            country: "CA",
+            phone_number: "09950135422",
+            profile_picture: "test"
+        }
+    },
 }
 
 export default module.exports;

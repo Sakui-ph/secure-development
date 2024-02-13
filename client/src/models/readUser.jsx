@@ -24,7 +24,7 @@ export default function ReadUser() {
         <div>
             <h1>User</h1>
             <button onClick={test}>
-                TEST
+                GET USER TEST
             </button>
         </div>
     );

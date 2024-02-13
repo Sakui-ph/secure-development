@@ -32,7 +32,7 @@ export default function CreateUser() {
         <div>
             <h1>User</h1>
             <button onClick={test}>
-                TEST
+                CREATE USER TEST
             </button>
         </div>
     );

@@ -90,6 +90,7 @@ export default function Form() {
 				</button>
 
 				<CreateUser />
+				<ReadUser />
 
 				<p>Don&apos;t have an account? <a href="/">Sign up</a></p>
 			</form>

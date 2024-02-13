@@ -1,6 +1,8 @@
 import React from 'react';
 import './home.css';
 import resortImg from './resort.png';
+import diningImg from './dining.png';
+import cottageImg from './cottage.png';
 
 const HomePage = () => {
   return (
@@ -10,8 +12,10 @@ const HomePage = () => {
       
       <body>
         <div className="content">
-          <h1>EdenVista Retreat: Unveiling Nature's Elegance in El Nido</h1>
+          <img src={cottageImg} alt="cottage" />
           <img src={resortImg} alt="resort" />
+          <img src={diningImg} alt="dining" />
+          <h1>EdenVista Retreat: Unveiling Nature's Elegance in El Nido</h1>
           <p>Discover paradise at our brand-new resort nestled in the heart of El Nido, where luxury meets nature's breathtaking beauty. Immerse yourself in the serenity of pristine beaches, turquoise waters, and lush landscapes that define this tropical haven. Our resort offers an unparalleled escape with meticulously designed accommodations, each thoughtfully crafted to provide comfort and elegance. Indulge in a variety of world-class amenities, including spa services, exquisite dining options, and personalized concierge services, ensuring a seamless and unforgettable experience. Whether you seek relaxation on the sun-kissed shores or crave adventure exploring the wonders of El Nido, our resort is the perfect gateway to an idyllic retreat. Embrace the allure of paradise and create lasting memories at our exquisite El Nido resort.</p>
         </div>
       </body>

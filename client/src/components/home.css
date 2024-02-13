@@ -1,0 +1,54 @@
+@font-face {
+    font-family: 'Serif';
+    src: url('RomanSerif.ttf') format('truetype');
+}
+  
+h1 {
+    font-family: 'Serif', sans-serif;
+    letter-spacing: 2px;
+    font-size: 30px;
+    padding: 20px;
+    margin-top: 30px;
+}
+
+.home {
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+img {
+    margin-top: 80%;
+    width: 380px;
+    height: 380px;
+    object-fit: cover;
+}
+
+p {
+    margin-right: 9%;
+    margin-left: 9%;
+    font-size: 15px;
+    font-weight: lighter;
+    font-family: 'Serif', sans-serif;
+    line-height: 2.5;
+    text-align: justify;
+}
+
+h3 {
+    font-family: 'Serif', sans-serif;
+    letter-spacing: 2px;
+    font-size: 18px;
+    color: white;
+}
+
+.contact-info p {
+    text-align: center;
+    color: white;
+    line-height: 1.5;
+}
+footer {
+    margin-top: 47%;
+    background-color: #262D19;
+    padding: 1%;
+}

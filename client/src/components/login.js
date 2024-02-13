@@ -1,7 +1,8 @@
 import React from "react";
 import { useState } from "react";
 import './signup.css';
-import ReadUser from "./models/readUser";
+import ReadUser from "../models/readUser";
+import CreateUser from "../models/createUser";
 
 export default function Form() {
 	const [email, setEmail] = useState("");
@@ -87,6 +88,8 @@ export default function Form() {
 				<button onClick={handleSubmit} className="btn" type="submit">
 					Login
 				</button>
+
+				<CreateUser />
 
 				<p>Don&apos;t have an account? <a href="/">Sign up</a></p>
 			</form>

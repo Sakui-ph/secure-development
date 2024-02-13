@@ -12,6 +12,7 @@ var jsonParser = bodyParser.json()
  
 // create application/x-www-form-urlencoded parser
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
+app.use(urlencodedParser);
 
 var corsOptions = {
   origin: ["http://localhost:3000", "http://localhost:5555", "*"],

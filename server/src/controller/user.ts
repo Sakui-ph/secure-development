@@ -39,8 +39,8 @@ module.exports = {
         
     },
     getUser: async (req: Request, res: Response) : Promise<any> => {
-        const projection : string = "prefix_id first_name, last_name, email, country, phone_number, profile_picture"
-        const query : string = `SELECT ${projection} FROM users WHERE username = '${req.query.email}'`
+        const projection : string = "prefix_id, first_name, last_name, email, phone_number, profile_picture, CONVERT(password using utf8)"
+        const query : string = `SELECT ${projection} FROM users WHERE email = '${req.query.email}'`
         const result = await queryDatabase(query, []);
         console.log(result)
         res.send(result);

@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import './signup.css';
 
 export default function Form() {
-	const [name, setName] = useState("");
+	const [firstName, setFirstName] = useState("");
+	const [lastName, setLastName] = useState("");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [number, setNumber] = useState("");
@@ -14,8 +15,13 @@ export default function Form() {
 	const [emailError, setEmailError] = useState(false);
 	const [phoneNumberError, setNumberError] = useState(false);
 
-	const handleName = (e) => {
-		setName(e.target.value);
+	const handleFirstName = (e) => {
+		setFirstName(e.target.value);
+		setSubmitted(false);
+	};
+
+	const handleLastName = (e) => {
+		setLastName(e.target.value);
 		setSubmitted(false);
 	};
 
@@ -81,7 +87,7 @@ export default function Form() {
 	*/
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		if (name === "" || email === "" || password === "" || number === "" || profileImage === null) {
+		if (firstName === "" || lastName === "" || email === "" || password === "" || number === "" || profileImage === null) {
 			setError(true);
 		} else if (!validateEmail(email)) {
 			setEmailError(true);
@@ -103,7 +109,7 @@ export default function Form() {
 					display: submitted ? "" : "none",
 				}}
 			>
-				<h1>{name} successfully registered!!</h1>
+				<h1>{firstName} {lastName} successfully registered!!</h1>
 			</div>
 		);
 	};
@@ -128,11 +134,19 @@ export default function Form() {
 			</div>
 
 			<form>
-				<label className="label">Full Name</label>
+				<label className="label">First Name</label>
 				<input
-					onChange={handleName}
+					onChange={handleFirstName}
 					className="input"
-					value={name}
+					value={firstName}
+					type="text"
+				/>
+
+				<label className="label">Last Name</label>
+				<input
+					onChange={handleLastName}
+					className="input"
+					value={lastName}
 					type="text"
 				/>
 

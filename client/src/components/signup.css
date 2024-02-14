@@ -9,7 +9,7 @@ body {
 .form {
     text-align: center;
     width: 100%; 
-    /* max-width: 900px;  */
+    max-width: 900px;  
     height: auto; 
     border-radius: 20px;
     padding: 40px;
@@ -73,7 +73,7 @@ body {
     width: 200px;
     height: 200px;
     margin: 20px auto; 
-    overflow: hidden;
+    overflow:scroll;
     border-radius: 50%; 
 }
 

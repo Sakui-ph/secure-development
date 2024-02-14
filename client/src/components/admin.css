@@ -1,85 +1,83 @@
 .admin-panel {
-    width : 700px;
-    margin: 20px;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    background-color: #f9f9f9;
+    width: 100%;
+    max-width: 900px;
     max-height: 80vh;
     overflow-y: auto;
-    align-items: center;
-}  
+    border-radius: 20px;
+    padding: 80px;
+    background-color: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
 
-.content{
+.content {
     width: 100%;
     max-width: 500px;
 }
 
-.admin-panel h1 {
-    text-align: center;
-    margin-bottom: 20px;
-}
-  
 .admin-panel h2 {
     margin-top: 20px;
 }
-  
+
 .admin-panel p {
-    margin-bottom: 10px;
+    margin: 20px -1px auto; 
+    text-align: left;
 }
-  
+
 .admin-panel label {
     display: block;
     margin-bottom: 5px;
 }
-  
+
 .admin-panel textarea {
     width: 100%;
-    margin-bottom: 15px;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
 }
-  
-.admin-panel input[type="file"] {
-    margin-bottom: 15px;
-}
-  
+
+
 .admin-panel img {
     max-width: 100%;
     height: auto;
     margin-bottom: 15px;
 }
-  
+
+.image-preview-container {
+    background-size: cover;
+    border-radius: 10px;
+}
+
 .admin-panel button {
-    display: block;
     width: 100%;
-    padding: 10px;
+    padding: 14px 28px; 
     margin-top: 15px;
     border: none;
     border-radius: 5px;
+    margin: 20px 12px auto;  
     background-color: rgba(253, 187, 45, 1);
     color: #fff;
     cursor: pointer;
 }
-  
+
 .admin-panel button:hover {
     background-color: rgba(121, 83, 0, 0.9);
-}  
+}
 
 .admin-panel::-webkit-scrollbar {
     width: 10px;
 }
-  
+
 .admin-panel::-webkit-scrollbar-track {
     background: #f1f1f1;
 }
-  
+
 .admin-panel::-webkit-scrollbar-thumb {
-    background: #a7a7a7; 
-    border-radius: 4px; 
+    background: #a7a7a7;
+    border-radius: 4px;
 }
-  
+
 .admin-panel::-webkit-scrollbar-thumb:hover {
     background: #b4b4b4;
 }
+
+

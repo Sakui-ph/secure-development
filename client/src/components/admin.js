@@ -33,7 +33,7 @@ const AdminPanel = () => {
         <input type="file" accept="image/*" onChange={handleImageChange} />
         {selectedImage && (
           <div>
-            <h4>Image Preview:</h4>
+            {/* <h4>Image Preview:</h4> */}
             <img
               src={URL.createObjectURL(selectedImage)}
               alt="Selected"

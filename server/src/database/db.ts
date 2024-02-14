@@ -33,7 +33,7 @@ export async function queryDatabase(query: string, params: any[]) : Promise<any>
         catch (e : unknown) {
             if (e instanceof Error)
             {
-                throw new Error(e.message);
+                result = e;
             }
         }
     }

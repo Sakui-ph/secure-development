@@ -27,8 +27,16 @@ module.exports = {
         '${newUser.password}')`
 
         console.log(query + values);
-        await queryDatabase(query + values, []);
-        res.send("User created");
+        var result = await queryDatabase(query + values, []);
+
+        if (result instanceof Error) {
+            res.status(500).send(result.name);
+        }
+        else {
+            res.send("User created");
+        }
+
+        
     },
     getUser: async (req: Request, res: Response) : Promise<any> => {
         const projection : string = "prefix_id first_name, last_name, email, country, phone_number, profile_picture"

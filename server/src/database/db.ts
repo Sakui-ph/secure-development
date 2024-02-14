@@ -11,7 +11,7 @@ export const makeConnection = async () => {
         catch (e : unknown) {
             if (e instanceof Error)
             {
-                console.log(e.message);
+                throw new Error(e.message);
             }
         }
     }
@@ -19,7 +19,6 @@ export const makeConnection = async () => {
         throw new Error("Connection string is undefined")
     }
 
-   
     return connection;
 }
 
@@ -34,7 +33,7 @@ export async function queryDatabase(query: string, params: any[]) : Promise<any>
         catch (e : unknown) {
             if (e instanceof Error)
             {
-                console.log(e.message);
+                throw new Error(e.message);
             }
         }
     }

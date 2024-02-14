@@ -2,7 +2,7 @@ import express, {query, Request, Response} from 'express';
 import { connectionString } from '../config/dbConfig';
 import User from '../models/User';
 import { makeConnection, queryDatabase } from '../database/db';
-
+import { buildUpdateQuery } from '../utils/queryBuilder';
 module.exports = {
     createUser: async (req: Request, res: Response) : Promise<any> => {
         console.log(req.body);
@@ -38,6 +38,15 @@ module.exports = {
         res.send(result);
     },
     updateUser: async (req: Request, res: Response) : Promise<any> => {
+        const columnNames = {
+            first_name: "first_name",
+            last_name: "last_name",
+            email: "email",
+            password: "password",
+            phone_number: "phone_number",
+            profile_picture: "profile_picture"
+        }
+
         const updateUser : User = {
             first_name: req.body.first_name,
             last_name: req.body.last_name,
@@ -46,8 +55,11 @@ module.exports = {
             phone_number: req.body.phone_number,
             profile_picture: req.body.profile_picture
         }
-
-        const query : string = `UPDATE users SET`
+        
+        const query : string = buildUpdateQuery(updateUser, ["first_name", "last_name", "phone_number", "profile_picture"], "email");
+        console.log(query);
+        
+        const result = await queryDatabase(query, []);
     },
 }
 

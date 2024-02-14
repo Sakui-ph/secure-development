@@ -21,7 +21,7 @@ export interface User {
     profile_picture: string; // medium blob (16mb)
 }
 
-export const UserTypes : { [key: string]: string } = {
-    admin: "admin",
-    user : "user"
+export const UserType = {
+    ADMIN: "admin",
+    USER : "user"
 }

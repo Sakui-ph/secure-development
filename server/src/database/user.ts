@@ -10,6 +10,8 @@ class UserDB {
         let result = await db.queryDatabase(`SELECT ${projection} FROM users WHERE ${searchParams}`, [])
         return result[0][0];
     }
+
+    // eventually move all crud stuffs here
 }
 
 export default new UserDB();

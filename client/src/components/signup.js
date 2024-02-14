@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import './signup.css';
+import { Logout } from "../api/user";
 
 export default function Form() {
 	const [firstName, setFirstName] = useState("");
@@ -86,6 +87,7 @@ export default function Form() {
     };
 	*/
 	const handleSubmit = (e) => {
+		Logout(); // REMOVE LATER
 		e.preventDefault();
 		if (firstName === "" || lastName === "" || email === "" || password === "" || number === "" || profileImage === null) {
 			setError(true);

@@ -1,12 +1,13 @@
 import bcrypt from 'bcrypt';
 import { Request, Response, NextFunction } from 'express';
 import UserDB from '../database/user';
+import { UserType } from '../models/User';
 
 const SALT_ROUNDS = 15;
 const PASSWORD_PROJECTION_STRING : string = "CONVERT(password using utf8) as password";
 
 export const validatePassword = async (req : Request, res : Response, next : NextFunction) => {
-   
+    console.log(req.sessionID)
     if (req.body.password === undefined) {
         res.send("Password is undefined").status(500);
         return false;
@@ -16,11 +17,12 @@ export const validatePassword = async (req : Request, res : Response, next : Nex
     let hashedPassword = await UserDB.find(PASSWORD_PROJECTION_STRING, {email: req.body.email})
     
     if(await bcrypt.compare(password, hashedPassword['password'])) {
-        res.send("Password is valid").status(200);
         next();
     }
-    else
+    else {
         res.send("Invalid password").status(500);
+        return;
+    }
 };
 
 export const hashPassword = (req : Request, res : Response, next : NextFunction) => {
@@ -44,3 +46,64 @@ export const hashPassword = (req : Request, res : Response, next : NextFunction)
         });
     });
 };
+
+export const setSession = async (req : Request, res : Response, next : NextFunction) => {
+    if (req.session !== undefined) {
+        let data = await UserDB.find("prefix_id, id", {email: req.body.email})
+        let user = data['prefix_id'] + data['id'].toString().padStart(5, '0');
+
+        
+
+        req.session.regenerate((err) => {
+            if (err) {
+                res.status(500).send("Error regenerating session");
+            }
+
+            req.session.user = user;
+            if (data['prefix_id'] === '100') {
+                req.session.userType = UserType.ADMIN;
+            }
+            else {
+                req.session.userType = UserType.USER;
+            }
+        });
+
+        
+
+        req.session.save((err) => {
+            console.log("Session saved")
+            if (err) {
+                res.status(500).send("Error saving session");
+            }
+            else {
+                next();
+            }
+        });
+
+    }
+    else {
+        res.status(500).send("Session is undefined");
+    }
+}
+
+
+export const validateSession = (requiredType : string[]) => {
+    return (req : Request, res : Response, next : NextFunction) => {
+        console.log(req.sessionID);
+        let userType = req.session.userType;
+        console.log(req.session.user)
+        console.log(userType);
+        
+        if (userType === null || userType === undefined) {
+            res.redirect(401, '/');
+            return;
+        }
+
+        if (requiredType.includes(userType) === false) {
+            res.redirect(401, '/');
+            return;
+        }
+  
+        next();
+    }
+}

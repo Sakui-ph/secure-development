@@ -1,9 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import './signup.css';
-import ReadUser from "../models/readUser";
-import CreateUser from "../models/createUser";
-import UpdateUser from "../models/updateUser";
+import { Login } from "../api/user";
 
 export default function Form() {
 	const [email, setEmail] = useState("");
@@ -23,7 +21,7 @@ export default function Form() {
 	};
 
 	const handleSubmit = (e) => {
-		ReadUser();
+		Login(); // REMOVE LATER
 		e.preventDefault();
 		if (email === "" || password === "") {
 			setError(true);
@@ -89,10 +87,6 @@ export default function Form() {
 				<button onClick={handleSubmit} className="btn" type="submit">
 					Login
 				</button>
-
-				<CreateUser />
-				<ReadUser />
-				<UpdateUser />
 
 				<p>Don&apos;t have an account? <a href="/">Sign up</a></p>
 			</form>

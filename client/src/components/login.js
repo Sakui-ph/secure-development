@@ -3,6 +3,7 @@ import { useState } from "react";
 import './signup.css';
 import ReadUser from "../models/readUser";
 import CreateUser from "../models/createUser";
+import UpdateUser from "../models/updateUser";
 
 export default function Form() {
 	const [email, setEmail] = useState("");
@@ -91,6 +92,7 @@ export default function Form() {
 
 				<CreateUser />
 				<ReadUser />
+				<UpdateUser />
 
 				<p>Don&apos;t have an account? <a href="/">Sign up</a></p>
 			</form>

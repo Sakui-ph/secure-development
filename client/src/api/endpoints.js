@@ -1,5 +1,6 @@
 export const ENDPOINTS = {
     create: "create",
-    read: "read"
+    read: "read",
+    patch: "update",
 }
 

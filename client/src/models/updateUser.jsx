@@ -2,16 +2,15 @@ import React from "react";
 import { userEndpoints } from "../api/axios";
 import { ENDPOINTS } from "../api/endpoints";
 
-function Create() {
-    userEndpoints(ENDPOINTS.create).post({
-            first_name: "John",
-            last_name: "Doe",
-            email: "throwaway@gmail.com",
-            password: "KLFJiof98jfd", // hash this
-            phone_number: "09950135412",
-            profile_picture: "This is a picture of me",
-        }
-    )
+function Update() {
+    userEndpoints(ENDPOINTS.patch).patch({
+        first_name: "Naruto",
+        last_name: "Sasuke",
+        email: "throwaway@gmail.com",
+        password: "KLFJiof98jfd", // hash this
+        phone_number: "09992322323",
+        profile_picture: "This is a picture of me",
+    })
         .then((response) => {
             console.log(response.data);
         })
@@ -20,10 +19,10 @@ function Create() {
         });
 }
 
-export default function CreateUser() {
+export default function UpdateUser() {
     const test = (e) => {
 		e.preventDefault();
-		Create();
+		Update();
 	};	
 
 
@@ -32,7 +31,7 @@ export default function CreateUser() {
         <div>
             <h1>User</h1>
             <button onClick={test}>
-                CREATE USER TEST
+                UPDATE USER TEST
             </button>
         </div>
     );

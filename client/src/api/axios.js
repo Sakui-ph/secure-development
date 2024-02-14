@@ -13,6 +13,9 @@ export const userEndpoints = (endpoint) => {
         post: (data) => axios.post(url, data,
             {headers: {"content-type": "application/x-www-form-urlencoded",}}
         ),
+        patch: (data) => axios.patch(url, data,
+            {headers: {"content-type": "application/x-www-form-urlencoded",}}
+        ),
     }    
 }
 

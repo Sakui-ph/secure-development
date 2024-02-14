@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import './signup.css';
-import { Logout } from "../api/user";
 
 import { userEndpoints } from "../api/axios";
 import { ENDPOINTS } from "../api/endpoints";
@@ -134,7 +133,6 @@ export default function Form() {
     };
 	
 	const handleSubmit = (e) => {
-		Logout(); // REMOVE LATER
 		e.preventDefault();
 		if (firstName === "" || lastName === "" || email === "" || password === "" || number === "" || profileImage === null) {
 			setError(true);

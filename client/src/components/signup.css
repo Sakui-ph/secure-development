@@ -10,7 +10,8 @@ body {
     text-align: center;
     width: 100%; 
     max-width: 900px;  
-    height: auto; 
+    max-height: 80vh;
+    overflow-y: auto;
     border-radius: 20px;
     padding: 40px;
     background-color: rgba(255, 255, 255, 0.9);
@@ -82,4 +83,21 @@ body {
     height: 100%;
     object-fit: cover;
     border-radius: 50%; 
+}
+
+.form::-webkit-scrollbar {
+    width: 10px;
+}
+  
+.form::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+  
+.form::-webkit-scrollbar-thumb {
+    background: #a7a7a7; 
+    border-radius: 4px; 
+}
+  
+.form::-webkit-scrollbar-thumb:hover {
+    background: #b4b4b4;
 }

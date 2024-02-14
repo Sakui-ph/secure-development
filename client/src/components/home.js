@@ -23,7 +23,7 @@ const HomePage = () => {
       <footer className="footer" id="contact">
         <div className="contact-info">
           <h3>Contact Us</h3>
-          <p>123 Resort Way, Paradise Island</p>
+          <p>Address: 123 Resort Way, Paradise Island</p>
           <p>Phone: 123-456-7890</p>
           <p>Email: info@resort.com</p>
         </div>

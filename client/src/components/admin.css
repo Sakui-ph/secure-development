@@ -1,0 +1,85 @@
+.admin-panel {
+    width : 700px;
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    max-height: 80vh;
+    overflow-y: auto;
+    align-items: center;
+}  
+
+.content{
+    width: 100%;
+    max-width: 500px;
+}
+
+.admin-panel h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+  
+.admin-panel h2 {
+    margin-top: 20px;
+}
+  
+.admin-panel p {
+    margin-bottom: 10px;
+}
+  
+.admin-panel label {
+    display: block;
+    margin-bottom: 5px;
+}
+  
+.admin-panel textarea {
+    width: 100%;
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+  
+.admin-panel input[type="file"] {
+    margin-bottom: 15px;
+}
+  
+.admin-panel img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 15px;
+}
+  
+.admin-panel button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-top: 15px;
+    border: none;
+    border-radius: 5px;
+    background-color: rgba(253, 187, 45, 1);
+    color: #fff;
+    cursor: pointer;
+}
+  
+.admin-panel button:hover {
+    background-color: rgba(121, 83, 0, 0.9);
+}  
+
+.admin-panel::-webkit-scrollbar {
+    width: 10px;
+}
+  
+.admin-panel::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+  
+.admin-panel::-webkit-scrollbar-thumb {
+    background: #a7a7a7; 
+    border-radius: 4px; 
+}
+  
+.admin-panel::-webkit-scrollbar-thumb:hover {
+    background: #b4b4b4;
+}

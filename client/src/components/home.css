@@ -7,7 +7,6 @@ h1 {
     font-family: 'Serif', sans-serif;
     letter-spacing: 2px;
     font-size: 30px;
-    padding: 20px;
     margin-top: 30px;
 }
 
@@ -19,15 +18,13 @@ h1 {
 }
 
 img {
-    margin-top: 80%;
-    width: 380px;
-    height: 380px;
+    margin-top: 275%;
+    width: 110%;
+    height: 110%;
     object-fit: cover;
 }
 
 p {
-    margin-right: 9%;
-    margin-left: 9%;
     font-size: 15px;
     font-weight: lighter;
     font-family: 'Serif', sans-serif;
@@ -48,7 +45,7 @@ h3 {
     line-height: 1.5;
 }
 footer {
-    margin-top: 47%;
+    margin-top: 165%;
     background-color: #262D19;
     padding: 1%;
 }

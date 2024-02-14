@@ -1,6 +1,26 @@
 import React, { useState } from "react";
 import './signup.css';
 
+import { userEndpoints } from "../api/axios";
+import { ENDPOINTS } from "../api/endpoints";
+
+function CreateNewUser ({first_name, last_name, email, password, phone_number, profile_picture}){
+    userEndpoints(ENDPOINTS.create).post({
+        first_name: first_name,
+        last_name: last_name,
+        email: email,
+        password: password,
+        phone_number: phone_number,
+        profile_picture: profile_picture,
+    })
+    .then((response) => {
+        console.log("User added to SQL:", response.data);
+    })
+    .catch((error) => {
+        console.log(error);
+    });
+}
+
 export default function Form() {
 	const [firstName, setFirstName] = useState("");
 	const [lastName, setLastName] = useState("");
@@ -150,6 +170,7 @@ export default function Form() {
 		} else {
 			setSubmitted(true);
 			setError(false);
+			CreateNewUser({first_name: firstName, last_name: lastName, email: email, password: password, phone_number: number, profile_picture: profileImage});
 		}
 	};
 

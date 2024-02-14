@@ -2,7 +2,7 @@ import React from "react";
 import { userEndpoints } from "../api/axios";
 import { ENDPOINTS } from "../api/endpoints";
 
-function GetUser() {
+function Read() {
     userEndpoints(ENDPOINTS.read).fetch('JohnDoe')
         .then((response) => {
             console.log(response.data);
@@ -15,10 +15,8 @@ function GetUser() {
 export default function ReadUser() {
     const test = (e) => {
 		e.preventDefault();
-		GetUser();
+		Read();
 	};	
-
-
 
     return (
         <div>

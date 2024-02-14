@@ -29,6 +29,7 @@ export async function queryDatabase(query: string, params: any[]) : Promise<any>
 
         try {
             result = await connection.execute(query, params)
+            
         }
         catch (e : unknown) {
             if (e instanceof Error)

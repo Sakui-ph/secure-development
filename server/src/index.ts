@@ -3,12 +3,12 @@ import { UserRoutes } from './routes/user';
 import * as dotenv from 'dotenv';
 import cors from 'cors';
 import bodyParser from 'body-parser';
+import session from 'express-session';
+import { sessionConfig } from './config/sessionConfig';
 
 dotenv.config();
 
 const app: Application = express();
-
-var jsonParser = bodyParser.json()
  
 // create application/x-www-form-urlencoded parser
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
@@ -21,7 +21,7 @@ var corsOptions = {
   methods: ['GET', 'POST', 'DELETE', 'PATCH'],
 }
 app.use(cors(corsOptions));
-
+app.use(session(sessionConfig));
 
 
 app.use('/user', UserRoutes);

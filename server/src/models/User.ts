@@ -1,5 +1,5 @@
 
-export default interface User {
+export interface User {
     readonly prefix_id?: number; // (3) 100 for admin, 101 for user ig
     readonly id?: string; // (7) 7 digit unique id INT
 
@@ -7,7 +7,7 @@ export default interface User {
     last_name: string; // varchar(50)
 
     email: string; // varchar(62)
-    password: string; // varchar(255)
+    password: string; // binary(60)
     //country: string; // varchar(2)
     phone_number: string; // varchar(25)
     /* From stackoverflow:
@@ -19,4 +19,9 @@ export default interface User {
     */
 
     profile_picture: string; // medium blob (16mb)
+}
+
+export const UserTypes : { [key: string]: string } = {
+    admin: "admin",
+    user : "user"
 }

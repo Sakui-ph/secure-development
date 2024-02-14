@@ -1,4 +1,4 @@
-import User from "../models/User";
+import {User} from "../models/User";
 
 export function buildUpdateQuery(user : User, allowedKeys : string[], queryBy : string) : string {
     let keys = Object.keys(user);

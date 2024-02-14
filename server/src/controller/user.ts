@@ -1,8 +1,11 @@
 import express, {query, Request, Response} from 'express';
 import { connectionString } from '../config/dbConfig';
-import User from '../models/User';
+import {User} from '../models/User';
 import { makeConnection, queryDatabase } from '../database/db';
+import UserDB from '../database/user';
 import { buildUpdateQuery } from '../utils/queryBuilder';
+
+
 module.exports = {
     createUser: async (req: Request, res: Response) : Promise<any> => {
         console.log(req.body);
@@ -35,15 +38,27 @@ module.exports = {
         else {
             res.send("User created");
         }
-
-        
     },
-    getUser: async (req: Request, res: Response) : Promise<any> => {
-        const projection : string = "prefix_id, first_name, last_name, email, phone_number, profile_picture, CONVERT(password using utf8)"
-        const query : string = `SELECT ${projection} FROM users WHERE email = '${req.query.email}'`
-        const result = await queryDatabase(query, []);
-        console.log(result)
-        res.send(result);
+    getUser: (projection : string[], searchBy : string)  => {
+        return async (req : Request, res : Response) : Promise<any> => {
+            let projectionString : string = projection.join(", ");
+
+            if (req.query.email === undefined && req.body.email === undefined) {
+                res.status(500).send("Email is undefined");
+                return;
+            }
+            
+            if (projection === undefined) {
+                res.status(500).send("Projection is undefined");
+                return;
+            }
+
+            let email : string = req.query.email || req.body.email;
+            
+            UserDB.find(projectionString, {email: email}).then((result) => {
+                res.send(result).status(200);
+            })
+        }
     },
     updateUser: async (req: Request, res: Response) : Promise<any> => {
         const columnNames = {

@@ -14,6 +14,7 @@ export default function Form() {
 	const [error, setError] = useState(false);
 	const [emailError, setEmailError] = useState(false);
 	const [phoneNumberError, setNumberError] = useState(false);
+	const [fileTypeError, setFileTypeError] = useState(false);
 
 	const handleFirstName = (e) => {
 		setFirstName(e.target.value);
@@ -64,7 +65,7 @@ export default function Form() {
 		setSubmitted(false);
 	};
 
-	const handleImageChange = (e) => {
+	/*const handleImageChange = (e) => {
 		const imageFile = e.target.files[0];
 		setProfileImage(imageFile);
 		setSubmitted(false);
@@ -78,13 +79,39 @@ export default function Form() {
 		} else {
 			setImagePreview(null);
 		}
-	};	
+	};*/
+
+	const handleImageChange = (e) => {
+		const imageFile = e.target.files[0];
+		setProfileImage(imageFile);
+		setSubmitted(false);
+		setFileTypeError(false);
+
+		const reader = new FileReader();
+		reader.onloadend = () => {
+			setImagePreview(reader.result);
+		};
+
+		if (imageFile) {
+			// Use the type attribute to get the MIME type
+			const fileType = imageFile.type;
+
+			if (['image/jpeg', 'image/png'].includes(fileType)) {
+				reader.readAsDataURL(imageFile);
+			} else {
+				setFileTypeError(true);
+			}
+		} else {
+			setImagePreview(null);
+		}
+	};
+
     /*
 	const removeImage = () => {
         setProfileImage(null);
         setImagePreview(null);
     };
-	*/
+	
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		if (firstName === "" || lastName === "" || email === "" || password === "" || number === "" || profileImage === null) {
@@ -99,7 +126,32 @@ export default function Form() {
 			setSubmitted(true);
 			setError(false);
 		}
-	};	
+	};*/	
+
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		if (
+			firstName === "" ||
+			lastName === "" ||
+			email === "" ||
+			password === "" ||
+			number === "" ||
+			profileImage === null
+		) {
+			setError(true);
+		} else if (!validateEmail(email)) {
+			setEmailError(true);
+			setError(false);
+		} else if (!validateNumber(number)) {
+			setNumberError(true);
+			setError(false);
+		} else if (fileTypeError) {
+			setError(true);
+		} else {
+			setSubmitted(true);
+			setError(false);
+		}
+	};
 
 	const successMessage = () => {
 		return (
@@ -119,13 +171,26 @@ export default function Form() {
 			<div
 				className="error"
 				style={{
-					display: error ? "" : "none",
+					display: error || fileTypeError ? "" : "none",
 				}}
 			>
-				<h1>Please enter all the fields.</h1>
+				<h1>Please enter all the fields and make sure the file type id in JPEG or PNG.</h1>
 			</div>
 		);
 	};
+
+	/*const fileTypeErrorMessage = () => {
+		return (
+			<div
+				className="error"
+				style={{
+					display: fileTypeError ? "" : "none",
+				}}
+			>
+				<h1>Invalid file format. Only JPEG and PNG images are allowed.</h1>
+			</div>
+		);
+	};*/
 
 	return (
 		<div className="form">

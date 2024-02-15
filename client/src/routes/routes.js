@@ -10,6 +10,7 @@ import { UserType } from '../models/user'
 const ADMIN = [UserType.ADMIN]
 // eslint-disable-next-line no-unused-vars
 const USER = [UserType.USER]
+const NONE = [UserType.NONE]
 const ALL = [UserType.ADMIN, UserType.USER]
 
 export const Router = () => {
@@ -18,8 +19,10 @@ export const Router = () => {
     <BrowserRouter>
       <Routes>
 
-          <Route path="/" element={<Signup />} />
-          <Route path="/login" element={<Login />} />
+          <Route path="/" element={
+              <Signup />} />
+          <Route path="/login" element={
+              <Login />} />
           <Route path= "/home" element={
             <Protected  allowedTypes={ALL}>
               <Home />

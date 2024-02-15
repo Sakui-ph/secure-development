@@ -5,9 +5,10 @@ import {  Navigate } from "react-router-dom";
 
 // REFACTOR LATER
 
-export const Protected = ({children, allowedTypes} ) => {
+export const Protected = ({children, allowedTypes, redirect = "/login"}) => {
     const [isUser, setIsUser] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
+    const redir = redirect;
     console.log(allowedTypes)
     console.log("Protected")
     useEffect(() => {
@@ -34,6 +35,6 @@ export const Protected = ({children, allowedTypes} ) => {
         return children
     }
     else if (!isUser) {
-        return <Navigate to="/login" replace />
+        return <Navigate to={redir} replace />
     }
 };

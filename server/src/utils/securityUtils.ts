@@ -89,32 +89,41 @@ export const setSession = async (req : Request, res : Response, next : NextFunct
 
 export const validateSession = () => {
     return (req : Request, res : Response, next : NextFunction) => {
+        console.log(`Session in Validation is: ${req.sessionID}`)
+        console.log("User session is: ", req.session.user)
+        console.log("User type is: ", req.session.userType)
         console.log("validating session");
-        let userType = req.session.userType;
-        let allowedTypes = [];
-        const obj = Object.assign({},req.body)
-        let admin : boolean = obj.admin
-        let user : boolean = obj.user
 
-        if (admin) {
+        const userType = req.session.userType;
+        const allowedTypes : string[] = [];
+        const admin = req.body['admin']
+        const user  = req.body['user']
+        
+        // REFACTOR LATER
+        if (admin === "true") {
             allowedTypes.push(UserType.ADMIN);
         }
-        if (user) {
+
+        if (user === "true") {
+            console.log(`user is allowed when user is ${user}`)
             allowedTypes.push(UserType.USER);
         }
-
-        console.log(allowedTypes)
 
         if (userType === null || userType === undefined) {
             res.send({auth: false, message: "No session found"}).status(401);
             return;
         }
-
         if (!allowedTypes.includes(userType)) {
             res.send({auth: false, message: "Not authorized"}).status(401);
             return;
         }
-  
-        next();
+        console.log(allowedTypes)
+        if (allowedTypes.includes(userType)) {
+            console.log("valid session");
+            res.send({auth: true, message: "Valid session"}).status(200);
+            return;
+        }
+
+        console.log("ERROR");
     }
 }

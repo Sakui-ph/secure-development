@@ -38,14 +38,12 @@ router.post('/logout', validateSession(), (req: Request, res: Response, next: Ne
 
     req.session.regenerate(function (err) {
         if (err) console.log("Error regenerating session on logout")
-        res.redirect('/')
+        res.send("Logout successful").status(200)
     })
 })
 
 router.post('/validateSession', validateSession(), (req: Request, res: Response, next: NextFunction) => {
-    console.log(`Session in Validation is: ${req.sessionID}`)
-    console.log("User session is: ", req.session.user)
-    res.send({auth: true, message: "Valid session"}).status(200);
+
 })
 
 router.post('/create', hashPassword, (req: Request, res: Response, next: NextFunction) => {

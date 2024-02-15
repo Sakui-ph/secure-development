@@ -1,4 +1,5 @@
 export const UserType = {
     ADMIN: "admin",
-    USER : "user"
+    USER : "user",
+    NONE : "none"
 }

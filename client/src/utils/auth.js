@@ -12,8 +12,10 @@ export const isAuthenticated = async (allowedTypes)  => {
     try {
         console.log("Checking if user is authenticated")
         const response = await userEndpoints(ENDPOINTS.validate_session).post({admin: admin, user: user}).then((response) => {
-            console.log(`AUTH = ${response.data.auth}`)
+            admin = null;
+            user = null;
             if (response.data.auth) {
+                console.log(response.data.message)
                 console.log("User is authenticated")
                 result = true;
             } else {

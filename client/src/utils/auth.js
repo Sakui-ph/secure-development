@@ -1,4 +1,3 @@
-import { all } from 'axios';
 import { userEndpoints } from '../api/axios'
 import { ENDPOINTS } from '../api/endpoints'
 import { UserType } from '../models/user';

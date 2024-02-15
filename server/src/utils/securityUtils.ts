@@ -87,21 +87,31 @@ export const setSession = async (req : Request, res : Response, next : NextFunct
 }
 
 
-export const validateSession = (requiredType : string[]) => {
+export const validateSession = () => {
     return (req : Request, res : Response, next : NextFunction) => {
+        console.log("validating session");
         let userType = req.session.userType;
-        console.log(`User type in validation is: ${userType}`)
-        if (req.body.admin === true) {
-            requiredType.push(UserType.ADMIN);
+        let allowedTypes = [];
+        const obj = Object.assign({},req.body)
+        let admin : boolean = obj.admin
+        let user : boolean = obj.user
+
+        if (admin) {
+            allowedTypes.push(UserType.ADMIN);
         }
+        if (user) {
+            allowedTypes.push(UserType.USER);
+        }
+
+        console.log(allowedTypes)
 
         if (userType === null || userType === undefined) {
             res.send({auth: false, message: "No session found"}).status(401);
             return;
         }
 
-        if (requiredType.includes(userType) === false) {
-            res.send({auth: false, message: "False session"}).status(401);
+        if (!allowedTypes.includes(userType)) {
+            res.send({auth: false, message: "Not authorized"}).status(401);
             return;
         }
   

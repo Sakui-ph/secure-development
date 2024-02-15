@@ -19,5 +19,6 @@ module.exports = {
     ],
     "rules": {
         "react/no-unescaped-entities": "off",
+        "no-unused-vars": "off",
     }
 }

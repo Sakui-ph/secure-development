@@ -59,7 +59,7 @@ export default function Form() {
 	};
 
 	const validateEmail = (email) => {
-        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // temp regex for email validation
+        const regex = /^[A-Za-z0-9]+([-_.][A-Za-z0-9]+)*@[-A-Za-z0-9]+[.][-A-Za-z0-9]{2,}$/;
         return regex.test(email);
     };
 

@@ -1,21 +1,25 @@
+import { all } from 'axios';
 import { userEndpoints } from '../api/axios'
 import { ENDPOINTS } from '../api/endpoints'
+import { UserType } from '../models/user';
 
-export const isAuthenticated = async (admin = false)  => {
+export const isAuthenticated = async (allowedTypes)  => {
+    console.log(allowedTypes)
     let result = false;
+    let admin = allowedTypes.includes(UserType.ADMIN)? true : false;
+    let user = allowedTypes.includes(UserType.USER)? true : false;
+
     try {
         console.log("Checking if user is authenticated")
-        await userEndpoints(ENDPOINTS.validate_session).post({admin : admin}).then((response) => {
+        const response = await userEndpoints(ENDPOINTS.validate_session).post({admin: admin, user: user}).then((response) => {
             console.log(`AUTH = ${response.data.auth}`)
             if (response.data.auth) {
-
                 console.log("User is authenticated")
                 result = true;
             } else {
                 console.log("User is not authenticated")
                 result = false;
             }
-            
         });
     } catch (error) {
         if (error.status === 401) {

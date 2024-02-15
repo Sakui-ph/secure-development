@@ -27,10 +27,10 @@ router.get('/read', (req: Request, res: Response, next: NextFunction) => {
 router.post('/login', validatePassword, setSession, (req: Request, res: Response, next: NextFunction) => {
     console.log(`User login ID is: ${req.session.user}`)
     console.log(`Session in Login is: ${req.sessionID}`)
-    res.status(200).send("Login successful")
+    res.send("Login successful").status(200)
 })
 
-router.post('/logout', validateSession([UserType.ADMIN, UserType.USER]), (req: Request, res: Response, next: NextFunction) => {
+router.post('/logout', validateSession(), (req: Request, res: Response, next: NextFunction) => {
     req.session.user = null
     req.session.save(function (err) {
         if (err) console.log("Error saving session on logout")
@@ -42,7 +42,7 @@ router.post('/logout', validateSession([UserType.ADMIN, UserType.USER]), (req: R
     })
 })
 
-router.post('/validateSession', validateSession([UserType.USER]), (req: Request, res: Response, next: NextFunction) => {
+router.post('/validateSession', validateSession(), (req: Request, res: Response, next: NextFunction) => {
     console.log(`Session in Validation is: ${req.sessionID}`)
     console.log("User session is: ", req.session.user)
     res.send({auth: true, message: "Valid session"}).status(200);

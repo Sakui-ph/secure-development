@@ -5,42 +5,35 @@ import {  Navigate } from "react-router-dom";
 
 // REFACTOR LATER
 
-export const Protected = ({children}, admin = false) => {
+export const Protected = ({children, allowedTypes} ) => {
     const [isUser, setIsUser] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
-
+    console.log(allowedTypes)
     console.log("Protected")
     useEffect(() => {
         setIsLoading(true);
         async function checkIfAuthenticated() {
-            const user = await isAuthenticated(admin)
+            const user = await isAuthenticated(allowedTypes)
                 if (user) {
                     setIsUser(true);
                 }
                 else {
                     setIsUser(false);
                 }
-                console.log(`Is user: ${isUser}`)
                 setIsLoading(false);
-      
-            
         }
-        
         checkIfAuthenticated();
     }, []);
 
-    console.log(`Is loading ${isLoading}`)
     
     if (isLoading || isUser === null) {
         return <h1>Loading...</h1>
     }
 
     if (isUser) {
-        console.log("loading children")
         return children
     }
-    else {
-        console.log("navigating to login")
+    else if (!isUser) {
         return <Navigate to="/login" replace />
     }
 };

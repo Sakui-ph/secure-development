@@ -17,7 +17,7 @@ function CreateNewUser ({first_name, last_name, email, password, phone_number, p
         console.log("User added to SQL:", response.data);
     })
     .catch((error) => {
-        console.log(error);
+        console.log("An error has occurred in user creation");
     });
 }
 
@@ -35,7 +35,7 @@ function CreateNewAdmin ({prefix_id, first_name, last_name, email, password, pho
         console.log("User added to SQL:", response.data);
     })
     .catch((error) => {
-        console.log(error);
+        console.log("An error has occurred in admin creation");
     });
 }
 

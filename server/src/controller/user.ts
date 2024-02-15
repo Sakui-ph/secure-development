@@ -8,7 +8,6 @@ import { buildUpdateQuery } from '../utils/queryBuilder';
 
 module.exports = {
     createUser: async (req: Request, res: Response) : Promise<any> => {
-        console.log(req.body);
         const prefix_id : number = req.body.prefix_id? req.body.prefix_id : 101;
 
         const newUser : User = {
@@ -27,7 +26,6 @@ module.exports = {
         }
         catch (e) {
             console.log("Error creating user");
-            res.status(500).send("Error creating user");
         }
     },
     getUser: (projection : string[], searchBy : string)  => {

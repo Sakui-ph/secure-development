@@ -58,5 +58,17 @@ export const checkUser = checkSchema({
         in: ['body'],
         trim : true,
     },
+    profile_picture: {
+        in: ['body'],
+        optional: true,
+        custom: {
+            options: (value, {req}) => {
+                if (req.file === undefined) {
+                    return false;
+                }
+                return customValidators.isImage(value, req.file.originalname);
+            }
+        }
+    }
 },
 )

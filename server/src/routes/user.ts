@@ -49,7 +49,6 @@ router.post('/create', checkUser, hashPassword, (req: Request, res: Response, ne
         res.status(400).send(err.array())
     }
     var result = controller.createUser(req, res)
-    res.send(result).status(200)
 })
 
 // UNUSED AS OF RN

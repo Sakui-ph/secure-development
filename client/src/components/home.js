@@ -19,6 +19,11 @@ const defaultWebsiteInfo = {
     window.location.href = "/login";
   };
 
+  const handleAdminPanel = (e) => {
+    e.preventDefault();
+    window.location.href = "/admin";
+  }
+
 const HomePage = ({ websiteInfo = defaultWebsiteInfo }) => {
   return (
     <div className="home">
@@ -40,7 +45,11 @@ const HomePage = ({ websiteInfo = defaultWebsiteInfo }) => {
           <p>Phone: {websiteInfo.phone}</p>
           <p>Email: {websiteInfo.email}</p>
           <button onClick={handleLogout} className="btn" type="logout">
+          
 					Logout
+          </button>
+          <button onClick={handleAdminPanel} className="btn" type="admin">
+            Admin Access
           </button>
         </div>
       </footer>

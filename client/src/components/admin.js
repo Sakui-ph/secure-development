@@ -1,55 +1,42 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import './admin.css';
 
 const AdminPanel = () => {
-  const [content, setContent] = useState('');
-  const [footer, setFooter] = useState('');
-  const [selectedImage, setSelectedImage] = useState(null);
+  const [users, setUsers] = useState([]);
 
-  const handleContentChange = (e) => {
-    setContent(e.target.value);
+  useEffect(() => {
+    fetchUsers();
+  }, []);
+
+  const fetchUsers = async () => {
+    try {
+      const response = await axios.get('http://localhost:5555/user');
+      setUsers(response.data[0]);
+    } catch (error) {
+      console.error('Error fetching users:', error);
+    }
   };
 
-  const handleFooterChange = (e) => {
-    setFooter(e.target.value);
-  };
-
-  const handleImageChange = (e) => {
-    setSelectedImage(e.target.files[0]);
-  };
-
-  const handleSubmit = () => {
-    // Logic to handle form submission
+  const handleRoleChange = async (userId) => {
+    
   };
 
   return (
     <div className="admin-panel">
       <h1>Admin Panel</h1>
-      <div className='content'>
-        <h2>Content</h2>
-        <p>Change the content of the home page</p>
-        <textarea value={content} onChange={handleContentChange} />
-        <p>Change the images of the home page</p>
-        <input type="file" accept="image/*" onChange={handleImageChange} />
-        {selectedImage && (
-          <div>
-            {/* <h4>Image Preview:</h4> */}
-            <img
-              src={URL.createObjectURL(selectedImage)}
-              alt="Selected"
-              style={{ maxWidth: '200px', maxHeight: '200px' }}
-            />
-          </div>
-        )}
-        <h3>Footer</h3>
-        <p>Change the footer of the home page</p>
-        <label>Address:</label>
-        <textarea value={footer} onChange={handleFooterChange} />
-        <label>Phone Number:</label>
-        <textarea value={footer} onChange={handleFooterChange} />
-        <label>Email:</label>
-        <textarea value={footer} onChange={handleFooterChange} />
-        <button onClick={handleSubmit}>Save Changes</button>
+      <div className="user-list">
+        <h2>User List</h2>
+        <ul>
+          {users.map(user => (
+            <li key={user.id}>
+              {/* Render user information */}
+              <p>Name: {user.first_name} {user.last_name}</p>
+              <p>Email: {user.email}</p>
+              <button onClick={() => handleRoleChange(user.id)}>Make Admin</button>
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );

@@ -11,10 +11,14 @@ export const Router = () => {
   <div>
     <BrowserRouter>
       <Routes>
+
           <Route path="/" element={<Signup />} />
           <Route path="/login" element={<Login />} />
-          <Route element={<Protected />}>
-            <Route path="/home" element={<Home />} />
+          <Route path= "/home" element={
+            <Protected>
+              <Home />
+            </Protected>
+          }>
           </Route>
 
           <Route path="/admin" component={Admin} redirect="/login" />

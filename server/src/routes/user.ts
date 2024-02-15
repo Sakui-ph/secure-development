@@ -25,7 +25,8 @@ router.get('/read', (req: Request, res: Response, next: NextFunction) => {
 })
 
 router.post('/login', validatePassword, setSession, (req: Request, res: Response, next: NextFunction) => {
-    res.send()
+    console.log(req.session.user)
+    res.status(200).send("Login successful")
 })
 
 router.post('/logout', validateSession([UserType.ADMIN, UserType.USER]), (req: Request, res: Response, next: NextFunction) => {
@@ -41,6 +42,7 @@ router.post('/logout', validateSession([UserType.ADMIN, UserType.USER]), (req: R
 })
 
 router.post('/validateSession', validateSession([UserType.USER]), (req: Request, res: Response, next: NextFunction) => {
+    console.log(req.session.user)
     res.status(200).send("Session is valid")
 })
 

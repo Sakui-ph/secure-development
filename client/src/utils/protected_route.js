@@ -1,26 +1,44 @@
+/* eslint-disable react/prop-types */
 import { isAuthenticated } from "./auth";
 import React, { useEffect, useState } from "react";
-import { Outlet, Navigate, useLocation, useNavigate } from "react-router-dom";
+import {  Navigate } from "react-router-dom";
 
-export const Protected = (redirect = '/login') => {
-    const location = useLocation();
-    const [user, setUser] = useState(false);
+// REFACTOR LATER
 
-    console.log("Protected route")
+export const Protected = ({children}, admin = false) => {
+    const [isUser, setIsUser] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
+
+    console.log("Protected")
     useEffect(() => {
-        const checkIfAuthenticated = async () => {
-            const user = await isAuthenticated();
-            setUser(user);
-        };
+        setIsLoading(true);
+        async function checkIfAuthenticated() {
+            const user = await isAuthenticated(admin);
+            console.log("user: ", user);
+            if (user) {
+                setIsUser(true);
+            }
+            else {
+                setIsUser(false);
+            }
+            setIsLoading(false);
+        }
+        
         checkIfAuthenticated();
-    }, [location]);
-
+    }, []);
     
-    console.log(user)
-    if (!user) {
-        console.log("Redirecting")
-        useNavigate(redirect);
+    if (isLoading || isUser === null) {
+        return <h1>Loading...</h1>
     }
-    
-    return user ? <Outlet /> : <Navigate to={redirect} />;
+
+    console.log("isUser: ", isUser)
+
+    if (isUser) {
+        console.log("loading children")
+        return children
+    }
+    else {
+        console.log("navigating to login")
+        return <Navigate to="/login" replace />
+    }
 };

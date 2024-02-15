@@ -89,7 +89,7 @@ export const setSession = async (req : Request, res : Response, next : NextFunct
 export const validateSession = (requiredType : string[]) => {
     return (req : Request, res : Response, next : NextFunction) => {
         let userType = req.session.userType;
-        
+        console.log(console.log(req.session.userType))
         if (req.body.admin === true) {
             requiredType.push(UserType.ADMIN);
         }

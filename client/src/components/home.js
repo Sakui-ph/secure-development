@@ -16,6 +16,7 @@ const defaultWebsiteInfo = {
   const handleLogout = (e) => {
     e.preventDefault();
     Logout();
+    window.location.href = "/login";
   };
 
 const HomePage = ({ websiteInfo = defaultWebsiteInfo }) => {

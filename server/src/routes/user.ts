@@ -27,7 +27,7 @@ router.post('/login', validatePassword, setSession, (req: Request, res: Response
     res.send({success: true}).status(200)
 })
 
-router.post('/logout', validateSession(), (req: Request, res: Response, next: NextFunction) => {
+router.post('/logout', (req: Request, res: Response, next: NextFunction) => {
     req.session.user = null
     req.session.save(function (err) {
         if (err) console.log("Error saving session on logout")

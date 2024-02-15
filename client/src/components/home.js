@@ -2,6 +2,7 @@ import React from 'react';
 import './home.css';
 import cottageImg from './cottage.png';
 import PropTypes from 'prop-types';
+import { Logout } from '../api/user';
 
 // Default website information
 const defaultWebsiteInfo = {
@@ -11,6 +12,11 @@ const defaultWebsiteInfo = {
   phone: "123-456-7890",
   email: "info@resort.com"
 };
+
+  const handleLogout = (e) => {
+    e.preventDefault();
+    Logout();
+  };
 
 const HomePage = ({ websiteInfo = defaultWebsiteInfo }) => {
   return (
@@ -32,6 +38,9 @@ const HomePage = ({ websiteInfo = defaultWebsiteInfo }) => {
           <p>Address: {websiteInfo.address}</p>
           <p>Phone: {websiteInfo.phone}</p>
           <p>Email: {websiteInfo.email}</p>
+          <button onClick={handleLogout} className="btn" type="logout">
+					Logout
+          </button>
         </div>
       </footer>
     </div>

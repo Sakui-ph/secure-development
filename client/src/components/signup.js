@@ -21,6 +21,24 @@ function CreateNewUser ({first_name, last_name, email, password, phone_number, p
     });
 }
 
+function CreateNewAdmin ({prefix_id, first_name, last_name, email, password, phone_number, profile_picture}){
+    userEndpoints(ENDPOINTS.create).post({
+		prefix_id: prefix_id,
+        first_name: first_name,
+        last_name: last_name,
+        email: email,
+        password: password,
+        phone_number: phone_number,
+        profile_picture: profile_picture,
+    })
+    .then((response) => {
+        console.log("User added to SQL:", response.data);
+    })
+    .catch((error) => {
+        console.log(error);
+    });
+}
+
 export default function Form() {
 	const [firstName, setFirstName] = useState("");
 	const [lastName, setLastName] = useState("");

@@ -4,8 +4,9 @@ import './signup.css';
 import { userEndpoints } from "../api/axios";
 import { ENDPOINTS } from "../api/endpoints";
 
-function CreateNewUser ({first_name, last_name, email, password, phone_number, profile_picture}){
+function CreateNewUser ({prefix_id, first_name, last_name, email, password, phone_number, profile_picture}){
     userEndpoints(ENDPOINTS.create).post({
+		prefix_id: prefix_id,
         first_name: first_name,
         last_name: last_name,
         email: email,
@@ -17,7 +18,7 @@ function CreateNewUser ({first_name, last_name, email, password, phone_number, p
         console.log("User added to SQL:", response.data);
     })
     .catch((error) => {
-        console.log("An error has occurred in user creation");
+        console.log(error);
     });
 }
 
@@ -35,7 +36,7 @@ function CreateNewAdmin ({prefix_id, first_name, last_name, email, password, pho
         console.log("User added to SQL:", response.data);
     })
     .catch((error) => {
-        console.log("An error has occurred in admin creation");
+        console.log(error);
     });
 }
 
@@ -151,7 +152,8 @@ export default function Form() {
 	};
 
 	const handlePrefixIdChange = (e) => {
-        setPrefixId(parseInt(e.target.value));
+        const selectedPrefixId = parseInt(e.target.value);
+    setPrefixId(selectedPrefixId);
     };
 
 	const handleSubmit = (e) => {
@@ -176,7 +178,7 @@ export default function Form() {
 		} else {
 			setSubmitted(true);
 			setError(false);
-			CreateNewUser({first_name: firstName, last_name: lastName, email: email, password: password, phone_number: number, profile_picture: profileImage});
+			CreateNewUser({prefix_id: prefixId, first_name: firstName, last_name: lastName, email: email, password: password, phone_number: number, profile_picture: profileImage});
 		}
 	};
 
@@ -215,8 +217,8 @@ export default function Form() {
 			<form>
 				<label className="label">User Type</label>
                 <select value={prefixId} onChange={handlePrefixIdChange} className="input">
+					<option value={101}>User</option>
                     <option value={100}>Admin</option>
-                    <option value={101}>User</option>
                 </select>
 				<label className="label">First Name</label>
 				<input

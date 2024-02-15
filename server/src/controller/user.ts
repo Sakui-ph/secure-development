@@ -9,8 +9,10 @@ import { buildUpdateQuery } from '../utils/queryBuilder';
 module.exports = {
     createUser: async (req: Request, res: Response) : Promise<any> => {
         console.log(req.body);
+        const prefix_id : number = req.body.prefix_id? req.body.prefix_id : 101;
+
         const newUser : User = {
-            prefix_id: 101,
+            prefix_id: prefix_id,
             first_name: req.body.first_name,
             last_name: req.body.last_name,
             email: req.body.email,
@@ -18,25 +20,14 @@ module.exports = {
             phone_number: req.body.phone_number,
             profile_picture: req.body.profile_picture
         }
-
-        const query : string = "INSERT INTO users (prefix_id, first_name, last_name, email, phone_number, profile_picture, password) "
-        const values : string = `VALUES 
-        ('${newUser.prefix_id}', 
-        '${newUser.first_name}', 
-        '${newUser.last_name}', 
-        '${newUser.email}', 
-        '${newUser.phone_number}', 
-        '${newUser.profile_picture}', 
-        '${newUser.password}')`
-
-        console.log(query + values);
-        var result = await queryDatabase(query + values, []);
-
-        if (result instanceof Error) {
-            res.status(500).send(result.name);
+        
+        try {
+            const result = await UserDB.create(newUser);
+            res.send(result).status(200);
         }
-        else {
-            res.send("User created");
+        catch (e) {
+            console.log("Error creating user");
+            res.status(500).send("Error creating user");
         }
     },
     getUser: (projection : string[], searchBy : string)  => {

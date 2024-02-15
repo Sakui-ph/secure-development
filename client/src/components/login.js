@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import './signup.css';
+import { Login } from "../api/user";
 
 export default function Form() {
 	const [email, setEmail] = useState("");
@@ -26,6 +27,7 @@ export default function Form() {
 		} else {
 			setSubmitted(true);
 			setError(false);
+			Login();
 		}
 	};
 

@@ -4,5 +4,6 @@ export const ENDPOINTS = {
     patch: "update",
     login: "login",
     logout: "logout",
+    validate_session: "validateSession"
 }
 

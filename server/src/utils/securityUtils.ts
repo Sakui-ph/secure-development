@@ -7,7 +7,6 @@ const SALT_ROUNDS = 15;
 const PASSWORD_PROJECTION_STRING : string = "CONVERT(password using utf8) as password";
 
 export const validatePassword = async (req : Request, res : Response, next : NextFunction) => {
-    console.log(req.sessionID)
     if (req.body.password === undefined) {
         res.send("Password is undefined").status(500);
         return false;
@@ -89,18 +88,19 @@ export const setSession = async (req : Request, res : Response, next : NextFunct
 
 export const validateSession = (requiredType : string[]) => {
     return (req : Request, res : Response, next : NextFunction) => {
-        console.log(req.sessionID);
         let userType = req.session.userType;
-        console.log(req.session.user)
-        console.log(userType);
         
+        if (req.body.admin === true) {
+            requiredType.push(UserType.ADMIN);
+        }
+
         if (userType === null || userType === undefined) {
-            res.redirect(401, '/');
+            res.location('/').status(401);
             return;
         }
 
         if (requiredType.includes(userType) === false) {
-            res.redirect(401, '/');
+            res.location('/').status(401);
             return;
         }
   

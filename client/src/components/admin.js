@@ -33,7 +33,10 @@ const AdminPanel = () => {
               {/* Render user information */}
               <p>Name: {user.first_name} {user.last_name}</p>
               <p>Email: {user.email}</p>
-              <button onClick={() => handleRoleChange(user.id)}>Make Admin</button>
+              <select value={user.prefix_id == 100 ? 'admin' : 'user'} onChange={(e) => handleRoleChange(user.id, e.target.value)}>
+                <option value="user">User</option>
+                <option value="admin">Admin</option>
+              </select>
             </li>
           ))}
         </ul>

@@ -21,17 +21,17 @@ export const Protected = ({children}, admin = false) => {
             else {
                 setIsUser(false);
             }
-            setIsLoading(false);
         }
+        setIsLoading(false);
         
         checkIfAuthenticated();
     }, []);
+
+    console.log(`Is loading ${isLoading}`)
     
     if (isLoading || isUser === null) {
         return <h1>Loading...</h1>
     }
-
-    console.log("isUser: ", isUser)
 
     if (isUser) {
         console.log("loading children")

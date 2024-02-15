@@ -4,6 +4,7 @@ import { ENDPOINTS } from '../api/endpoints'
 export const isAuthenticated = async (admin = false)  => {
     let result = false;
     try {
+        console.log("Checking if user is authenticated")
         await userEndpoints(ENDPOINTS.validate_session).post({admin : admin}).then((response) => {
             if (response.status == 200) {
                 console.log("User is authenticated")

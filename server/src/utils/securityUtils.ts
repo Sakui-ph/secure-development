@@ -9,6 +9,7 @@ const PASSWORD_PROJECTION_STRING : string = "CONVERT(password using utf8) as pas
 export const validatePassword = async (req : Request, res : Response, next : NextFunction) => {
     if (req.body.password === undefined) {
         res.send("Password is undefined").status(500);
+        console.log("Password is undefined");
         return false;
     }
 
@@ -20,6 +21,7 @@ export const validatePassword = async (req : Request, res : Response, next : Nex
     }
     else {
         res.send("Invalid password").status(500);
+        console.log("Invalid password")
         return;
     }
 };
@@ -67,12 +69,11 @@ export const setSession = async (req : Request, res : Response, next : NextFunct
             }
         });
 
-        
-
         req.session.save((err) => {
             console.log("Session saved")
             if (err) {
                 res.status(500).send("Error saving session");
+                console.log("Error saving session")
             }
             else {
                 next();
@@ -89,7 +90,7 @@ export const setSession = async (req : Request, res : Response, next : NextFunct
 export const validateSession = (requiredType : string[]) => {
     return (req : Request, res : Response, next : NextFunction) => {
         let userType = req.session.userType;
-        console.log(console.log(req.session.userType))
+        console.log(`User type in validation is: ${userType}`)
         if (req.body.admin === true) {
             requiredType.push(UserType.ADMIN);
         }

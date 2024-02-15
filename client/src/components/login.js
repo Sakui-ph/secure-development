@@ -3,12 +3,22 @@ import { useState } from "react";
 import './signup.css';
 import { Login } from "../api/user";
 
+async function TryLogin(email, password) {
+	await Login(email, password).then((result) => {
+		console.log("result: fasdas", result);
+		if (result) {
+			console.log("Login successful");
+			window.location.href = "/home";
+		}
+	})
+}
+
 export default function Form() {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
-
 	const [submitted, setSubmitted] = useState(false);
 	const [error, setError] = useState(false);
+	
 
 	const handleEmail = (e) => {
 		setEmail(e.target.value);
@@ -27,7 +37,7 @@ export default function Form() {
 		} else {
 			setSubmitted(true);
 			setError(false);
-			Login();
+			TryLogin(email, password);
 		}
 	};
 

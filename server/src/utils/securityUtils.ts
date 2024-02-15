@@ -8,7 +8,7 @@ const PASSWORD_PROJECTION_STRING : string = "CONVERT(password using utf8) as pas
 
 export const validatePassword = async (req : Request, res : Response, next : NextFunction) => {
     if (req.body.password === undefined) {
-        res.send("Password is undefined").status(500);
+        res.send({message: "wrong password"}).status(500);
         console.log("Password is undefined");
         return false;
     }
@@ -20,7 +20,7 @@ export const validatePassword = async (req : Request, res : Response, next : Nex
         next();
     }
     else {
-        res.send("Invalid password").status(500);
+        res.send({message: "wrong password"}).status(500);
         console.log("Invalid password")
         return;
     }

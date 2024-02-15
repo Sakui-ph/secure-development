@@ -32,6 +32,8 @@ export default function Form() {
 
 	const [submitted, setSubmitted] = useState(false);
 	const [error, setError] = useState(false);
+	const [firstNameError, setFirstNameError] = useState(false);
+	const [lastNameError, setLastNameError] = useState(false);
 	const [emailError, setEmailError] = useState(false);
 	const [phoneNumberError, setNumberError] = useState(false);
 	const [fileTypeError, setFileTypeError] = useState(false);
@@ -39,12 +41,29 @@ export default function Form() {
 	const handleFirstName = (e) => {
 		setFirstName(e.target.value);
 		setSubmitted(false);
+
+		if (!validateName(e.target.value)) {
+			setFirstNameError(true);
+		} else {
+			setFirstNameError(false);
+		}
 	};
 
 	const handleLastName = (e) => {
 		setLastName(e.target.value);
 		setSubmitted(false);
+
+		if (!validateName(e.target.value)) {
+			setLastNameError(true);
+		} else {
+			setLastNameError(false);
+		}
 	};
+
+	const validateName = (name) => {
+		const regex = /^[A-Za-z\s]+$/;
+		return regex.test(name);
+	}
 
 	const handleEmail = (e) => {
 		const emailValue = e.target.value;
@@ -62,6 +81,8 @@ export default function Form() {
         const regex = /^[A-Za-z0-9]+([-_.][A-Za-z0-9]+)*@[-A-Za-z0-9]+[.][-A-Za-z0-9]{2,}$/;
         return regex.test(email);
     };
+
+
 
 	const handleNumber = (e) => {
 		const numberValue = e.target.value;
@@ -84,22 +105,6 @@ export default function Form() {
 		setPassword(e.target.value);
 		setSubmitted(false);
 	};
-
-	/*const handleImageChange = (e) => {
-		const imageFile = e.target.files[0];
-		setProfileImage(imageFile);
-		setSubmitted(false);
-		
-		const reader = new FileReader();
-		reader.onloadend = () => {
-			setImagePreview(reader.result);
-		};
-		if (imageFile) {
-			reader.readAsDataURL(imageFile);
-		} else {
-			setImagePreview(null);
-		}
-	};*/
 
 	const handleImageChange = (e) => {
 		const imageFile = e.target.files[0];
@@ -126,27 +131,6 @@ export default function Form() {
 		}
 	};
 
-    /*
-	const removeImage = () => {
-        setProfileImage(null);
-        setImagePreview(null);
-    };
-	
-	const handleSubmit = (e) => {
-		e.preventDefault();
-		if (firstName === "" || lastName === "" || email === "" || password === "" || number === "" || profileImage === null) {
-			setError(true);
-		} else if (!validateEmail(email)) {
-			setEmailError(true);
-			setError(false);
-		} else if (!validateNumber(number)) {
-            setNumberError(true);
-            setError(false);
-        } else {
-			setSubmitted(true);
-			setError(false);
-		}
-	};*/	
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -195,23 +179,10 @@ export default function Form() {
 					display: error || fileTypeError ? "" : "none",
 				}}
 			>
-				<h1>Please enter all the fields and make sure the file type id in JPEG or PNG.</h1>
+				<h1>Please enter all the fields and make sure that the file type is in JPEG or PNG.</h1>
 			</div>
 		);
 	};
-
-	/*const fileTypeErrorMessage = () => {
-		return (
-			<div
-				className="error"
-				style={{
-					display: fileTypeError ? "" : "none",
-				}}
-			>
-				<h1>Invalid file format. Only JPEG and PNG images are allowed.</h1>
-			</div>
-		);
-	};*/
 
 	return (
 		<div className="form">
@@ -227,6 +198,9 @@ export default function Form() {
 					value={firstName}
 					type="text"
 				/>
+				{firstNameError && (
+					<p className="error">Please use characters and spaces only.</p>
+				)}
 
 				<label className="label">Last Name</label>
 				<input
@@ -235,6 +209,9 @@ export default function Form() {
 					value={lastName}
 					type="text"
 				/>
+				{lastNameError && (
+					<p className="error">Please use characters and spaces only.</p>
+				)}
 
 				<label className="label">Email</label>
 				<input
@@ -256,7 +233,7 @@ export default function Form() {
 					type="text"
 				/>
 				{phoneNumberError && (
-                    <p className="error">Please enter a valid phone number (Philippines).</p>
+                    <p className="error">Please enter a valid phone number (Philippines, no dashes).</p>
                 )}
 
 				<label className="label">Password</label>

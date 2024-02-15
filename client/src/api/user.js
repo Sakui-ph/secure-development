@@ -5,7 +5,7 @@ export const Login = async (email, password) => {
     let result = false;
     try {
         await userEndpoints(ENDPOINTS.login).post({email: email, password: password}).then((response) => {
-            if (response.status === 200) {
+            if (response.data.success) {
                 console.log("Login successful");
                 result = true;
                 return true;

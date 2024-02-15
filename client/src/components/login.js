@@ -10,6 +10,7 @@ async function TryLogin(email, password) {
 			console.log("Login successful");
 			window.location.href = "/home";
 		}
+		return result;
 	})
 }
 
@@ -65,6 +66,7 @@ export default function Form() {
 			</div>
 		);
 	};
+
 
 	return (
 		<div className="form">

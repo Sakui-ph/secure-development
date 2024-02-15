@@ -27,7 +27,7 @@ router.get('/read', (req: Request, res: Response, next: NextFunction) => {
 router.post('/login', validatePassword, setSession, (req: Request, res: Response, next: NextFunction) => {
     console.log(`User login ID is: ${req.session.user}`)
     console.log(`Session in Login is: ${req.sessionID}`)
-    res.send("Login successful").status(200)
+    res.send({success: true}).status(200)
 })
 
 router.post('/logout', validateSession(), (req: Request, res: Response, next: NextFunction) => {

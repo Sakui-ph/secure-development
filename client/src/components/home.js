@@ -13,10 +13,13 @@ const defaultWebsiteInfo = {
   email: "info@resort.com"
 };
 
-  const handleLogout = (e) => {
+  const handleLogout = async (e) => {
     e.preventDefault();
-    Logout();
-    window.location.href = "/login";
+    await Logout().then((result) => {
+      window.location.href = "/login";
+    }, (error) => {
+      console.log("Error: ", error);
+    });
   };
 
   const handleAdminPanel = (e) => {

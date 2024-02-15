@@ -32,6 +32,7 @@ router.post('/logout', (req: Request, res: Response, next: NextFunction) => {
     req.session.save(function (err) {
         if (err) console.log("Error saving session on logout")
     })
+    console.log("deleting user session");
 
     req.session.regenerate(function (err) {
         if (err) console.log("Error regenerating session on logout")

@@ -40,6 +40,7 @@ function CreateNewAdmin ({prefix_id, first_name, last_name, email, password, pho
 }
 
 export default function Form() {
+	const [prefixId, setPrefixId] = useState(101);
 	const [firstName, setFirstName] = useState("");
 	const [lastName, setLastName] = useState("");
 	const [email, setEmail] = useState("");
@@ -149,6 +150,9 @@ export default function Form() {
 		}
 	};
 
+	const handlePrefixIdChange = (e) => {
+        setPrefixId(parseInt(e.target.value));
+    };
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -209,6 +213,11 @@ export default function Form() {
 			</div>
 
 			<form>
+				<label className="label">User Type</label>
+                <select value={prefixId} onChange={handlePrefixIdChange} className="input">
+                    <option value={100}>Admin</option>
+                    <option value={101}>User</option>
+                </select>
 				<label className="label">First Name</label>
 				<input
 					onChange={handleFirstName}

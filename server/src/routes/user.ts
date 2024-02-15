@@ -4,20 +4,17 @@ import controller from '../controller/user';
 import { hashPassword, validatePassword, setSession, validateSession } from '../utils/securityUtils';
 import UserDB from '../database/user';
 import { UserType } from '../models/User';
+import { checkEmail, checkUser } from '../utils/inputValidation';
+import { validationResult } from 'express-validator';
 
 const router = express.Router();
 
-router.get('/', (req: Request, res: Response, next: NextFunction) => {
-    var result = db.queryDatabase("SELECT * FROM users", ["id", "username", "password"])
-    .then((result) => {
-        if (result != null)
-            res.status(200).send(result)
-        else
-            res.send("No users found")
-    })
-})
 
-router.get('/read', (req: Request, res: Response, next: NextFunction) => {
+router.get('/read', checkEmail, (req: Request, res: Response, next: NextFunction) => {
+    var err = validationResult(req)
+    if (!err.isEmpty()) {
+        res.status(400).send(err.array())
+    }
     var result = UserDB.find("first_name, last_name", {email: req.query.email}).then((result) => {
         console.log(result);
     })
@@ -46,14 +43,19 @@ router.post('/validateSession', validateSession(), (req: Request, res: Response,
 
 })
 
-router.post('/create', hashPassword, (req: Request, res: Response, next: NextFunction) => {
+router.post('/create', checkUser, hashPassword, (req: Request, res: Response, next: NextFunction) => {
+    var err = validationResult(req)
+    if (!err.isEmpty()) {
+        res.status(400).send(err.array())
+    }
     var result = controller.createUser(req, res)
-    //console.log(res.status);
+    res.send(result).status(200)
 })
 
-router.patch('/update', hashPassword, (req: Request, res: Response, next: NextFunction) => {
+// UNUSED AS OF RN
+router.patch('/update', checkUser, hashPassword, (req: Request, res: Response, next: NextFunction) => {
     var result = controller.updateUser(req, res)
-    console.log(res.status);
+    res.send(result).status(200)
 })
 
 export { router as UserRoutes }

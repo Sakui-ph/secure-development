@@ -13,16 +13,18 @@ export const Protected = ({children}, admin = false) => {
     useEffect(() => {
         setIsLoading(true);
         async function checkIfAuthenticated() {
-            const user = await isAuthenticated(admin);
-            console.log("user: ", user);
-            if (user) {
-                setIsUser(true);
-            }
-            else {
-                setIsUser(false);
-            }
+            const user = await isAuthenticated(admin)
+                if (user) {
+                    setIsUser(true);
+                }
+                else {
+                    setIsUser(false);
+                }
+                console.log(`Is user: ${isUser}`)
+                setIsLoading(false);
+      
+            
         }
-        setIsLoading(false);
         
         checkIfAuthenticated();
     }, []);

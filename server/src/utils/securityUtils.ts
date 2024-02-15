@@ -96,12 +96,12 @@ export const validateSession = (requiredType : string[]) => {
         }
 
         if (userType === null || userType === undefined) {
-            res.location('/').status(401);
+            res.send({auth: false, message: "No session found"}).status(401);
             return;
         }
 
         if (requiredType.includes(userType) === false) {
-            res.location('/').status(401);
+            res.send({auth: false, message: "False session"}).status(401);
             return;
         }
   

@@ -45,7 +45,7 @@ router.post('/logout', validateSession([UserType.ADMIN, UserType.USER]), (req: R
 router.post('/validateSession', validateSession([UserType.USER]), (req: Request, res: Response, next: NextFunction) => {
     console.log(`Session in Validation is: ${req.sessionID}`)
     console.log("User session is: ", req.session.user)
-    res.status(200).send("Session is valid")
+    res.send({auth: true, message: "Valid session"}).status(200);
 })
 
 router.post('/create', hashPassword, (req: Request, res: Response, next: NextFunction) => {

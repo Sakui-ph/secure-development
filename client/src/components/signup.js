@@ -1,44 +1,8 @@
 import React, { useState } from "react";
 import './signup.css';
-
+import { CreateNewUser } from "../api/user";
 import { userEndpoints } from "../api/axios";
 import { ENDPOINTS } from "../api/endpoints";
-
-function CreateNewUser ({prefix_id, first_name, last_name, email, password, phone_number, profile_picture}){
-    userEndpoints(ENDPOINTS.create).post({
-		prefix_id: prefix_id,
-        first_name: first_name,
-        last_name: last_name,
-        email: email,
-        password: password,
-        phone_number: phone_number,
-        profile_picture: profile_picture,
-    })
-    .then((response) => {
-        console.log("User added to SQL:", response.data);
-    })
-    .catch((error) => {
-        console.log(error);
-    });
-}
-
-function CreateNewAdmin ({prefix_id, first_name, last_name, email, password, phone_number, profile_picture}){
-    userEndpoints(ENDPOINTS.create).post({
-		prefix_id: prefix_id,
-        first_name: first_name,
-        last_name: last_name,
-        email: email,
-        password: password,
-        phone_number: phone_number,
-        profile_picture: profile_picture,
-    })
-    .then((response) => {
-        console.log("User added to SQL:", response.data);
-    })
-    .catch((error) => {
-        console.log(error);
-    });
-}
 
 export default function Form() {
 	const [prefixId, setPrefixId] = useState(101);
@@ -215,11 +179,11 @@ export default function Form() {
 			</div>
 
 			<form>
-				<label className="label">User Type</label>
+				{/* <label className="label">User Type</label>
                 <select value={prefixId} onChange={handlePrefixIdChange} className="input">
 					<option value={101}>User</option>
                     <option value={100}>Admin</option>
-                </select>
+                </select> */}
 				<label className="label">First Name</label>
 				<input
 					onChange={handleFirstName}

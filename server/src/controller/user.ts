@@ -4,6 +4,7 @@ import {User} from '../models/User';
 import { makeConnection, queryDatabase } from '../database/db';
 import UserDB from '../database/user';
 import { buildUpdateQuery } from '../utils/queryBuilder';
+import { profile } from 'console';
 
 
 module.exports = {
@@ -19,6 +20,11 @@ module.exports = {
             phone_number: req.body.phone_number,
             profile_picture: req.body.profile_picture
         }
+
+        // brb i refactor how client handles stuff
+        console.log(req.body)
+        console.log(req.body.profile_picture);
+        console.log(newUser.profile_picture.type);
         
         try {
             const result = await UserDB.create(newUser);

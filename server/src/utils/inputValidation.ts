@@ -4,7 +4,7 @@ import path from "path";
 
 export const checkEmail = check('email').isEmail().withMessage('Invalid email');
 
-export const customValidators = {
+export const customValidators = { // check image hex / file sig
     isImage: (value : any, filename : string) : any => {
         var extension = (path.extname(filename)).toLowerCase();
         switch (extension) {

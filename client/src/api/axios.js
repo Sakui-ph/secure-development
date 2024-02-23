@@ -6,7 +6,10 @@ export const BASE_URL = DEVELOPMENT_BASE_URL;
 
 export const userEndpoints = (endpoint) => {
     axios.defaults.withCredentials = true
-    
+    axios.defaults.headers = {
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Accept": "application/json",
+    }
     let url = BASE_URL + "/user/" + endpoint;
     
     return {

@@ -18,7 +18,7 @@ export interface User {
     Format in the client code
     */
 
-    profile_picture: string; // medium blob (16mb)
+    profile_picture: File; // medium blob (16mb)
 }
 
 export const UserType = {

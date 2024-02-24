@@ -3,8 +3,9 @@ import controller from '../controller/user';
 import { hashPassword, validatePassword, setSession, validateSession } from '../utils/securityUtils';
 import UserDB from '../database/user';
 import { UserParams, UserType } from '../models/User';
-import { checkEmail, checkUser } from '../utils/inputValidation';
+import { checkUser } from '../utils/inputValidation';
 import { validationResult } from 'express-validator';
+import inputValidtion from '../utils/inputValidation';
 
 const router = express.Router();
 
@@ -31,14 +32,10 @@ router.post('/validateSession', validateSession(), (req: Request, res: Response,
 
 })
 
-router.get('/read', checkEmail, (req: Request, res: Response, next: NextFunction) => {
-    var err = validationResult(req)
-    if (!err.isEmpty()) {
-        res.status(400).send(err.array())
-    }
-    var result = UserDB.find([UserParams.FIRST_NAME, UserParams.LAST_NAME], {email: req.query.email}).then((result) => {
-        console.log(result);
-    })
+router.get('/read',
+inputValidtion.checkEmail,
+controller.getUser([UserParams.FIRST_NAME, UserParams.LAST_NAME], [UserParams.EMAIL]), 
+(req: Request, res: Response, next: NextFunction) => {
     res.send();
 })
 
@@ -54,7 +51,7 @@ router.post('/create', checkUser, hashPassword, (req: Request, res: Response, ne
 
 router.patch('/update', 
     checkUser,
-    controller.updateUser(["first_name", "last_name", "phone_number"], ["email"]), 
+    controller.updateUser([UserParams.FIRST_NAME, UserParams.LAST_NAME, UserParams.PHONE_NUMBER], [UserParams.EMAIL]), 
     (req: Request, res: Response, next: NextFunction) => {
     console.log("User updated")
     res.send("User updated").status(200)

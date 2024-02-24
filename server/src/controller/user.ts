@@ -37,8 +37,18 @@ module.exports = {
                 res.status(500).send("Projection is undefined");
                 return;
             }
+
+            let searchObject : Record<string, any> = {};
             
-            UserDB.find(projection, searchBy).then((result) => {
+            searchBy.forEach((key) => {
+                if (req.query[key] !== undefined) {
+                    searchObject[key] = req.query[key];
+                }
+            })
+
+            console.log(searchObject)
+            
+            UserDB.find(projection, searchObject).then((result) => {
                 res.send(result).status(200);
             })
         }
@@ -46,16 +56,14 @@ module.exports = {
     updateUser: (projection : string[], searchBy : string[]) => {
         return async (req : Request, res : Response) : Promise<any> => {
             // TODO: Add check for if email they want to change to exists
-            let projectionString : string = projection.join(", ");
-
-            let searchObject : Record<string, any> = {};
-            
             projection.forEach((key) => {
                 if (req.body[key] === undefined || req.body[key] === null || req.body[key] === "") {
                     projection.splice(projection.indexOf(key), 1);  
                 }
             })
 
+            let searchObject : Record<string, any> = {};
+            
             searchBy.forEach((key) => {
                 if (req.body[key] !== undefined) {
                     searchObject[key] = req.body[key];

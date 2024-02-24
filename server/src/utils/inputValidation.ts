@@ -1,8 +1,28 @@
-import { query, body, checkSchema, check } from "express-validator";
-import { AlphaLocale } from "express-validator/src/options";
+import { query, body, checkSchema, check, validationResult } from "express-validator";
+import {Request, Response, NextFunction} from 'express';
 import path from "path";
 
-export const checkEmail = check('email').isEmail().withMessage('Invalid email');
+
+
+
+module.exports.checkEmail = [
+    check('email')
+        .trim()
+        .normalizeEmail()
+        .escape()
+        .not().isEmpty().withMessage('Email is required')
+        .bail()
+        .isEmail().withMessage('Invalid email')
+        .bail().matches(/^[A-Za-z0-9]+([-_.][A-Za-z0-9]+)*@[-A-Za-z0-9]+[.][-A-Za-z0-9]{2,}$/).withMessage('Invalid email'),
+    (req : Request, res : Response, next : NextFunction) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json(errors.array());
+        }
+        console.log(`Email is valid as ${req.query.email}`);
+        next();
+    }
+]
 
 export const customValidators = { // check image hex / file sig
     isImage: (value : any, filename : string) : any => {
@@ -72,3 +92,5 @@ export const checkUser = checkSchema({
     }
 },
 )
+
+export default module.exports;

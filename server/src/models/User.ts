@@ -21,6 +21,18 @@ export interface User {
     profile_picture: File; // medium blob (16mb)
 }
 
+export const UserParams = {
+    PREFIX_ID: "prefix_id",
+    ID: "id",
+    FIRST_NAME: "first_name",
+    LAST_NAME: "last_name",
+    EMAIL: "email",
+    PASSWORD: "password",
+    PHONE_NUMBER: "phone_number",
+    PROFILE_PICTURE: "profile_picture"
+
+}
+
 export const UserType = {
     ADMIN: "admin",
     USER : "user",

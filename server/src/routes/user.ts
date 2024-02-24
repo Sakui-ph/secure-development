@@ -1,25 +1,12 @@
 import express, {Router, Request, Response, NextFunction} from 'express';
-import db from '../database/db';
 import controller from '../controller/user';
 import { hashPassword, validatePassword, setSession, validateSession } from '../utils/securityUtils';
 import UserDB from '../database/user';
-import { UserType } from '../models/User';
+import { UserParams, UserType } from '../models/User';
 import { checkEmail, checkUser } from '../utils/inputValidation';
 import { validationResult } from 'express-validator';
 
 const router = express.Router();
-
-
-router.get('/read', checkEmail, (req: Request, res: Response, next: NextFunction) => {
-    var err = validationResult(req)
-    if (!err.isEmpty()) {
-        res.status(400).send(err.array())
-    }
-    var result = UserDB.find("first_name, last_name", {email: req.query.email}).then((result) => {
-        console.log(result);
-    })
-    res.send();
-})
 
 router.post('/login', validatePassword, setSession, (req: Request, res: Response, next: NextFunction) => {
     console.log(`User login ID is: ${req.session.user}`)
@@ -44,18 +31,33 @@ router.post('/validateSession', validateSession(), (req: Request, res: Response,
 
 })
 
+router.get('/read', checkEmail, (req: Request, res: Response, next: NextFunction) => {
+    var err = validationResult(req)
+    if (!err.isEmpty()) {
+        res.status(400).send(err.array())
+    }
+    var result = UserDB.find([UserParams.FIRST_NAME, UserParams.LAST_NAME], {email: req.query.email}).then((result) => {
+        console.log(result);
+    })
+    res.send();
+})
+
+
 router.post('/create', checkUser, hashPassword, (req: Request, res: Response, next: NextFunction) => {
     var err = validationResult(req)
     if (!err.isEmpty()) {
         res.status(400).send(err.array())
     }
     var result = controller.createUser(req, res)
+    console.log(typeof(result))
 })
 
-// UNUSED AS OF RN
-router.patch('/update', checkUser, hashPassword, (req: Request, res: Response, next: NextFunction) => {
-    var result = controller.updateUser(req, res)
-    res.send(result).status(200)
+router.patch('/update', 
+    checkUser,
+    controller.updateUser(["first_name", "last_name", "phone_number"], ["email"]), 
+    (req: Request, res: Response, next: NextFunction) => {
+    console.log("User updated")
+    res.send("User updated").status(200)
 })
 
 export { router as UserRoutes }

@@ -14,7 +14,7 @@ export const validatePassword = async (req : Request, res : Response, next : Nex
     }
 
     let password = req.body.password;
-    let hashedPassword = await UserDB.find(PASSWORD_PROJECTION_STRING, {email: req.body.email})
+    let hashedPassword = await UserDB.find([PASSWORD_PROJECTION_STRING], {email: req.body.email})
     
     if(await bcrypt.compare(password, hashedPassword['password'])) {
         next();
@@ -50,7 +50,7 @@ export const hashPassword = (req : Request, res : Response, next : NextFunction)
 
 export const setSession = async (req : Request, res : Response, next : NextFunction) => {
     if (req.session !== undefined) {
-        let data = await UserDB.find("prefix_id, id", {email: req.body.email})
+        let data = await UserDB.find(["prefix_i", "id"], {email: req.body.email})
         let user = data['prefix_id'] + data['id'].toString().padStart(5, '0');
 
         

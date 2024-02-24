@@ -13,7 +13,16 @@ export function buildUpdateQuery(user : User, allowedKeys : string[], queryBy : 
         return accumulator;
     }, [])
 
+    return query + values.join(", ") + ` WHERE ${queryBy}`;
+}
 
+export function convertSearchByToString(searchBy : Object) {
+    console.log(searchBy)
+    console.log("Keys = " + Object.keys(searchBy))
+    let searchParams : string = Object.keys(searchBy).map((key) => {
+        var whereString = `${key} = '${searchBy[key as keyof Object]}'` 
+        return whereString;
+    }).join(" AND ");
 
-    return query + values.join(", ") + ` WHERE ${queryBy} = '${user[queryBy as keyof User]}'`;
+    return searchParams;
 }

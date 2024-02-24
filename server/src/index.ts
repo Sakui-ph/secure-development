@@ -10,7 +10,6 @@ dotenv.config();
 
 const app: Application = express();
 
-// create application/x-www-form-urlencoded parser
 let PORT : string | undefined;
 process.env.STATUS === 'dev'
 ? PORT = process.env.DEV_PORT

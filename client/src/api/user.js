@@ -47,7 +47,7 @@ export function CreateNewUser ({prefix_id, first_name, last_name, email, passwor
         console.log("User added to SQL:", response.data);
     })
     .catch((error) => {
-        console.log(error);
+        console.log(error.response);
     });
 }
 

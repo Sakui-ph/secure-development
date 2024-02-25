@@ -1,8 +1,8 @@
 @font-face {
     font-family: 'Serif';
-    src: url('RomanSerif.ttf') format('truetype');
+    src: url('../resources/fonts/RomanSerif.ttf') format('truetype');
 }
-  
+
 h1 {
     font-family: 'Serif', sans-serif;
     letter-spacing: 2px;

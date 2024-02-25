@@ -1,8 +1,6 @@
 import React, { useState } from "react";
-import './signup.css';
+import '../styles/signup.css';
 import { CreateNewUser } from "../api/user";
-import { userEndpoints } from "../api/axios";
-import { ENDPOINTS } from "../api/endpoints";
 
 export default function Form() {
 	const [prefixId, setPrefixId] = useState(101);

@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import './signup.css';
+import '../styles/signup.css';
 import { Login } from "../api/user";
 
 async function TryLogin(email, password) {

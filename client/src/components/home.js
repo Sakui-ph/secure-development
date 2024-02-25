@@ -1,6 +1,6 @@
 import React from 'react';
-import './home.css';
-import cottageImg from './cottage.png';
+import '../styles/home.css';
+import cottageImg from '../resources/images/cottage.png';
 import PropTypes from 'prop-types';
 import { Logout } from '../api/user';
 

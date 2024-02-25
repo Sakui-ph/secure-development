@@ -50,7 +50,7 @@ export const hashPassword = (req : Request, res : Response, next : NextFunction)
 
 export const setSession = async (req : Request, res : Response, next : NextFunction) => {
     if (req.session !== undefined) {
-        let data = await UserDB.find(["prefix_i", "id"], {email: req.body.email})
+        let data = await UserDB.find(["prefix_id", "id"], {email: req.body.email})
         let user = data['prefix_id'] + data['id'].toString().padStart(5, '0');
 
         

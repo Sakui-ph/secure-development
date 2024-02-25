@@ -3,7 +3,6 @@ import controller from '../controller/user';
 import { hashPassword, validatePassword, setSession, validateSession } from '../utils/securityUtils';
 import UserDB from '../database/user';
 import { UserParams, UserType } from '../models/User';
-import { checkUser } from '../utils/inputValidation';
 import { validationResult } from 'express-validator';
 import inputValidtion from '../utils/inputValidation';
 
@@ -39,8 +38,11 @@ controller.getUser([UserParams.FIRST_NAME, UserParams.LAST_NAME], [UserParams.EM
     res.send();
 })
 
-
-router.post('/create', checkUser, hashPassword, (req: Request, res: Response, next: NextFunction) => {
+// TODO: fix all the checkers
+router.post('/create', 
+inputValidtion.checkUser,
+hashPassword, 
+(req: Request, res: Response, next: NextFunction) => {
     var err = validationResult(req)
     if (!err.isEmpty()) {
         res.status(400).send(err.array())
@@ -50,7 +52,7 @@ router.post('/create', checkUser, hashPassword, (req: Request, res: Response, ne
 })
 
 router.patch('/update', 
-    checkUser,
+    inputValidtion.checkUser,
     controller.updateUser([UserParams.FIRST_NAME, UserParams.LAST_NAME, UserParams.PHONE_NUMBER], [UserParams.EMAIL]), 
     (req: Request, res: Response, next: NextFunction) => {
     console.log("User updated")

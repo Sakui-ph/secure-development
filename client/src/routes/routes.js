@@ -1,9 +1,9 @@
 import React from 'react'
 import { Route, BrowserRouter, Routes} from 'react-router-dom'
-import Signup from '../components/signup'
-import Login from '../components/login'
-import Home from '../components/home'
-import Admin from '../components/admin'
+import Signup from '../components/pages/signupPage'
+import Login from '../components/pages/loginPage'
+import Home from '../components/pages/homePage'
+import Admin from '../components/pages/adminPage'
 import {Protected} from '../utils/protected_route'
 import { UserType } from '../models/user'
 

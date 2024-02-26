@@ -1,8 +1,8 @@
 import React from 'react';
-import '../styles/home.css';
-import cottageImg from '../resources/images/cottage.png';
+import '../../styles/home.css';
+import cottageImg from '../../resources/images/cottage.png';
 import PropTypes from 'prop-types';
-import { Logout } from '../api/user';
+import { Logout } from '../../api/user';
 
 // Default website information
 const defaultWebsiteInfo = {

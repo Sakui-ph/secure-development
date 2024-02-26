@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
-import '../styles/signup.css';
-import { Login } from "../api/user";
+import '../../styles/signup.css';
+import { Login } from "../../api/user";
 
 async function TryLogin(email, password) {
 	await Login(email, password).then((result) => {

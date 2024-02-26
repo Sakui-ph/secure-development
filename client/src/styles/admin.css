@@ -3,45 +3,44 @@
     padding: 150px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(181, 154, 3, 0.1);
-  }
-  
-  .admin-panel h1 {
+}
+
+.admin-panel h1 {
     font-size: 24px;
     margin-bottom: 20px;
-  }
-  
-  .user-list {
+}
+
+.user-list {
     border: 1px solid #ccc;
     padding: 50px;
     border-radius: 8px;
     background-color: #fff;
-  }
-  
-  .user-list h2 {
+}
+
+.user-list h2 {
     font-size: 20px;
     margin-bottom: 15px;
-  }
-  
-  .user-list ul {
+}
+
+.user-list ul {
     list-style-type: none;
     padding: 0;
-  }
-  
-  .user-list li {
+}
+
+.user-list li {
     margin-bottom: 15px;
-  }
-  
-  .user-list p {
+}
+
+.user-list p {
     margin: 5px 0;
-  }
-  
-  .user-list select {
+}
+
+.user-list select {
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 4px;
-  }
+}
 
-  .user-list option {
+.user-list option {
     padding: 8px;
-  }
-  
+}

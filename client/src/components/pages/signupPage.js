@@ -1,14 +1,9 @@
-import React from "react";
-import SignupForm from "../forms/SignInForm";
+import React from 'react';
+import SignupForm from '../forms/SignInForm';
 
 export default function Signup() {
-	return (
-		<SignupForm />
-	)
+    return <SignupForm />;
 }
-
-
-
 
 // import React, { useState } from "react";
 // import '../styles/signup.css';
@@ -75,8 +70,6 @@ export default function Signup() {
 //         const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 //         return regex.test(email);
 //     };
-
-
 
 // 	const handleNumber = (e) => {
 // 		const numberValue = e.target.value;

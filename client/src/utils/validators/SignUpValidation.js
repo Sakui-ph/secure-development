@@ -1,5 +1,1 @@
-
-
-export const SignUpValidation = (inputFields) => {
-    
-}
+export const SignUpValidation = (inputFields) => {};

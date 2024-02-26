@@ -8,8 +8,8 @@ body {
 
 .form {
     text-align: center;
-    width: 100%; 
-    max-width: 900px;  
+    width: 100%;
+    max-width: 900px;
     max-height: 80vh;
     overflow-y: auto;
     border-radius: 20px;
@@ -22,82 +22,84 @@ body {
     text-align: left;
     display: block;
     font-size: 15px;
-    margin-bottom: 10px; 
+    margin-bottom: 10px;
 }
 
 .input {
     font-size: 16px;
-    padding: 12px; 
-    margin-bottom: 20px; 
+    padding: 12px;
+    margin-bottom: 20px;
     width: calc(100% - 24px);
-    border: none; 
-    border-radius: 8px; 
-    background-color: rgba(245, 238, 217, 0.9); 
+    border: none;
+    border-radius: 8px;
+    background-color: rgba(245, 238, 217, 0.9);
 }
 
 .btn {
-    color: #fff; 
+    color: #fff;
     border-radius: 8px;
     font-size: 15px;
     display: inline-block;
-    padding: 14px 28px; 
-    margin: 20px auto; 
+    padding: 14px 28px;
+    margin: 20px auto;
     background-color: rgba(253, 187, 45, 1);
-    border: none; 
+    border: none;
     cursor: pointer;
-    transition: background-color 0.3s, color 0.3s;
+    transition:
+        background-color 0.3s,
+        color 0.3s;
 }
 
 .btn:hover {
-    background-color: rgba(121, 83, 0, 0.9); 
+    background-color: rgba(121, 83, 0, 0.9);
 }
 
 .messages {
     display: flex;
     justify-content: center;
     font-size: 14px;
-    margin-top: 20px; 
+    margin-top: 20px;
 }
 
 .error {
     display: block;
     color: red;
-    margin-top: 10px; 
+    margin-top: 10px;
 }
 
 .success {
     display: block;
-    margin-top: 10px; 
+    margin-top: 10px;
 }
 
 .image-preview-container {
     width: 200px;
     height: 200px;
-    margin: 20px auto; 
-    overflow:scroll;
-    border-radius: 50%; 
+    margin: 20px auto;
+    overflow: scroll;
+    border-radius: 50%;
 }
 
 .image-preview img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    border-radius: 50%; 
+    border-radius: 50%;
 }
 
 .form::-webkit-scrollbar {
     width: 10px;
 }
-  
+
 .form::-webkit-scrollbar-track {
     background: #f1f1f1;
 }
-  
+
 .form::-webkit-scrollbar-thumb {
-    background: #a7a7a7; 
-    border-radius: 4px; 
+    background: #a7a7a7;
+    border-radius: 4px;
 }
-  
+
 .form::-webkit-scrollbar-thumb:hover {
     background: #b4b4b4;
 }

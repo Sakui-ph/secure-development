@@ -4,22 +4,22 @@ import { CreateNewUser } from '../../api/user';
 
 export default function SignupForm() {
     const [inputFields, setInputFields] = useState({
-        prefixId: 101,
-        firstName: '',
-        lastName: '',
+        prefix_id: 101,
+        first_name: '',
+        last_name: '',
         email: '',
         password: '',
-        phoneNumber: '',
+        phone_number: '',
     });
     const [errors, setErrors] = useState({});
     const [submitting, setSubmitting] = useState(false);
 
     const SignUpValidation = () => {
-        if (!inputFields.firstName) {
-            errors.firstName = 'First Name is required';
+        if (!inputFields.first_name) {
+            errors.first_name = 'First Name is required';
         }
-        if (!inputFields.lastName) {
-            errors.lastName = 'Last Name is required';
+        if (!inputFields.last_name) {
+            errors.last_name = 'Last Name is required';
         }
         if (!inputFields.email) {
             errors.email = 'Email is required';
@@ -27,17 +27,14 @@ export default function SignupForm() {
         if (!inputFields.password) {
             errors.password = 'Password is required';
         }
-        if (!inputFields.phoneNumber) {
-            errors.number = 'Phone Number is required';
+        if (!inputFields.phone_number) {
+            errors.phone_number = 'Phone Number is required';
         }
         return errors;
     };
 
     const handleInputChange = (e) => {
-        console.log(e.target.value);
-        console.log(e.target);
         setInputFields({ ...inputFields, [e.target.name]: e.target.value });
-        console.log(inputFields);
     };
 
     const handleSubmit = (e) => {
@@ -48,10 +45,12 @@ export default function SignupForm() {
 
     useEffect(() => {
         if (Object.keys(errors).length === 0 && submitting) {
-            console.log(inputFields);
-            setSubmitting(false);
+            CreateNewUser(inputFields).then((result) => {
+                setSubmitting(false);
+            });
         }
-    }, [errors, submitting]);
+        setSubmitting(false);
+    }, [errors, submitting, inputFields]);
 
     return (
         <div className="form">
@@ -72,11 +71,11 @@ export default function SignupForm() {
                     <input
                         className="input"
                         type="text"
-                        name="firstName"
-                        value={inputFields.firstName}
+                        name="first_name"
+                        value={inputFields.first_name}
                         onChange={handleInputChange}
                     />
-                    {errors.firstName && (
+                    {errors.first_name && (
                         <p className="error">
                             Please use characters and spaces only.
                         </p>
@@ -87,11 +86,11 @@ export default function SignupForm() {
                     <input
                         className="input"
                         type="text"
-                        name="lastName"
-                        value={inputFields.lastName}
+                        name="last_name"
+                        value={inputFields.last_name}
                         onChange={handleInputChange}
                     />
-                    {errors.lastName && (
+                    {errors.last_name && (
                         <p className="error">
                             Please use characters and spaces only.
                         </p>
@@ -118,11 +117,11 @@ export default function SignupForm() {
                     <input
                         className="input"
                         type="text"
-                        name="phoneNumber"
-                        value={inputFields.phoneNumber}
+                        name="phone_number"
+                        value={inputFields.phone_number}
                         onChange={handleInputChange}
                     />
-                    {errors.phoneNumber && (
+                    {errors.phone_number && (
                         <p className="error">
                             Please enter a valid phone number (Philippines, no
                             dashes).

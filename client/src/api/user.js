@@ -31,16 +31,17 @@ export const Logout = async () => {
     }
 };
 
-export function CreateNewUser({
+export const CreateNewUser = async ({
     prefix_id,
     first_name,
     last_name,
     email,
     password,
     phone_number,
-    profile_picture,
-}) {
-    userEndpoints(ENDPOINTS.create)
+    profile_picture = null,
+}) => {
+    console.log('enter');
+    await userEndpoints(ENDPOINTS.create)
         .post({
             prefix_id,
             first_name,
@@ -56,7 +57,7 @@ export function CreateNewUser({
         .catch((error) => {
             console.log(error.response);
         });
-}
+};
 
 export function CreateNewAdmin({
     prefix_id,

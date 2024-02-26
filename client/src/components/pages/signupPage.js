@@ -1,10 +1,11 @@
 import React from 'react';
 import SignupForm from '../forms/SignInForm';
 
-export default function Signup() {
+export default function SignupPage() {
     return <SignupForm />;
 }
 
+// REFACTORED, ITS JUST HERE JUST IN CASE
 // import React, { useState } from "react";
 // import '../styles/signup.css';
 // import { CreateNewUser } from "../api/user";

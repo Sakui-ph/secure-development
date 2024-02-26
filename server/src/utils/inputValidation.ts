@@ -60,11 +60,11 @@ const checkUser = checkSchema({
             errorMessage: "Email is required",
         },
         isEmail: {
-            errorMessage: "Invalid email",
+            errorMessage: `Invalid email`,
         },
         matches: {
             options: /^[A-Za-z0-9]+([-_.][A-Za-z0-9]+)*@[-A-Za-z0-9]+[.][-A-Za-z0-9]{2,}$/,
-            errorMessage: "Invalid email",
+            errorMessage: "Invalid email format!",
         },
     },
     password: {
@@ -114,6 +114,8 @@ module.exports = {
     checkEmail: [
         validateEmail,
         (req: Request, res: Response, next: NextFunction) => {
+            console.log("In here")
+            console.log(req.body)
             const errors = validationResult(req);
             if (!errors.isEmpty()) {
                 return res.status(400).json(errors.array());
@@ -126,6 +128,8 @@ module.exports = {
         checkUser,
         (req: Request, res: Response, next: NextFunction) => {
             const errors = validationResult(req);
+            console.log("In here user")
+            console.log(req.body)
             if (!errors.isEmpty()) {
                 return res.status(400).json(errors.array());
             }

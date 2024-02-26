@@ -1,102 +1,108 @@
 import React, { useState } from 'react';
+import LoginForm from '../forms/LoginForm';
 
-import '../../styles/signup.css';
-import { Login } from '../../api/user';
-
-async function TryLogin(email, password) {
-    await Login(email, password).then((result) => {
-        console.log('result: fasdas', result);
-        if (result) {
-            console.log('Login successful');
-            window.location.href = '/home';
-        }
-        return result;
-    });
+export default function LoginPage() {
+    return <LoginForm />;
 }
 
-export default function Form() {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [submitted, setSubmitted] = useState(false);
-    const [error, setError] = useState(false);
+// REFACTORED, ITS JUST HERE JUST IN CASE
+// import '../../styles/signup.css';
+// import { Login } from '../../api/user';
 
-    const handleEmail = (e) => {
-        setEmail(e.target.value);
-        setSubmitted(false);
-    };
+// async function TryLogin(email, password) {
+//     await Login(email, password).then((result) => {
+//         console.log('result: fasdas', result);
+//         if (result) {
+//             console.log('Login successful');
+//             window.location.href = '/home';
+//         }
+//         return result;
+//     });
+// }
 
-    const handlePassword = (e) => {
-        setPassword(e.target.value);
-        setSubmitted(false);
-    };
+// export default function Form() {
+//     const [email, setEmail] = useState('');
+//     const [password, setPassword] = useState('');
+//     const [submitted, setSubmitted] = useState(false);
+//     const [error, setError] = useState(false);
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        if (email === '' || password === '') {
-            setError(true);
-        } else {
-            setSubmitted(true);
-            setError(false);
-            TryLogin(email, password);
-        }
-    };
+//     const handleEmail = (e) => {
+//         setEmail(e.target.value);
+//         setSubmitted(false);
+//     };
 
-    const successMessage = () => (
-        <div
-            className="success"
-            style={{
-                display: submitted ? '' : 'none',
-            }}
-        />
-    );
+//     const handlePassword = (e) => {
+//         setPassword(e.target.value);
+//         setSubmitted(false);
+//     };
 
-    const errorMessage = () => (
-        <div
-            className="error"
-            style={{
-                display: error ? '' : 'none',
-            }}
-        >
-            <h1>Please enter all the fields</h1>
-        </div>
-    );
+//     const handleSubmit = (e) => {
+//         e.preventDefault();
+//         if (email === '' || password === '') {
+//             setError(true);
+//         } else {
+//             setSubmitted(true);
+//             setError(false);
+//             TryLogin(email, password);
+//         }
+//     };
 
-    return (
-        <div className="form">
-            <div>
-                <h2>Login</h2>
-            </div>
+//     const successMessage = () => (
+//         <div
+//             className="success"
+//             style={{
+//                 display: submitted ? '' : 'none',
+//             }}
+//         />
+//     );
 
-            <form>
-                <label className="label">Email</label>
-                <input
-                    onChange={handleEmail}
-                    className="input"
-                    value={email}
-                    type="email"
-                />
+//     const errorMessage = () => (
+//         <div
+//             className="error"
+//             style={{
+//                 display: error ? '' : 'none',
+//             }}
+//         >
+//             <h1>Please enter all the fields</h1>
+//         </div>
+//     );
 
-                <label className="label">Password</label>
-                <input
-                    onChange={handlePassword}
-                    className="input"
-                    value={password}
-                    type="password"
-                />
+//     return (
+//         <div className="form">
+//             <div>
+//                 <h2>Login</h2>
+//             </div>
 
-                <div className="messages">
-                    {errorMessage()}
-                    {successMessage()}
-                </div>
+//             <form>
+//                 <label className="label">Email</label>
+//                 <input
+//                     onChange={handleEmail}
+//                     className="input"
+//                     value={email}
+//                     type="email"
+//                 />
 
-                <button onClick={handleSubmit} className="btn" type="submit">
-                    Login
-                </button>
+//                 <label className="label">Password</label>
+//                 <input
+//                     onChange={handlePassword}
+//                     className="input"
+//                     value={password}
+//                     type="password"
+//                 />
 
-                <p>
-                    Don&apos;t have an account? <a href="/">Sign up</a>
-                </p>
-            </form>
-        </div>
-    );
-}
+//                 <div className="messages">
+//                     {errorMessage()}
+//                     {successMessage()}
+//                 </div>
+
+//                 <button onClick={handleSubmit} className="btn" type="submit">
+//                     Login
+//                 </button>
+
+//                 <p>
+//                     Don&apos;t have an account? <a href="/">Sign up</a>
+//                 </p>
+//             </form>
+//         </div>
+//     );
+// }

@@ -14,6 +14,7 @@ export default function SignupForm() {
     const [errors, setErrors] = useState({});
     const [submitting, setSubmitting] = useState(false);
 
+    // TODO: REFACTOR THIS FUNCTION TO ANOTHER FUNCTION WHEN POSSIBLE
     const SignUpValidation = () => {
         if (!inputFields.first_name) {
             errors.first_name = 'First Name is required';

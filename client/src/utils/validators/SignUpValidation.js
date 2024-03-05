@@ -1,24 +1,47 @@
 export const SignUpValidation = (inputFields) => {
     const errors = {};
-    if (!inputFields.first_name) {
-        errors.first_name = 'First Name is required';
-    }
-    if (!inputFields.last_name) {
-        errors.last_name = 'Last Name is required';
-    }
-    if (!inputFields.email) {
-        errors.email = 'Email is required';
-    }
-    if (!inputFields.password) {
-        errors.password = 'Password is required';
-    }
-    if (!inputFields.phone_number) {
-        errors.phone_number = 'Phone Number is required';
-    }
+    errors.first_name = validateName(inputFields.first_name);
+    errors.last_name = validateName(inputFields.last_name);
+    errors.email = validateEmail(inputFields.email);
+    errors.password = validatePassword(inputFields.password);
+    errors.phone_number = validatePhoneNumber(inputFields.phone_number);
     return errors;
 };
 
-function validateFirstName(first_name) {
-    const re = /^[a-zA-Z\s]+$/;
-    return re.test(first_name);
+function validateName(name) {
+    const regex = /^[A-Za-z\s]+$/;
+
+    if (!name) return 'First Name is required';
+
+    if (!regex.test(name)) return 'Please use characters and spaces only';
+
+    if (name.length > 50)
+        return 'First Name must be at least 50 characters long';
+}
+
+function validateEmail(email) {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!email) return 'Email is required';
+
+    if (!regex.test(email)) return 'Please enter a valid email address';
+
+    if (email.length > 80) return 'Email must be at least 80 characters long';
+}
+
+function validatePhoneNumber(phone_number) {
+    const regex = /^(\+?63|0)9\d{9}$/;
+
+    if (!phone_number) return 'Phone Number is required';
+
+    if (!regex.test(phone_number))
+        return 'Please enter a valid phone number (Philippines, no dashes)';
+}
+
+// TODO: Add validation for more password stuff like special chars and numbers
+function validatePassword(password) {
+    if (!password) return 'Password is required';
+
+    if (password.length < 8)
+        return 'Password must be at least 8 characters long';
 }

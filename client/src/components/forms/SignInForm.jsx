@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import '../../styles/signup.css';
 import { CreateNewUser } from '../../api/user';
+import { SignUpValidation } from '../../utils/validators/SignUpValidation';
 
 export default function SignupForm() {
     const [inputFields, setInputFields] = useState({
@@ -13,26 +14,6 @@ export default function SignupForm() {
     });
     const [errors, setErrors] = useState({});
     const [submitting, setSubmitting] = useState(false);
-
-    // TODO: REFACTOR THIS FUNCTION TO ANOTHER FUNCTION WHEN POSSIBLE
-    const SignUpValidation = () => {
-        if (!inputFields.first_name) {
-            errors.first_name = 'First Name is required';
-        }
-        if (!inputFields.last_name) {
-            errors.last_name = 'Last Name is required';
-        }
-        if (!inputFields.email) {
-            errors.email = 'Email is required';
-        }
-        if (!inputFields.password) {
-            errors.password = 'Password is required';
-        }
-        if (!inputFields.phone_number) {
-            errors.phone_number = 'Phone Number is required';
-        }
-        return errors;
-    };
 
     const handleInputChange = (e) => {
         setInputFields({ ...inputFields, [e.target.name]: e.target.value });

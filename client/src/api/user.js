@@ -55,7 +55,7 @@ export const CreateNewUser = async ({
             console.log('User added to SQL:', response.data);
         })
         .catch((error) => {
-            console.log(error.response);
+            console.log(error.response.data);
         });
 };
 

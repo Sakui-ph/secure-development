@@ -14,14 +14,22 @@ export default function SignupForm() {
     });
     const [errors, setErrors] = useState({});
     const [submitting, setSubmitting] = useState(false);
+    const [buttonDisabled, setButtonDisabled] = useState(true);
 
     const handleInputChange = (e) => {
         setInputFields({ ...inputFields, [e.target.name]: e.target.value });
+
+        if (Object.keys(errors).length === 0) {
+            setButtonDisabled(false);
+        }
+    };
+
+    const displayErrors = () => {
+        setErrors(SignUpValidation(inputFields));
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        setErrors(SignUpValidation(inputFields));
         setSubmitting(true);
     };
 
@@ -58,9 +66,7 @@ export default function SignupForm() {
                         onChange={handleInputChange}
                     />
                     {errors.first_name && (
-                        <p className="error">
-                            Please use characters and spaces only.
-                        </p>
+                        <p className="error">{errors.first_name}</p>
                     )}
                 </label>
                 <label className="label">
@@ -73,9 +79,7 @@ export default function SignupForm() {
                         onChange={handleInputChange}
                     />
                     {errors.last_name && (
-                        <p className="error">
-                            Please use characters and spaces only.
-                        </p>
+                        <p className="error">{errors.last_name}</p>
                     )}
                 </label>
 
@@ -90,9 +94,7 @@ export default function SignupForm() {
                     />
                 </label>
 
-                {errors.email && (
-                    <p className="error">Please enter a valid email address.</p>
-                )}
+                {errors.email && <p className="error">{errors.email}.</p>}
 
                 <label className="label">
                     Phone Number
@@ -104,10 +106,7 @@ export default function SignupForm() {
                         onChange={handleInputChange}
                     />
                     {errors.phone_number && (
-                        <p className="error">
-                            Please enter a valid phone number (Philippines, no
-                            dashes).
-                        </p>
+                        <p className="error">{errors.phone_number}</p>
                     )}
                 </label>
 
@@ -120,11 +119,28 @@ export default function SignupForm() {
                         value={inputFields.password}
                         onChange={handleInputChange}
                     />
+                    {errors.password && (
+                        <p className="error">{errors.password}</p>
+                    )}
                 </label>
 
-                <button className="btn" type="submit">
-                    Sign up
-                </button>
+                {buttonDisabled ? (
+                    <button
+                        className="btn"
+                        type="button"
+                        onClick={displayErrors}
+                    >
+                        Sign up
+                    </button>
+                ) : (
+                    <button
+                        className="btn"
+                        type="submit"
+                        disabled={buttonDisabled}
+                    >
+                        Sign up
+                    </button>
+                )}
 
                 <p>
                     Already have an account? <a href="/login">Login</a>

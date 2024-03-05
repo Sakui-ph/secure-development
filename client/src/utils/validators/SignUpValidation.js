@@ -11,7 +11,7 @@ export const SignUpValidation = (inputFields) => {
 function validateName(name) {
     const regex = /^[A-Za-z\s]+$/;
 
-    if (!name) return 'First Name is required';
+    if (name === '') return 'First Name is required';
 
     if (!regex.test(name)) return 'Please use characters and spaces only';
 
@@ -22,7 +22,7 @@ function validateName(name) {
 function validateEmail(email) {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    if (!email) return 'Email is required';
+    if (email === '') return 'Email is required';
 
     if (!regex.test(email)) return 'Please enter a valid email address';
 
@@ -32,7 +32,7 @@ function validateEmail(email) {
 function validatePhoneNumber(phone_number) {
     const regex = /^(\+?63|0)9\d{9}$/;
 
-    if (!phone_number) return 'Phone Number is required';
+    if (phone_number === '') return 'Phone Number is required';
 
     if (!regex.test(phone_number))
         return 'Please enter a valid phone number (Philippines, no dashes)';
@@ -40,7 +40,8 @@ function validatePhoneNumber(phone_number) {
 
 // TODO: Add validation for more password stuff like special chars and numbers
 function validatePassword(password) {
-    if (!password) return 'Password is required';
+    console.log(password);
+    if (password === '') return 'Password is required';
 
     if (password.length < 8)
         return 'Password must be at least 8 characters long';

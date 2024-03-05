@@ -50,6 +50,11 @@ body {
         color 0.3s;
 }
 
+.btn:disabled {
+    background-color: rgba(253, 187, 45, 0.5);
+    cursor: not-allowed;
+}
+
 .btn:hover {
     background-color: rgba(121, 83, 0, 0.9);
 }

@@ -21,7 +21,7 @@ const handleLogout = async (e) => {
             window.location.href = '/login';
         },
         (error) => {
-            console.log('Error: ', error);
+            window.location.href = '/home';
         },
     );
 };

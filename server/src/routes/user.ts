@@ -38,7 +38,6 @@ controller.getUser([UserParams.FIRST_NAME, UserParams.LAST_NAME], [UserParams.EM
     res.send();
 })
 
-// TODO: fix all the checkers
 router.post('/create', 
 inputValidtion.checkUser,
 hashPassword, 

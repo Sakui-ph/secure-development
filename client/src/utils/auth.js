@@ -1,6 +1,7 @@
 import { userEndpoints } from '../api/axios';
 import { ENDPOINTS } from '../api/endpoints';
 import { UserType } from '../models/user';
+import { LogError } from './error-handlers/error_handler';
 
 export const isAuthenticated = async (allowedTypes) => {
     let result = false;
@@ -20,9 +21,7 @@ export const isAuthenticated = async (allowedTypes) => {
                 }
             });
     } catch (error) {
-        if (error.status === 401) {
-            return false;
-        }
+        LogError(error, 'An error occurred while validating session');
     }
     return result;
 };

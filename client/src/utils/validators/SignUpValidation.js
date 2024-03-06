@@ -40,7 +40,6 @@ function validatePhoneNumber(phone_number) {
 
 // TODO: Add validation for more password stuff like special chars and numbers
 function validatePassword(password) {
-    console.log(password);
     if (password === '') return 'Password is required';
 
     if (password.length < 8)

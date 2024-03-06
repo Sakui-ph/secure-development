@@ -1,3 +1,4 @@
+import { LogError } from '../utils/error-handlers/error_handler';
 import { userEndpoints } from './axios';
 import { ENDPOINTS } from './endpoints';
 
@@ -17,7 +18,7 @@ export const Login = async (email, password) => {
                 return false;
             });
     } catch (error) {
-        console.log('An error occurred while logging in.');
+        LogError(error, 'An error occurred while logging in, login failed');
         return false;
     }
     return result;
@@ -27,7 +28,8 @@ export const Logout = async () => {
     try {
         await userEndpoints(ENDPOINTS.logout).post();
     } catch (error) {
-        console.log('An error occurred while logging out');
+        LogError(error, 'An error occurred while logging out, logout failed');
+        return false;
     }
 };
 
@@ -40,7 +42,6 @@ export const CreateNewUser = async ({
     phone_number,
     profile_picture = null,
 }) => {
-    console.log('enter');
     await userEndpoints(ENDPOINTS.create)
         .post({
             prefix_id,
@@ -51,11 +52,8 @@ export const CreateNewUser = async ({
             phone_number,
             profile_picture,
         })
-        .then((response) => {
-            console.log('User added to SQL:', response.data);
-        })
         .catch((error) => {
-            console.log(error.response.data);
+            LogError(error, 'An error occurred while creating a new user');
         });
 };
 
@@ -78,10 +76,7 @@ export function CreateNewAdmin({
             phone_number,
             profile_picture,
         })
-        .then((response) => {
-            console.log('User added to SQL:', response.data);
-        })
         .catch((error) => {
-            console.log(error);
+            LogError(error, 'An error occurred while creating a new user');
         });
 }

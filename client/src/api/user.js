@@ -9,12 +9,10 @@ export const Login = async (email, password) => {
             .post({ email, password })
             .then((response) => {
                 if (response.data.success) {
-                    console.log('Login successful');
                     result = true;
                     return true;
                 }
 
-                console.log('Login failed');
                 return false;
             });
     } catch (error) {

@@ -1,6 +1,6 @@
-import { SessionOptions } from "express-session";
+import { SessionOptions } from 'express-session';
 
-export const sessionConfig : SessionOptions = {
+export const sessionConfig: SessionOptions = {
     secret: process.env.SESSION_SECRET || 'secret',
     name: 'sessionID',
     resave: false,
@@ -11,4 +11,4 @@ export const sessionConfig : SessionOptions = {
         sameSite: true,
         httpOnly: false,
     },
-}
+};

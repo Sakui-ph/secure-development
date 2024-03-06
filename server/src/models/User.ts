@@ -1,4 +1,3 @@
-
 export interface User {
     readonly prefix_id?: number; // (3) 100 for admin, 101 for user ig
     readonly id?: string; // (7) 7 digit unique id INT
@@ -22,19 +21,18 @@ export interface User {
 }
 
 export const UserParams = {
-    PREFIX_ID: "prefix_id",
-    ID: "id",
-    FIRST_NAME: "first_name",
-    LAST_NAME: "last_name",
-    EMAIL: "email",
-    PASSWORD: "password",
-    PHONE_NUMBER: "phone_number",
-    PROFILE_PICTURE: "profile_picture"
-
-}
+    PREFIX_ID: 'prefix_id',
+    ID: 'id',
+    FIRST_NAME: 'first_name',
+    LAST_NAME: 'last_name',
+    EMAIL: 'email',
+    PASSWORD: 'password',
+    PHONE_NUMBER: 'phone_number',
+    PROFILE_PICTURE: 'profile_picture',
+};
 
 export const UserType = {
-    ADMIN: "admin",
-    USER : "user",
-    NONE : "none"
-}
+    ADMIN: 'admin',
+    USER: 'user',
+    NONE: 'none',
+};

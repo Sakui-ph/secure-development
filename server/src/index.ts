@@ -11,28 +11,24 @@ dotenv.config();
 
 const app: Application = express();
 
-let PORT : string | undefined;
+let PORT: string | undefined;
 process.env.STATUS === 'dev'
-? PORT = process.env.DEV_PORT
-: PORT = process.env.PROD_PORT;
-
+    ? (PORT = process.env.DEV_PORT)
+    : (PORT = process.env.PROD_PORT);
 
 app.listen(PORT, () => {
-  logger.info(`Server is running on port ${PORT}`);
-})
+    logger.info(`Server is running on port ${PORT}`);
+});
 app.use(session(sessionConfig));
 
-var urlencodedParser = bodyParser.urlencoded({ extended: false })
+const urlencodedParser = bodyParser.urlencoded({ extended: false });
 app.use(urlencodedParser);
 
-
-var corsOptions = {
-  origin: ["http://localhost:3000", "http://localhost:5555"],
-  credentials: true,
-  methods: ['GET', 'POST', 'DELETE', 'PATCH'],
-}
+const corsOptions = {
+    origin: ['http://localhost:3000', 'http://localhost:5555'],
+    credentials: true,
+    methods: ['GET', 'POST', 'DELETE', 'PATCH'],
+};
 app.use(cors(corsOptions));
 
 app.use('/user', UserRoutes);
-
-

@@ -1,26 +1,35 @@
-import {User} from "../models/User";
+import { User } from '../models/User';
 
-export function buildUpdateQuery(user : User, allowedKeys : string[], queryBy : string) : string {
-    let keys = Object.keys(user);
+export function buildUpdateQuery(
+    user: User,
+    allowedKeys: string[],
+    queryBy: string,
+): string {
+    const keys = Object.keys(user);
 
-    const query : string = `UPDATE users SET `
+    const query: string = `UPDATE users SET `;
 
-    let values : string[] = keys.reduce((accumulator : string[], key : string) => {
-        let val = user[key as keyof User];
-        if (val !== undefined && allowedKeys.includes(key)) {
-            accumulator.push(`${key} = '${val}'`);
-        }
-        return accumulator;
-    }, [])
+    const values: string[] = keys.reduce(
+        (accumulator: string[], key: string) => {
+            const val = user[key as keyof User];
+            if (val !== undefined && allowedKeys.includes(key)) {
+                accumulator.push(`${key} = '${val}'`);
+            }
+            return accumulator;
+        },
+        [],
+    );
 
-    return query + values.join(", ") + ` WHERE ${queryBy}`;
+    return query + values.join(', ') + ` WHERE ${queryBy}`;
 }
 
-export function convertSearchByToString(searchBy : Object) {
-    let searchParams : string = Object.keys(searchBy).map((key) => {
-        var whereString = `${key} = '${searchBy[key as keyof Object]}'` 
-        return whereString;
-    }).join(" AND ");
+export function convertSearchByToString(searchBy: object) {
+    const searchParams: string = Object.keys(searchBy)
+        .map((key) => {
+            const whereString = `${key} = '${searchBy[key as keyof object]}'`;
+            return whereString;
+        })
+        .join(' AND ');
 
     return searchParams;
 }

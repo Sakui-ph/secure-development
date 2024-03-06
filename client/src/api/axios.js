@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { LogError } from '../utils/error-handlers/error-logger';
 
 const DEVELOPMENT_BASE_URL = 'http://localhost:5555';
 
@@ -15,17 +16,28 @@ export const userEndpoints = (endpoint) => {
     return {
         fetch: (username) => axios.get(url, { params: { username } }),
         post: (data) =>
-            axios.post(url, data, {
-                headers: {
-                    'content-type': 'application/x-www-form-urlencoded',
-                },
-            }),
+            axios
+                .post(url, data, {
+                    headers: {
+                        'content-type': 'application/x-www-form-urlencoded',
+                    },
+                })
+                .catch((error) => {
+                    LogError(error, 'POST request failed');
+                }),
         patch: (data) =>
-            axios.patch(url, data, {
-                headers: {
-                    'content-type': 'application/x-www-form-urlencoded',
-                },
-            }),
-        get: () => axios.get(url),
+            axios
+                .patch(url, data, {
+                    headers: {
+                        'content-type': 'application/x-www-form-urlencoded',
+                    },
+                })
+                .catch((error) => {
+                    LogError(error, 'PATCH request failed');
+                }),
+        get: () =>
+            axios
+                .get(url)
+                .catch((error) => LogError(error, 'GET request failed')),
     };
 };

@@ -5,9 +5,7 @@ import { User } from "../models/User";
 class UserDB {
     find = async (projection : string[], searchBy : Record<string, any>) => {
         let searchParams = convertSearchByToString(searchBy);
-        console.log(searchParams)
         let result = await db.queryDatabase(`SELECT ${projection.join(", ")} FROM users WHERE ${searchParams}`, [])
-        console.log(result)
         return result[0][0];
     }
 
@@ -31,7 +29,6 @@ class UserDB {
         const query : string = buildUpdateQuery(user, projection, searchParams);
 
         var result = await db.queryDatabase(query, []);
-        console.log(query);
         return result[0][0];
     }
 }

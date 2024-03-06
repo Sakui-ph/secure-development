@@ -4,7 +4,6 @@ declare global {
         STATUS: 'dev' | 'prod';
         DB_CONNECTION_STRING: string;
         SESSION_SECRET: string;
-        DEBUG: 'true' | 'false';
       }
     }
   }

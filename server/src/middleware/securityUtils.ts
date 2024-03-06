@@ -2,7 +2,7 @@ import bcrypt from 'bcrypt';
 import { Request, Response, NextFunction } from 'express';
 import UserDB from '../database/user';
 import { UserType } from '../models/User';
-import LogError from './logger';
+import { LogError } from '../utils/logger';
 
 const SALT_ROUNDS = 15;
 const PASSWORD_PROJECTION_STRING : string = "CONVERT(password using utf8) as password";

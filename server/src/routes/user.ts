@@ -1,11 +1,11 @@
 import express, {Router, Request, Response, NextFunction} from 'express';
 import controller from '../controller/user';
-import { hashPassword, validatePassword, setSession, validateSession } from '../utils/securityUtils';
+import { hashPassword, validatePassword, setSession, validateSession } from '../middleware/securityUtils';
 import UserDB from '../database/user';
 import { UserParams, UserType } from '../models/User';
 import { validationResult } from 'express-validator';
-import inputValidtion from '../utils/inputValidation';
-import LogError, { LogInfo } from '../utils/logger';
+import inputValidtion from '../middleware/inputValidation';
+import { LogError } from '../utils/logger';
 
 const router = express.Router();
 
@@ -29,16 +29,13 @@ router.post('/validateSession', validateSession(), (req: Request, res: Response,
 
 })
 
-router.get('/read',
-inputValidtion.checkEmail,
+router.get('/read', inputValidtion.checkEmail,
 controller.getUser([UserParams.FIRST_NAME, UserParams.LAST_NAME], [UserParams.EMAIL]), 
 (req: Request, res: Response, next: NextFunction) => {
     res.send();
 })
 
-router.post('/create', 
-inputValidtion.checkUser,
-hashPassword, 
+router.post('/create', inputValidtion.checkUser, hashPassword, 
 (req: Request, res: Response, next: NextFunction) => {
     var validationError = validationResult(req)
     if (!validationError.isEmpty()) {
@@ -48,8 +45,7 @@ hashPassword,
     res.send("User created").status(200)
 })
 
-router.patch('/update', 
-    inputValidtion.checkUser,
+router.patch('/update', inputValidtion.checkUser,
     controller.updateUser([UserParams.FIRST_NAME, UserParams.LAST_NAME, UserParams.PHONE_NUMBER], [UserParams.EMAIL]), 
     (req: Request, res: Response, next: NextFunction) => {
     res.send("User updated").status(200)

@@ -1,7 +1,7 @@
 import {Request, Response} from 'express';
 import {User} from '../models/User';
 import UserDB from '../database/user';
-import LogError from '../utils/logger';
+import { LogError, LogType, LogWarning } from '../utils/logger';
 
 
 module.exports = {
@@ -23,7 +23,7 @@ module.exports = {
             res.send(result).status(200);
         }
         catch (e) {
-            LogError(e as Error, "Error creating user");
+            LogError(e as Error, "Error creating user", LogType.TRANSACTION);
             res.status(500).send("Error creating user");
         }
     },
@@ -35,6 +35,7 @@ module.exports = {
             }
             
             if (projection === undefined) {
+                LogWarning(new Error("Projection is undefined"), "Projection is undefined", LogType.TRANSACTION)
                 res.status(500).send("Projection is undefined");
                 return;
             }

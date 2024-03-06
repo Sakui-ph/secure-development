@@ -1,5 +1,6 @@
 import { checkSchema, check, validationResult } from 'express-validator';
 import { Request, Response, NextFunction } from 'express';
+import { LogError, LogType } from '../utils/logger';
 import path from 'path';
 
 const customValidators = {
@@ -112,6 +113,11 @@ module.exports = {
         (req: Request, res: Response, next: NextFunction) => {
             const errors = validationResult(req);
             if (!errors.isEmpty()) {
+                LogError(
+                    JSON.stringify(errors.array()),
+                    'Validation error',
+                    LogType.AUTH,
+                );
                 return res.status(400).json(errors.array());
             }
             next();

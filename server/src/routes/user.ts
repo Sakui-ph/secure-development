@@ -7,7 +7,6 @@ import {
     validateSession,
 } from '../middleware/securityUtils';
 import { UserParams } from '../models/User';
-import { validationResult } from 'express-validator';
 import inputValidtion from '../middleware/inputValidation';
 import { LogError, LogInfo, LogType } from '../utils/logger';
 
@@ -53,10 +52,6 @@ router.post(
     inputValidtion.checkUser,
     hashPassword,
     (req: Request, res: Response) => {
-        const validationError = validationResult(req);
-        if (!validationError.isEmpty()) {
-            res.status(400).send(validationError.array());
-        }
         const result = controller.createUser(req, res);
         LogInfo(result, LogType.TRANSACTION);
         res.send('User created').status(200);

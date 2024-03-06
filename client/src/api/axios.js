@@ -23,7 +23,7 @@ export const userEndpoints = (endpoint) => {
                     },
                 })
                 .catch((error) => {
-                    LogError(error, 'POST request failed');
+                    LogError(error, 'Request failed');
                 }),
         patch: (data) =>
             axios
@@ -33,11 +33,9 @@ export const userEndpoints = (endpoint) => {
                     },
                 })
                 .catch((error) => {
-                    LogError(error, 'PATCH request failed');
+                    LogError(error, 'Request failed');
                 }),
         get: () =>
-            axios
-                .get(url)
-                .catch((error) => LogError(error, 'GET request failed')),
+            axios.get(url).catch((error) => LogError(error, 'Request failed')),
     };
 };

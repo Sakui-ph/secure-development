@@ -1,13 +1,14 @@
-import winston, { Logger, createLogger, format, transports } from 'winston';
+import winston, { Logger, createLogger, format } from 'winston';
 
 const { combine, timestamp, colorize, printf, label } = format;
 
 const levels = {
-    error: 0,
+    info: 0,
     warn: 1,
-    info: 2,
-    debug: 3,
-    trace: 4,
+    error: 2,
+    trace: 3,
+    http: 4,
+    debug: 5,
 };
 
 const colors = {
@@ -16,7 +17,21 @@ const colors = {
     info: 'green',
     debug: 'blue',
     trace: 'magenta',
+    http: 'cyan',
 };
+
+const consoleTransport = new winston.transports.Console({
+    format: combine(colorize()),
+    level: 'http',
+});
+
+const allTransport = new winston.transports.File({
+    filename: './logs/all.log',
+    format: combine(format.uncolorize()),
+    level: 'debug',
+});
+
+const timestampFormat = 'YYYY-MM-DD hh:mm:ss.SSS';
 
 winston.addColors(colors);
 
@@ -33,21 +48,39 @@ export enum LogType {
     AUTH = 'AUTH',
     TRANSACTION = 'TRANSACTION',
     ADMIN = 'ADMIN',
+    DEBUG = 'DEBUG',
 }
 
 const loggerFormat = printf(({ level, message, label, timestamp }) => {
     return `[${level}] ${timestamp} [${label}] ${message}`;
 });
 
+const defaultFormat = printf(({ level, message, timestamp }) => {
+    return `[${level}] ${timestamp} ${message}`;
+});
+
 export const logger: Logger = createLogger({
     levels: levels,
+    format: combine(timestamp({ format: timestampFormat }), defaultFormat),
+    transports: [consoleTransport, allTransport],
+});
+
+export const debugLogger: Logger = createLogger({
+    levels: levels,
     format: combine(
-        label({ label: LogType.NONE.toString() }),
+        label({ label: LogType.DEBUG.toString() }),
         colorize({ all: true }),
-        timestamp({ format: 'YYYY-MM-DD hh:mm:ss.SSS A' }),
+        timestamp({ format: timestampFormat }),
         loggerFormat,
     ),
-    transports: [new winston.transports.Console()],
+    transports: [
+        new winston.transports.File({
+            filename: './logs/debug.log',
+            level: 'debug',
+            format: format.uncolorize(),
+        }),
+        allTransport,
+    ],
 });
 
 export const authLogger: Logger = createLogger({
@@ -55,10 +88,16 @@ export const authLogger: Logger = createLogger({
     format: combine(
         label({ label: LogType.AUTH.toString() }),
         colorize({ all: true }),
-        timestamp({ format: 'YYYY-MM-DD hh:mm:ss.SSS A' }),
+        timestamp({ format: timestampFormat }),
         loggerFormat,
     ),
-    transports: [new winston.transports.File({ filename: './logs/auth.log' })],
+    transports: [
+        new winston.transports.File({
+            filename: './logs/auth.log',
+            format: format.uncolorize(),
+        }),
+        allTransport,
+    ],
 });
 
 export const transactionLogger: Logger = createLogger({
@@ -66,11 +105,15 @@ export const transactionLogger: Logger = createLogger({
     format: combine(
         label({ label: LogType.TRANSACTION.toString() }),
         colorize({ all: true }),
-        timestamp({ format: 'YYYY-MM-DD hh:mm:ss.SSS A' }),
+        timestamp({ format: timestampFormat }),
         loggerFormat,
     ),
     transports: [
-        new winston.transports.File({ filename: './logs/transaction.log' }),
+        new winston.transports.File({
+            filename: './logs/transaction.log',
+            format: format.uncolorize(),
+        }),
+        allTransport,
     ],
 });
 
@@ -79,20 +122,46 @@ export const adminLogger: Logger = createLogger({
     format: combine(
         label({ label: LogType.ADMIN.toString() }),
         colorize({ all: true }),
-        timestamp({ format: 'YYYY-MM-DD hh:mm:ss.SSS A' }),
+        timestamp({ format: timestampFormat }),
         loggerFormat,
     ),
-    transports: [new winston.transports.File({ filename: './logs/admin.log' })],
+    transports: [
+        new winston.transports.File({
+            filename: './logs/admin.log',
+            format: format.uncolorize(),
+        }),
+        allTransport,
+    ],
+});
+
+export const httpLogger: Logger = createLogger({
+    level: 'http',
+    format: combine(
+        label({ label: 'HTTP' }),
+        colorize({ all: true }),
+        timestamp({ format: timestampFormat }),
+        loggerFormat,
+    ),
+    transports: [
+        new winston.transports.File({
+            filename: './logs/http.log',
+            level: 'http',
+            format: combine(format.uncolorize()),
+        }),
+        allTransport,
+    ],
 });
 
 if (process.env.STATUS === 'dev') {
-    authLogger.add(new transports.Console({}));
-    transactionLogger.add(new transports.Console({}));
-    adminLogger.add(new transports.Console({}));
+    authLogger.add(consoleTransport);
+    transactionLogger.add(consoleTransport);
+    adminLogger.add(consoleTransport);
+    httpLogger.add(consoleTransport);
+    debugLogger.add(consoleTransport);
 }
 
 export const LogError = (
-    error: Error,
+    error: string,
     generic = 'An error has occurred',
     type: LogType = LogType.NONE,
 ) => {
@@ -117,7 +186,7 @@ export const LogError = (
 };
 
 export const LogWarning = (
-    warning: Error,
+    warning: string,
     generic = 'A warning has occurred',
     type: LogType = LogType.NONE,
 ) => {
@@ -142,6 +211,7 @@ export const LogWarning = (
 };
 
 export const LogInfo = (info: string, type: LogType = LogType.NONE) => {
+    console.log(info);
     switch (type) {
         case LogType.AUTH:
             authLogger.log('info', info);
@@ -157,8 +227,12 @@ export const LogInfo = (info: string, type: LogType = LogType.NONE) => {
     }
 };
 
-export const LogDebug = (debug: string) => {
-    if (process.env.STATUS === 'dev') logger.log('debug', debug);
-};
+export class LoggerStream {
+    write(message: string) {
+        httpLogger.log('http', message.substring(0, message.lastIndexOf('\n')));
+    }
+}
 
-export default LogError;
+export const LogDebug = (debug: string) => {
+    if (process.env.STATUS === 'dev') debugLogger.log('debug', debug);
+};

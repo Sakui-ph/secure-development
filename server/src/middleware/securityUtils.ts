@@ -2,7 +2,7 @@ import bcrypt from 'bcrypt';
 import { Request, Response, NextFunction } from 'express';
 import UserDB from '../database/user';
 import { UserType } from '../models/User';
-import { LogError } from '../utils/logger';
+import { LogDebug, LogError, LogType } from '../utils/logger';
 
 const SALT_ROUNDS = 15;
 const PASSWORD_PROJECTION_STRING: string =
@@ -13,8 +13,10 @@ export const validatePassword = async (
     res: Response,
     next: NextFunction,
 ) => {
-    if (req.body.password === undefined) {
-        res.send({ message: 'wrong password' }).status(500);
+    LogDebug('Validating password...');
+    if (req.body.password === undefined || req.body.password === '') {
+        LogError('No password', LogType.AUTH);
+        res.send({ message: 'no password' }).status(500);
         return false;
     }
 
@@ -26,6 +28,7 @@ export const validatePassword = async (
     if (await bcrypt.compare(password, hashedPassword['password'])) {
         next();
     } else {
+        LogError('Wrong password', 'Wrong password');
         res.send({ message: 'wrong password' }).status(500);
         return;
     }
@@ -44,12 +47,20 @@ export const hashPassword = (
 
     bcrypt.genSalt(SALT_ROUNDS, (err, salt) => {
         if (err) {
-            LogError(err, 'Error generating salt');
+            LogError(
+                err.stack ? err.stack : err.message,
+                'Error generating salt',
+            );
             throw Error('Error generating salt');
         }
         bcrypt.hash(password, salt, (err, hash) => {
             if (err) {
-                LogError(err, 'Error hashing password');
+                if (err instanceof Error) {
+                    LogError(
+                        err.stack ? err.stack : err.message,
+                        'Error hashing password',
+                    );
+                }
                 throw Error('Error hashing password');
             }
             req.body.password = hash;

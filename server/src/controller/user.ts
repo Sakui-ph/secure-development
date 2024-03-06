@@ -21,8 +21,12 @@ module.exports = {
             const result = await UserDB.create(newUser);
             res.send(result).status(200);
         } catch (e) {
-            LogError(e as Error, 'Error creating user', LogType.TRANSACTION);
-            res.status(500).send('Error creating user');
+            if (typeof e === 'string') {
+                LogError(e, 'Error creating user', LogType.TRANSACTION);
+            }
+            if (e instanceof Error) {
+                LogError(e.message, 'Error creating user', LogType.TRANSACTION);
+            }
         }
     },
     getUser: (projection: string[], searchBy: string[]) => {
@@ -34,7 +38,7 @@ module.exports = {
 
             if (projection === undefined) {
                 LogWarning(
-                    new Error('Projection is undefined'),
+                    'Projection is undefined for getUser',
                     'Projection is undefined',
                     LogType.TRANSACTION,
                 );

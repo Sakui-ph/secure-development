@@ -1,7 +1,7 @@
 import { userEndpoints } from '../api/axios';
 import { ENDPOINTS } from '../api/endpoints';
 import { UserType } from '../models/user';
-import { LogError } from './error-handlers/error_handler';
+import { LogError } from './error-handlers/error-logger';
 
 export const isAuthenticated = async (allowedTypes) => {
     let result = false;

@@ -1,6 +1,7 @@
 import mysqlPromise from "mysql2/promise"
 import { connectionString } from "../config/dbConfig"
 import { Connection } from "mysql2/typings/mysql/lib/Connection";
+import LogError from "../utils/logger";
 
 export const makeConnection = async () => {
     let connection = null
@@ -11,6 +12,7 @@ export const makeConnection = async () => {
         catch (e : unknown) {
             if (e instanceof Error)
             {
+                LogError(e, "Error creating connection to database");
                 throw new Error(e.message);
             }
         }
@@ -34,7 +36,7 @@ export async function queryDatabase(query: string, params: any[]) : Promise<any>
         catch (e : unknown) {
             if (e instanceof Error)
             {
-                result = e;
+                LogError(e, "Error querying database");
             }
         }
     }

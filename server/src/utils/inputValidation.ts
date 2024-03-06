@@ -114,13 +114,10 @@ module.exports = {
     checkEmail: [
         validateEmail,
         (req: Request, res: Response, next: NextFunction) => {
-            console.log("In here")
-            console.log(req.body)
             const errors = validationResult(req);
             if (!errors.isEmpty()) {
                 return res.status(400).json(errors.array());
             }
-            console.log(`Email is valid as ${req.query.email}`);
             next();
         },
     ],
@@ -128,12 +125,9 @@ module.exports = {
         checkUser,
         (req: Request, res: Response, next: NextFunction) => {
             const errors = validationResult(req);
-            console.log("In here user")
-            console.log(req.body)
             if (!errors.isEmpty()) {
                 return res.status(400).json(errors.array());
             }
-            console.log(`User ${req.body.first_name}`);
             next();
         },
     ],

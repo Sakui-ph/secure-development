@@ -1,6 +1,7 @@
 import {Request, Response} from 'express';
 import {User} from '../models/User';
 import UserDB from '../database/user';
+import LogError from '../utils/logger';
 
 
 module.exports = {
@@ -22,7 +23,7 @@ module.exports = {
             res.send(result).status(200);
         }
         catch (e) {
-            console.log("Error creating user");
+            LogError(e as Error, "Error creating user");
             res.status(500).send("Error creating user");
         }
     },
@@ -45,8 +46,6 @@ module.exports = {
                     searchObject[key] = req.query[key];
                 }
             })
-
-            console.log(searchObject)
             
             UserDB.find(projection, searchObject).then((result) => {
                 res.send(result).status(200);

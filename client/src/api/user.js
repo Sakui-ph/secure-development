@@ -1,4 +1,4 @@
-import { LogError } from '../utils/error-handlers/error_handler';
+import { LogError } from '../utils/error-handlers/error-logger';
 import { userEndpoints } from './axios';
 import { ENDPOINTS } from './endpoints';
 

@@ -2,6 +2,7 @@ import bcrypt from 'bcrypt';
 import { Request, Response, NextFunction } from 'express';
 import UserDB from '../database/user';
 import { UserType } from '../models/User';
+import LogError from './logger';
 
 const SALT_ROUNDS = 15;
 const PASSWORD_PROJECTION_STRING : string = "CONVERT(password using utf8) as password";
@@ -9,7 +10,6 @@ const PASSWORD_PROJECTION_STRING : string = "CONVERT(password using utf8) as pas
 export const validatePassword = async (req : Request, res : Response, next : NextFunction) => {
     if (req.body.password === undefined) {
         res.send({message: "wrong password"}).status(500);
-        console.log("Password is undefined");
         return false;
     }
 
@@ -21,14 +21,12 @@ export const validatePassword = async (req : Request, res : Response, next : Nex
     }
     else {
         res.send({message: "wrong password"}).status(500);
-        console.log("Invalid password")
         return;
     }
 };
 
 export const hashPassword = (req : Request, res : Response, next : NextFunction) => {
     if (req.body.password === undefined) {
-        res.send("Password is undefined").status(500);
         return;
     }
 
@@ -36,10 +34,12 @@ export const hashPassword = (req : Request, res : Response, next : NextFunction)
 
     bcrypt.genSalt(SALT_ROUNDS, (err, salt) => {
         if (err) {
+            LogError(err, "Error generating salt");
             throw Error("Error generating salt");
         }
         bcrypt.hash(password, salt, (err, hash) => {
             if (err) {
+                LogError(err, "Error hashing password");
                 throw Error("Error hashing password");
             }
             req.body.password = hash;
@@ -57,6 +57,7 @@ export const setSession = async (req : Request, res : Response, next : NextFunct
 
         req.session.regenerate((err) => {
             if (err) {
+                LogError(err, "Error regenerating session");
                 res.status(500).send("Error regenerating session");
             }
 
@@ -70,10 +71,9 @@ export const setSession = async (req : Request, res : Response, next : NextFunct
         });
 
         req.session.save((err) => {
-            console.log("Session saved")
             if (err) {
+                LogError(err, "Error saving session");
                 res.status(500).send("Error saving session");
-                console.log("Error saving session")
             }
             else {
                 next();
@@ -89,10 +89,6 @@ export const setSession = async (req : Request, res : Response, next : NextFunct
 
 export const validateSession = () => {
     return (req : Request, res : Response, next : NextFunction) => {
-        console.log(`Session in Validation is: ${req.sessionID}`)
-        console.log("User session is: ", req.session.user)
-        console.log("User type is: ", req.session.userType)
-        console.log("validating session");
 
         const userType = req.session.userType;
         const allowedTypes : string[] = [];
@@ -105,7 +101,6 @@ export const validateSession = () => {
         }
 
         if (user === "true") {
-            console.log(`user is allowed when user is ${user}`)
             allowedTypes.push(UserType.USER);
         }
 
@@ -117,13 +112,10 @@ export const validateSession = () => {
             res.send({auth: false, message: "Not authorized"}).status(401);
             return;
         }
-        console.log(allowedTypes)
         if (allowedTypes.includes(userType)) {
-            console.log("valid session");
             res.send({auth: true, message: "Valid session"}).status(200);
             return;
         }
 
-        console.log("ERROR");
     }
 }

@@ -5,6 +5,7 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import session from 'express-session';
 import { sessionConfig } from './config/sessionConfig';
+import { LogInfo } from './utils/logger';
 
 dotenv.config();
 
@@ -17,7 +18,7 @@ process.env.STATUS === 'dev'
 
 
 app.listen(PORT, () => {
-  console.log(`Server running in ${process.env.STATUS} mode on port ${PORT}`)
+  LogInfo(`Server is running on port ${PORT}`);
 })
 app.use(session(sessionConfig));
 

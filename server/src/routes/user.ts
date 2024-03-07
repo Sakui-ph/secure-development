@@ -9,8 +9,9 @@ import {
 import { UserParams } from '../models/User';
 import inputValidtion from '../middleware/inputValidation';
 import { LogError, LogInfo, LogType } from '../utils/logger';
+import asyncify from 'express-asyncify';
 
-const router = express.Router();
+const router = asyncify(express.Router());
 
 router.post(
     '/login',
@@ -38,12 +39,18 @@ router.post('/validateSession', validateSession());
 router.get(
     '/read',
     inputValidtion.checkEmail,
-    controller.getUser(
-        [UserParams.FIRST_NAME, UserParams.LAST_NAME],
-        [UserParams.EMAIL],
-    ),
-    (req: Request, res: Response) => {
-        res.send();
+    async function (req: Request, res: Response) {
+        try {
+            const result = await controller.getUser(
+                [UserParams.FIRST_NAME, UserParams.LAST_NAME],
+                [UserParams.EMAIL],
+            );
+            console.log(result);
+            res.send();
+        } catch (e) {
+            if (e instanceof Error) LogError(e.toString(), LogType.TRANSACTION);
+            if (typeof e === 'string') LogError(e, LogType.TRANSACTION);
+        }
     },
 );
 
@@ -51,8 +58,8 @@ router.post(
     '/create',
     inputValidtion.checkUser,
     hashPassword,
-    (req: Request, res: Response) => {
-        const result = controller.createUser(req, res);
+    async (req: Request, res: Response) => {
+        const result = await controller.createUser(req, res);
         LogInfo(result, LogType.TRANSACTION);
         res.send('User created').status(200);
     },

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { LogError } from '../utils/error-handlers/error-logger';
 
-const DEVELOPMENT_BASE_URL = 'http://localhost:5555';
+const DEVELOPMENT_BASE_URL = 'https://localhost:5555';
 
 export const BASE_URL = DEVELOPMENT_BASE_URL;
 

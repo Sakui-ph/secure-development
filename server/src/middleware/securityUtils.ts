@@ -78,6 +78,7 @@ export const setSession = async (
         const data = await UserDB.find(['prefix_id', 'id'], {
             email: req.body.email,
         });
+
         const user = data['prefix_id'] + data['id'].toString().padStart(5, '0');
 
         req.session.regenerate((err) => {

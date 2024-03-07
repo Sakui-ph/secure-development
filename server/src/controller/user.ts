@@ -1,8 +1,9 @@
 import { Request, Response } from 'express';
 import { User } from '../models/User';
 import UserDB from '../database/user';
-import { LogError, LogType, LogWarning } from '../utils/logger';
+import { LogDebug, LogError, LogType, LogWarning } from '../utils/logger';
 
+//TODO: FIX BUGS WHERE LOGS DON'T WORK (IS IT AN ASYNC ISSUE?)
 module.exports = {
     createUser: async (req: Request, res: Response): Promise<any> => {
         const prefix_id: number = req.body.prefix_id ? req.body.prefix_id : 101;
@@ -16,10 +17,11 @@ module.exports = {
             phone_number: req.body.phone_number,
             profile_picture: req.body.profile_picture,
         };
-
+        console.log('FASKJDHFJ');
         try {
             const result = await UserDB.create(newUser);
-            res.send(result).status(200);
+            console.log(result.data);
+            res.send(result.data).status(200);
         } catch (e) {
             if (typeof e === 'string') {
                 LogError(e, 'Error creating user', LogType.TRANSACTION);
@@ -53,10 +55,19 @@ module.exports = {
                     searchObject[key] = req.query[key];
                 }
             });
-
-            UserDB.find(projection, searchObject).then((result) => {
-                res.send(result).status(200);
-            });
+            console.log('test');
+            LogDebug('Running find');
+            try {
+                await UserDB.find(projection, searchObject).then((result) => {
+                    console.log('here');
+                    res.send(result).status(200);
+                    return result;
+                });
+            } catch (e) {
+                if (e instanceof Error) {
+                    LogError('Error finding user', LogType.TRANSACTION);
+                }
+            }
         };
     },
     updateUser: (projection: string[], searchBy: string[]) => {

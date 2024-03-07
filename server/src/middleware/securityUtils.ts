@@ -110,30 +110,18 @@ export const setSession = async (
 export const validateSession = () => {
     return (req: Request, res: Response) => {
         const userType = req.session.userType;
-        const allowedTypes: string[] = [];
-        const admin = req.body['admin'];
-        const user = req.body['user'];
+        const data = req.body['data[]'].toString();
+        const allowedTypes: string[] = data.split(',');
 
-        // REFACTOR LATER
-        if (admin === 'true') {
-            allowedTypes.push(UserType.ADMIN);
-        }
+        LogDebug(`Allowed types: ${allowedTypes}`);
+        LogDebug(`User type: ${userType}`);
 
-        if (user === 'true') {
-            allowedTypes.push(UserType.USER);
-        }
-
-        if (userType === null || userType === undefined) {
-            res.send({ auth: false, message: 'No session found' }).status(401);
-            return;
-        }
-        if (!allowedTypes.includes(userType)) {
-            res.send({ auth: false, message: 'Not authorized' }).status(401);
-            return;
-        }
-        if (allowedTypes.includes(userType)) {
+        if (allowedTypes.includes(userType) || allowedTypes.includes('none')) {
             res.send({ auth: true, message: 'Valid session' }).status(200);
             return;
         }
+        res.send({ auth: false, message: 'Not authorized' }).status(401);
+
+        return;
     };
 };

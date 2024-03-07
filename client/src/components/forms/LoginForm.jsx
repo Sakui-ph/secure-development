@@ -22,7 +22,7 @@ export default function LoginForm() {
         if (submitting) {
             Login(inputFields.email, inputFields.password).then((result) => {
                 setSubmitting(false);
-                window.location.href = '/home';
+                if (result) window.location.href = '/home';
             });
         }
     }, [submitting, inputFields]);

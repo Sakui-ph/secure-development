@@ -22,7 +22,7 @@ const colors = {
 
 const consoleTransport = new winston.transports.Console({
     format: combine(colorize()),
-    level: 'http',
+    level: 'debug',
 });
 
 const allTransport = new winston.transports.File({

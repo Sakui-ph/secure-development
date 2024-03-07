@@ -21,10 +21,10 @@ export default function InquiriesForm() {
 
     useEffect(() => {
         if (submitting) {
-            /*Login(inputFields.email, inputFields.password).then((result) => {
+            /* Login(inputFields.email, inputFields.password).then((result) => {
                 setSubmitting(false);
                 if (result) window.location.href = '/home';
-            });*/
+            }); */
             console.log('Form submitted:', formFields);
 
             // Reset the form after submission
@@ -88,8 +88,4 @@ export default function InquiriesForm() {
             <button type="submit">Submit Inquiry</button>
         </form>
     );
-};
-
-InquiryForm.propTypes = {
-    onSubmit: PropTypes.func.isRequired,
-};
+}

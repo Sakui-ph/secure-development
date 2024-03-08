@@ -36,7 +36,6 @@ export async function queryDatabase(
     if (connection != null) {
         try {
             result = await connection.execute(query, params);
-            console.log(result[1]);
         } catch (e: unknown) {
             if (e instanceof Error) {
                 LogError(

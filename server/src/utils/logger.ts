@@ -211,19 +211,22 @@ export const LogWarning = (
 };
 
 export const LogInfo = (info: string, type: LogType = LogType.NONE) => {
-    console.log(info);
+    if (typeof info === 'object') {
+        info = JSON.stringify(info);
+    }
+    const infoString = info.toString();
     switch (type) {
         case LogType.AUTH:
-            authLogger.log('info', info);
+            authLogger.log('info', infoString);
             break;
         case LogType.TRANSACTION:
-            transactionLogger.log('info', info);
+            transactionLogger.log('info', infoString);
             break;
         case LogType.ADMIN:
-            adminLogger.log('info', info);
+            adminLogger.log('info', infoString);
             break;
         default:
-            logger.log('info', info);
+            logger.log('info', infoString);
     }
 };
 

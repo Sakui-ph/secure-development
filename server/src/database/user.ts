@@ -1,25 +1,16 @@
 import db from './db';
 import { buildUpdateQuery, convertSearchByToString } from '../utils/dbHelpers';
 import { User } from '../models/User';
-import { LogDebug } from '../utils/logger';
 
 class UserDB {
-    find = async (
-        projection: string[],
-        searchBy: Record<string, any>,
-    ): Promise<any> => {
+    find = async (projection: string[], searchBy: Record<string, any>) => {
         const searchParams = convertSearchByToString(searchBy);
-        console.log(searchParams);
-        await db
-            .queryDatabase(
-                `SELECT ${projection.join(', ')} FROM users WHERE ${searchParams}`,
-                [],
-            )
-            .then((result) => {
-                LogDebug(result + 'test');
-                console.log(result[0][0]);
-                return result[0][0];
-            });
+        const result = await db.queryDatabase(
+            `SELECT ${projection.join(', ')} FROM users WHERE ${searchParams}`,
+            [],
+        );
+
+        return result[0][0];
     };
 
     create = async (user: User) => {
@@ -35,7 +26,6 @@ class UserDB {
         '${user.password}')`;
 
         const result = await db.queryDatabase(query + values, []);
-        console.log(result);
         return result[0][0];
     };
 

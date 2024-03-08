@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express';
-import controller from '../controller/user';
+import userController from '../controller/user';
 import {
     hashPassword,
     validatePassword,
@@ -41,11 +41,12 @@ router.get(
     inputValidtion.checkEmail,
     async function (req: Request, res: Response) {
         try {
-            const result = await controller.getUser(
+            const getUser = userController.getUser(
                 [UserParams.FIRST_NAME, UserParams.LAST_NAME],
                 [UserParams.EMAIL],
             );
-            console.log(result);
+            const result = await getUser(req, res);
+            LogInfo(result, LogType.TRANSACTION);
             res.send();
         } catch (e) {
             if (e instanceof Error) LogError(e.toString(), LogType.TRANSACTION);
@@ -59,7 +60,7 @@ router.post(
     inputValidtion.checkUser,
     hashPassword,
     async (req: Request, res: Response) => {
-        const result = await controller.createUser(req, res);
+        const result = await userController.createUser(req, res);
         LogInfo(result, LogType.TRANSACTION);
         res.send('User created').status(200);
     },
@@ -68,7 +69,7 @@ router.post(
 router.patch(
     '/update',
     inputValidtion.checkUser,
-    controller.updateUser(
+    userController.updateUser(
         [UserParams.FIRST_NAME, UserParams.LAST_NAME, UserParams.PHONE_NUMBER],
         [UserParams.EMAIL],
     ),

@@ -1,13 +1,12 @@
 import { Request, Response } from 'express';
 import { User } from '../models/User';
 import UserDB from '../database/user';
-import { LogDebug, LogError, LogType, LogWarning } from '../utils/logger';
+import { LogError, LogType, LogWarning } from '../utils/logger';
 
 //TODO: FIX BUGS WHERE LOGS DON'T WORK (IS IT AN ASYNC ISSUE?)
 module.exports = {
     createUser: async (req: Request, res: Response): Promise<any> => {
         const prefix_id: number = req.body.prefix_id ? req.body.prefix_id : 101;
-
         const newUser: User = {
             prefix_id: prefix_id,
             first_name: req.body.first_name,
@@ -17,10 +16,8 @@ module.exports = {
             phone_number: req.body.phone_number,
             profile_picture: req.body.profile_picture,
         };
-        console.log('FASKJDHFJ');
         try {
             const result = await UserDB.create(newUser);
-            console.log(result.data);
             res.send(result.data).status(200);
         } catch (e) {
             if (typeof e === 'string') {
@@ -32,12 +29,11 @@ module.exports = {
         }
     },
     getUser: (projection: string[], searchBy: string[]) => {
-        return async (req: Request, res: Response): Promise<any> => {
+        return async (req: Request, res: Response) => {
             if (req.query.email === undefined && req.body.email === undefined) {
                 res.status(500).send('Email is undefined');
                 return;
             }
-
             if (projection === undefined) {
                 LogWarning(
                     'Projection is undefined for getUser',
@@ -55,17 +51,15 @@ module.exports = {
                     searchObject[key] = req.query[key];
                 }
             });
-            console.log('test');
-            LogDebug('Running find');
+
             try {
-                await UserDB.find(projection, searchObject).then((result) => {
-                    console.log('here');
-                    res.send(result).status(200);
-                    return result;
-                });
+                const result = await UserDB.find(projection, searchObject);
+                res.send(result).status(200);
+                return result;
             } catch (e) {
                 if (e instanceof Error) {
-                    LogError('Error finding user', LogType.TRANSACTION);
+                    if (e.stack !== undefined)
+                        LogError(e.stack, LogType.TRANSACTION);
                 }
             }
         };

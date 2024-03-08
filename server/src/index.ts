@@ -39,7 +39,7 @@ process.env.STATUS === 'dev'
     ? (PORT = process.env.DEV_PORT)
     : (PORT = process.env.PROD_PORT);
 
-if (process.env.STATUS === 'dev') {
+if (process.env.STATUS !== 'dev') {
     app.listen(PORT, () => {
         logger.info(`Server is running on port ${PORT}`);
     });

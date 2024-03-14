@@ -35,7 +35,7 @@ export default function ReservationForm() {
 
     return (
         <form className="form" onSubmit={handleSubmit}>
-            <h1>Rooms Reservation Form</h1>
+            <h1>Amenities Reservation Form</h1>
             <label htmlFor="email">Email:</label>
             <input
                 className="input"
@@ -66,7 +66,7 @@ export default function ReservationForm() {
                 onChange={handleInputChange}
                 required
             />
-            <label htmlFor="room">Available rooms:</label>
+            <label htmlFor="room">Amenities:</label>
             <select
                 className="input"
                 id="room"
@@ -75,9 +75,11 @@ export default function ReservationForm() {
                 onChange={handleInputChange}
                 required
             >
-                <option value="">Select Room</option>
-                <option value="room1">Room 1</option>
-                <option value="room2">Room 2</option>
+                <option value="">Select amenity</option>
+                <option value="room1">Swimming Pool</option>
+                <option value="room2">Sauna</option>
+                <option value="room2">Massage</option>
+                <option value="room2">Fitness Room</option>
             </select>
             <button type="submit">Submit</button>
         </form>

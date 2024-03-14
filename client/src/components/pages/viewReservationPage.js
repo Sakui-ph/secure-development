@@ -19,6 +19,10 @@ const ViewReservationPage = () => {
         fetchReservations();
     }, []);
 
+    const handleCancelReservation = (id) => {
+        console.log('Cancel reservation with id:', id);
+    };
+
     return (
         <div>
             <h1>Current Reservations</h1>
@@ -28,6 +32,14 @@ const ViewReservationPage = () => {
                         <p>Date: {reservation.date}</p>
                         <p>Time: {reservation.time}</p>
                         <p>Room: {reservation.room}</p>
+                        <button
+                            onClick={() =>
+                                handleCancelReservation(reservation.id)
+                            }
+                            type="button"
+                        >
+                            Cancel
+                        </button>
                     </li>
                 ))}
             </ul>

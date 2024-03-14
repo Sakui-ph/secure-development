@@ -7,6 +7,7 @@ import Admin from '../components/pages/adminPage';
 import { Protected } from '../utils/protected_route';
 import { UserType } from '../models/user';
 import Inquiries from '../components/pages/inquiriesPage';
+import ReservationForm from '../components/pages/reservationForm';
 
 const ADMIN = [UserType.ADMIN];
 // eslint-disable-next-line no-unused-vars
@@ -29,6 +30,7 @@ export const Router = () => (
                     }
                 />
                 <Route path="/inquiries" element={<Inquiries />} />
+                <Route path="/reservation" element={<ReservationForm />} />
                 <Route
                     path="/admin"
                     element={

@@ -5,6 +5,7 @@ export default function ReservationForm() {
         date: '',
         time: '',
         email: '',
+        room: '',
     });
 
     const [submitting, setSubmitting] = useState(false);
@@ -20,17 +21,12 @@ export default function ReservationForm() {
 
     useEffect(() => {
         if (submitting) {
-            /* Login(inputFields.email, inputFields.password).then((result) => {
-                setSubmitting(false);
-                if (result) window.location.href = '/home';
-            }); */
             console.log('Form submitted:', formFields);
-
-            // Reset the form after submission
             setFormFields({
                 date: '',
                 time: '',
                 email: '',
+                room: '',
             });
 
             setSubmitting(false);
@@ -38,29 +34,8 @@ export default function ReservationForm() {
     }, [submitting, formFields]);
 
     return (
-        <form className="form">
-            <label htmlFor="name">Date:</label>
-            <input
-                className="input"
-                type="date"
-                id="date"
-                name="date"
-                value={formFields.date}
-                onChange={handleInputChange}
-                required
-            />
-
-            <label htmlFor="time">Time:</label>
-            <input
-                className="input"
-                type="time"
-                id="time"
-                name="time"
-                value={formFields.phone}
-                onChange={handleInputChange}
-                required
-            />
-
+        <form className="form" onSubmit={handleSubmit}>
+            <h1>Reservation Form</h1>
             <label htmlFor="email">Email:</label>
             <input
                 className="input"
@@ -71,7 +46,39 @@ export default function ReservationForm() {
                 onChange={handleInputChange}
                 required
             />
-
+            <label htmlFor="date">Date:</label>
+            <input
+                className="input"
+                type="date"
+                id="date"
+                name="date"
+                value={formFields.date}
+                onChange={handleInputChange}
+                required
+            />
+            <label htmlFor="time">Time:</label>
+            <input
+                className="input"
+                type="time"
+                id="time"
+                name="time"
+                value={formFields.time}
+                onChange={handleInputChange}
+                required
+            />
+            <label htmlFor="room">Available rooms:</label>
+            <select
+                className="input"
+                id="room"
+                name="room"
+                value={formFields.room}
+                onChange={handleInputChange}
+                required
+            >
+                <option value="">Select Room</option>
+                <option value="room1">Room 1</option>
+                <option value="room2">Room 2</option>
+            </select>
             <button type="submit">Submit</button>
         </form>
     );

@@ -1,4 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import roomImage from '../../resources/images/room.jpg';
+import drinksImage from '../../resources/images/drinks.jpg';
+import beachViewImage from '../../resources/images/beach view.jpg';
+import '../../styles/feedback.css';
 
 const FeedbackForm = () => {
     const [formFields, setFormFields] = useState({
@@ -14,18 +18,21 @@ const FeedbackForm = () => {
             author: 'John Doe',
             comment:
                 'Great experience at the resort. Loved the amenities and the beautiful surroundings!',
+            photo: roomImage,
         },
         {
             id: 2,
             author: 'Jane Smith',
             comment:
                 'The staff was very friendly and helpful throughout my stay. Highly recommend!',
+            photo: drinksImage,
         },
         {
             id: 3,
             author: 'David Brown',
             comment:
                 'The food was delicious and the views were breathtaking. Will definitely visit again!',
+            photo: beachViewImage,
         },
     ]);
 
@@ -50,6 +57,9 @@ const FeedbackForm = () => {
                     id: feedbacks.length + 1,
                     author: formFields.author,
                     comment: formFields.comment,
+                    photo: formFields.photo
+                        ? URL.createObjectURL(formFields.photo)
+                        : null,
                 },
                 ...feedbacks,
             ]);
@@ -75,6 +85,9 @@ const FeedbackForm = () => {
                             <b>{feedback.author}</b>
                         </p>
                         <p>{feedback.comment}</p>
+                        {feedback.photo && (
+                            <img src={feedback.photo} alt="Feedback" />
+                        )}
                     </div>
                 ))}
             </div>

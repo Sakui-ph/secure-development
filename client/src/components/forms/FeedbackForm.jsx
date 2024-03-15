@@ -4,6 +4,7 @@ const FeedbackForm = () => {
     const [formFields, setFormFields] = useState({
         author: '',
         comment: '',
+        photo: null, // Add photo state
     });
 
     const [submitting, setSubmitting] = useState(false);
@@ -29,7 +30,11 @@ const FeedbackForm = () => {
     ]);
 
     const handleInputChange = (e) => {
-        setFormFields({ ...formFields, [e.target.name]: e.target.value });
+        if (e.target.type === 'file') {
+            setFormFields({ ...formFields, photo: e.target.files[0] });
+        } else {
+            setFormFields({ ...formFields, [e.target.name]: e.target.value });
+        }
     };
 
     const handleSubmit = (e) => {
@@ -39,23 +44,21 @@ const FeedbackForm = () => {
 
     useEffect(() => {
         if (submitting) {
-            // Here you can handle your form submission logic
             console.log('Form submitted:', formFields);
-
-            // Add the new feedback to the list
             setFeedbacks([
-                ...feedbacks,
                 {
                     id: feedbacks.length + 1,
                     author: formFields.author,
                     comment: formFields.comment,
                 },
+                ...feedbacks,
             ]);
 
             // Reset the form after submission
             setFormFields({
                 author: '',
                 comment: '',
+                photo: null,
             });
 
             setSubmitting(false);
@@ -96,6 +99,16 @@ const FeedbackForm = () => {
                     onChange={handleInputChange}
                     rows="5"
                     required
+                />
+
+                <label htmlFor="photo">Upload Photo:</label>
+                <input
+                    className="input"
+                    type="file"
+                    id="photo"
+                    name="photo"
+                    accept="image/*"
+                    onChange={handleInputChange}
                 />
 
                 <button type="submit">Submit Feedback</button>

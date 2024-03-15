@@ -33,7 +33,10 @@ export const Router = () => (
                 />
                 <Route path="/inquiries" element={<Inquiries />} />
                 <Route path="/roomreservation" element={<ReservationForm />} />
-                <Route path="/viewreservations" element={<ViewReservations />} />
+                <Route
+                    path="/viewreservations"
+                    element={<ViewReservations />}
+                />
                 <Route
                     path="/amenitiesreservation"
                     element={<AmenitiesReservationForm />}

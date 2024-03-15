@@ -10,6 +10,7 @@ import Inquiries from '../components/pages/inquiriesPage';
 import ReservationForm from '../components/pages/roomReservationPage';
 import AmenitiesReservationForm from '../components/pages/amenitiesReservationPage';
 import ViewReservations from '../components/pages/viewReservationPage';
+import Feedback from '../components/pages/shareFeedback';
 
 const ADMIN = [UserType.ADMIN];
 // eslint-disable-next-line no-unused-vars
@@ -32,6 +33,7 @@ export const Router = () => (
                     }
                 />
                 <Route path="/inquiries" element={<Inquiries />} />
+                <Route path="/feedback" element={<Feedback />} />
                 <Route path="/roomreservation" element={<ReservationForm />} />
                 <Route
                     path="/viewreservations"

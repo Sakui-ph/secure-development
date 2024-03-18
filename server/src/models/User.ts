@@ -28,6 +28,7 @@ export const UserParams = {
     EMAIL: 'email',
     PASSWORD: 'password',
     PHONE_NUMBER: 'phone_number',
+    PROFILE_PICTURE: 'profile_picture',
 };
 
 export const UserType = {

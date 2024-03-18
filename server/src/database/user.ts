@@ -6,12 +6,11 @@ import { LogError, LogType } from '../utils/logger';
 class UserDB {
     find = async (projection: string[], searchBy: Record<string, any>) => {
         const searchParams = convertSearchByToString(searchBy);
-        const result = await db.executeDatabase(
+        const result = await db.readFromDatabase(
             `SELECT ${projection.join(', ')} FROM users WHERE ${searchParams}`,
             [],
         );
-
-        return result[0][0];
+        return result[0];
     };
 
     create = async (user: User) => {

@@ -33,7 +33,23 @@ export async function executeDatabase(
     if (connection != null) {
         try {
             await connection.execute(query, params);
-            return false;
+        } catch (e: unknown) {
+            if (e instanceof Error) {
+                return e.message;
+            }
+        }
+    }
+}
+
+export async function readFromDatabase(
+    query: string,
+    params: any,
+): Promise<any> {
+    const connection = await makeConnection();
+    if (connection != null) {
+        try {
+            const result = await connection.query(query, params);
+            return result[0];
         } catch (e: unknown) {
             if (e instanceof Error) {
                 return e.message;
@@ -57,4 +73,9 @@ export async function queryDatabase(query: string, params: any): Promise<any> {
     }
 }
 
-export default { makeConnection, executeDatabase, queryDatabase };
+export default {
+    makeConnection,
+    executeDatabase,
+    queryDatabase,
+    readFromDatabase,
+};

@@ -60,7 +60,6 @@ module.exports = {
 
             try {
                 const result = await UserDB.find(projection, searchObject);
-                res.send(result).status(200);
                 return result;
             } catch (e) {
                 if (e instanceof Error) {

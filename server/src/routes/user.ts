@@ -48,12 +48,18 @@ router.get(
     async function (req: Request, res: Response) {
         try {
             const getUser = userController.getUser(
-                [UserParams.FIRST_NAME, UserParams.LAST_NAME],
+                [
+                    UserParams.FIRST_NAME,
+                    UserParams.LAST_NAME,
+                    UserParams.PHONE_NUMBER,
+                    UserParams.EMAIL,
+                    UserParams.PROFILE_PICTURE,
+                ],
                 [UserParams.EMAIL],
             );
             const result = await getUser(req, res);
             LogInfo(result, LogType.TRANSACTION);
-            res.send();
+            res.send(result);
         } catch (e) {
             if (e instanceof Error)
                 LogError('Error reading user', e, LogType.TRANSACTION);

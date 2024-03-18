@@ -7,6 +7,7 @@ import defaultProfilePicture from '../../resources/images/default-profile-pictur
 import '../../styles/profilePicture.css';
 
 export default function SignupForm() {
+    const [initialized, setInitialized] = useState(false);
     const [inputFields, setInputFields] = useState({
         prefix_id: 101,
         first_name: '',
@@ -14,13 +15,32 @@ export default function SignupForm() {
         email: '',
         password: '',
         phone_number: '',
-        profile_picture: defaultProfilePicture,
+        profile_picture: '',
     });
-    console.log(inputFields);
     const [previewImage, setPreviewImage] = useState(null);
     const [errors, setErrors] = useState({});
     const [submitting, setSubmitting] = useState(false);
     const [buttonDisabled, setButtonDisabled] = useState(true);
+
+    if (!initialized) {
+        initCallback();
+        setInitialized(true);
+    }
+    // set default profile picture
+
+    function initCallback() {
+        fetch(defaultProfilePicture)
+            .then((response) => response.blob())
+            .then((blob) => {
+                const file = new File([blob], 'defaultProfilePicture.jpg', {
+                    type: 'image/jpeg',
+                });
+                setInputFields({ ...inputFields, profile_picture: file });
+            })
+            .catch((error) =>
+                console.error('Error fetching image as blob:', error),
+            );
+    }
 
     const handleInputChange = (e) => {
         setInputFields({ ...inputFields, [e.target.name]: e.target.value });
@@ -36,9 +56,6 @@ export default function SignupForm() {
 
     const displayErrors = () => {
         setErrors(SignUpValidation(inputFields));
-        console.log(errors);
-        console.log(inputFields);
-        console.log(Object.keys(errors).length);
     };
 
     const handleSubmit = (e) => {
@@ -47,9 +64,7 @@ export default function SignupForm() {
     };
 
     useEffect(() => {
-        console.log(submitting);
         if (Object.keys(errors).length === 0 && submitting) {
-            console.log('Submitting');
             CreateNewUser(inputFields).then((result) => {
                 setSubmitting(false);
             });

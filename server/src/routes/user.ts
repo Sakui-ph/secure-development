@@ -66,6 +66,10 @@ router.post(
     },
 );
 
+router.post('/changeProfilePicture', (req: Request, res: Response) => {
+    res.send('Profile picture changed').status(200);
+});
+
 router.patch(
     '/update',
     inputValidtion.checkUser,

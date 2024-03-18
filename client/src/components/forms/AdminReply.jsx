@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 
 export default function ReplyForm({ onSubmit }) {
     const [reply, setReply] = useState('');
@@ -29,3 +30,7 @@ export default function ReplyForm({ onSubmit }) {
         </form>
     );
 }
+
+ReplyForm.propTypes = {
+    onSubmit: PropTypes.func.isRequired,
+};

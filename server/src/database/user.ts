@@ -13,6 +13,7 @@ class UserDB {
         return result[0][0];
     };
 
+    // TODO: Possibly remove the profile picture from the projection and separate its upload
     create = async (user: User) => {
         const query: string =
             'INSERT INTO users (prefix_id, first_name, last_name, email, phone_number, profile_picture, password) ';

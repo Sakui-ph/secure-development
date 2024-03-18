@@ -1,10 +1,9 @@
 import axios from 'axios';
 import { LogError } from '../utils/error-handlers/error-logger';
 
-let DEVELOPMENT_BASE_URL = 'http://localhost:5555';
-if (process.env.HTTPS === 'true') {
-    DEVELOPMENT_BASE_URL = 'https://localhost:5555';
-}
+const DEVELOPMENT_BASE_URL = process.env.REACT_APP_HTTPS
+    ? 'https://localhost:5555'
+    : 'http://localhost:5555';
 
 export const BASE_URL = DEVELOPMENT_BASE_URL;
 
@@ -40,5 +39,15 @@ export const userEndpoints = (endpoint) => {
                 }),
         get: () =>
             axios.get(url).catch((error) => LogError(error, 'Request failed')),
+        create: (formData) =>
+            axios
+                .post(url, formData, {
+                    headers: {
+                        'content-type': 'multipart/form-data',
+                    },
+                })
+                .catch((error) => {
+                    LogError(error, 'Request failed');
+                }),
     };
 };

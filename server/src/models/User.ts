@@ -17,7 +17,7 @@ export interface User {
     Format in the client code
     */
 
-    profile_picture: File; // medium blob (16mb)
+    profile_picture: Buffer; // medium blob (16mb)
 }
 
 export const UserParams = {
@@ -28,7 +28,6 @@ export const UserParams = {
     EMAIL: 'email',
     PASSWORD: 'password',
     PHONE_NUMBER: 'phone_number',
-    PROFILE_PICTURE: 'profile_picture',
 };
 
 export const UserType = {

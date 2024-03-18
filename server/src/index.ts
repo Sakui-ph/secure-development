@@ -2,7 +2,6 @@ import express, { Application } from 'express';
 import { UserRoutes } from './routes/user';
 import * as dotenv from 'dotenv';
 import cors from 'cors';
-import bodyParser from 'body-parser';
 import session from 'express-session';
 import { sessionConfig } from './config/sessionConfig';
 import morgan from 'morgan';
@@ -50,9 +49,6 @@ if (process.env.STATUS !== 'dev') {
 }
 
 app.use(session(sessionConfig));
-
-const urlencodedParser = bodyParser.urlencoded({ extended: false });
-app.use(urlencodedParser);
 
 const corsOptions = {
     origin: [

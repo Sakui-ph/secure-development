@@ -1,6 +1,6 @@
 import mysqlPromise from 'mysql2/promise';
 import { connectionString } from '../config/dbConfig';
-import { LogError } from '../utils/logger';
+import { LogError, LogType } from '../utils/logger';
 
 export const makeConnection = async () => {
     let connection = null;
@@ -11,13 +11,11 @@ export const makeConnection = async () => {
             );
         } catch (e: unknown) {
             if (e instanceof Error) {
-                if (e instanceof Error) {
-                    LogError(
-                        e.stack ? e.stack : e.message,
-                        'Error connecting to database',
-                    );
-                }
-                throw new Error(e.message);
+                LogError(
+                    e.message,
+                    'Error connecting to database',
+                    LogType.TRANSACTION,
+                );
             }
         }
     } else {
@@ -27,26 +25,36 @@ export const makeConnection = async () => {
     return connection;
 };
 
-export async function queryDatabase(
+export async function executeDatabase(
     query: string,
     params: any[],
 ): Promise<any> {
-    let result = null;
     const connection = await makeConnection();
     if (connection != null) {
         try {
-            result = await connection.execute(query, params);
+            await connection.execute(query, params);
+            return false;
         } catch (e: unknown) {
             if (e instanceof Error) {
-                LogError(
-                    e.stack ? e.stack : e.message,
-                    'Error querying database',
-                );
+                return e.message;
             }
         }
     }
-
-    return result;
 }
 
-export default { makeConnection, queryDatabase };
+export async function queryDatabase(query: string, params: any): Promise<any> {
+    const connection = await makeConnection();
+    if (connection != null) {
+        try {
+            // query db and return the result
+            await connection.query(query, params);
+            return false;
+        } catch (e: unknown) {
+            if (e instanceof Error) {
+                return e.message;
+            }
+        }
+    }
+}
+
+export default { makeConnection, executeDatabase, queryDatabase };

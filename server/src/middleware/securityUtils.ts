@@ -40,6 +40,7 @@ export const hashPassword = (
     next: NextFunction,
 ) => {
     if (req.body.password === undefined) {
+        LogError('No password', 'No password');
         return;
     }
 

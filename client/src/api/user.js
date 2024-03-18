@@ -40,16 +40,18 @@ export const CreateNewUser = async ({
     phone_number,
     profile_picture = null,
 }) => {
+    // place all the data in a FormData object
+    const formData = new FormData();
+    formData.append('prefix_id', prefix_id);
+    formData.append('first_name', first_name);
+    formData.append('last_name', last_name);
+    formData.append('email', email);
+    formData.append('password', password);
+    formData.append('phone_number', phone_number);
+    formData.append('profile_picture', profile_picture);
+
     await userEndpoints(ENDPOINTS.create)
-        .post({
-            prefix_id,
-            first_name,
-            last_name,
-            email,
-            password,
-            phone_number,
-            profile_picture,
-        })
+        .create(formData)
         .catch((error) => {
             LogError(error, 'An error occurred while creating a new user');
         });

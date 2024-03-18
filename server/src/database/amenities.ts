@@ -5,7 +5,7 @@ import { Reservation } from '../models/Reservation';
 class AmenitiesReservationDB {
     find = async (projection: string[], searchBy: Record<string, any>) => {
         const searchParams = convertSearchByToString(searchBy);
-        const result = await db.queryDatabase(
+        const result = await db.executeDatabase(
             `SELECT ${projection.join(', ')} FROM amenities_reservations WHERE ${searchParams}`,
             [],
         );
@@ -22,7 +22,7 @@ class AmenitiesReservationDB {
         '${reservation.email}', 
         '${reservation.room}')`;
 
-        const result = await db.queryDatabase(query + values, []);
+        const result = await db.executeDatabase(query + values, []);
         return result[0][0];
     };
 
@@ -30,7 +30,7 @@ class AmenitiesReservationDB {
         const searchParams = convertSearchByToString(searchBy);
         const query = `DELETE FROM amenities_reservations WHERE ${searchParams}`;
 
-        const result = await db.queryDatabase(query, []);
+        const result = await db.executeDatabase(query, []);
         return result[0][0];
     };
 }

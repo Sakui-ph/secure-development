@@ -10,7 +10,7 @@ class InquiryDB {
         '${inquiry.email}', 
         '${inquiry.concern}')`;
 
-        const result = await db.queryDatabase(query + values, []);
+        const result = await db.executeDatabase(query + values, []);
         return result[0][0];
     };
 }

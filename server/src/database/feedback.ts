@@ -5,7 +5,7 @@ import { Feedback } from '../models/Feedback';
 class FeedbackDB {
     find = async (projection: string[], searchBy: Record<string, any>) => {
         const searchParams = convertSearchByToString(searchBy);
-        const result = await db.queryDatabase(
+        const result = await db.executeDatabase(
             `SELECT ${projection.join(', ')} FROM feedbacks WHERE ${searchParams}`,
             [],
         );
@@ -20,7 +20,7 @@ class FeedbackDB {
         '${feedback.comment}', 
         '${feedback.photo}')`;
 
-        const result = await db.queryDatabase(query + values, []);
+        const result = await db.executeDatabase(query + values, []);
         return result[0][0];
     };
 }

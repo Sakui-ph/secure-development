@@ -7,6 +7,7 @@
     "start": "concurrently \"npm run start:client\" \"npm run start:server\""
   },
   "devDependencies": {
+    "@types/multer": "^1.4.11",
     "concurrently": "^6.0.2"
   }
 }

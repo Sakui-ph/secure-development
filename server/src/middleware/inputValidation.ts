@@ -1,34 +1,32 @@
 import { checkSchema, check, validationResult } from 'express-validator';
 import { Request, Response, NextFunction } from 'express';
-import { LogDebug, LogError, LogType } from '../utils/logger';
-import path from 'path';
+import { LogError, LogType } from '../utils/logger';
 
-const PNG_BLOB_SIGNATURES = [0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a];
-const JPEG_BLOB_SIGNATURES = [0xff, 0xd8, 0xff];
+const PNG_BLOB_SIGNATURE = '89504e470d0a1a0a';
+const JPEG_BLOB_SIGNATURE = 'ffd8ff';
 
 const customValidators = {
     // check image hex / file sig
-    isImage: (value: any, filename: string): any => {
-        LogDebug(`Validating image: ${filename} with value ${value}`);
+    isImage: (buffer: Buffer): any => {
+        console.log(buffer);
+        if (buffer === undefined) return true;
 
-        const signatures = {
-            png: PNG_BLOB_SIGNATURES,
-            jpeg: JPEG_BLOB_SIGNATURES,
-        };
+        const pngHeading = buffer.toString('hex').slice(0, 16);
+        const jpegHeading = buffer.toString('hex').slice(0, 6);
 
-        const extension = path.extname(filename).toLowerCase();
-        switch (extension) {
-            case '.jpg':
-                return '.jpg';
-            case '.jpeg':
-                return '.jpeg';
-            case '.png':
-                return '.png';
-            default:
-                return false;
+        // check if headings match
+        if (pngHeading === PNG_BLOB_SIGNATURE) {
+            return '.png';
+        } else if (jpegHeading === JPEG_BLOB_SIGNATURE) {
+            return '.jpeg';
+        } else {
+            LogError(
+                'Invalid image format',
+                'Invalid image format',
+                LogType.AUTH,
+            );
+            return false;
         }
-
-        LogDebug(`Extension: ${signatures}`);
     },
 };
 
@@ -48,11 +46,13 @@ const validateEmail = check('email')
     )
     .withMessage('Invalid email');
 
-const validateProfilePicture = check('profile_picture').custom(
-    (value, { req }) => {
-        return customValidators.isImage(value, req.file.originalname);
-    },
-);
+const validateProfilePicture = check('profile_picture')
+    .optional()
+    .bail()
+    .custom(({ req }) => {
+        return customValidators.isImage(req.file.buffer);
+    })
+    .withMessage('Invalid image format (nice try)');
 
 const checkUser = checkSchema({
     email: {

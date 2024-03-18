@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import '../../styles/profilePicture.css';
-import defaultProfilePicture from '../../resources/images/default-profile-picture.jpg';
 
-export default function ProfilePictureForm({ setPreviewImage }) {
-    const [profilePicture, setProfilePicture] = useState(defaultProfilePicture);
+export default function ProfilePictureForm({
+    setPreviewImage,
+    setProfilePicture,
+}) {
     const [submitting, setSubmitting] = useState(false);
 
     const handleInputChange = (e) => {
@@ -24,7 +25,7 @@ export default function ProfilePictureForm({ setPreviewImage }) {
 
             setSubmitting(false);
         }
-    }, [submitting, profilePicture]);
+    }, [submitting, setProfilePicture]);
 
     return (
         <span>
@@ -43,4 +44,5 @@ export default function ProfilePictureForm({ setPreviewImage }) {
 
 ProfilePictureForm.propTypes = {
     setPreviewImage: PropTypes.func.isRequired,
+    setProfilePicture: PropTypes.func.isRequired,
 };

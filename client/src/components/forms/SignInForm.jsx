@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import '../../styles/signup.css';
+
 import { CreateNewUser } from '../../api/user';
 import { SignUpValidation } from '../../utils/validators/SignUpValidation';
+import defaultProfilePicture from '../../resources/images/default-profile-picture.jpg';
+import '../../styles/profilePicture.css';
 
 export default function SignupForm() {
     const [inputFields, setInputFields] = useState({
@@ -11,21 +14,31 @@ export default function SignupForm() {
         email: '',
         password: '',
         phone_number: '',
+        profile_picture: defaultProfilePicture,
     });
+    console.log(inputFields);
+    const [previewImage, setPreviewImage] = useState(null);
     const [errors, setErrors] = useState({});
     const [submitting, setSubmitting] = useState(false);
     const [buttonDisabled, setButtonDisabled] = useState(true);
 
     const handleInputChange = (e) => {
         setInputFields({ ...inputFields, [e.target.name]: e.target.value });
-
         if (Object.keys(errors).length === 0) {
             setButtonDisabled(false);
         }
     };
 
+    const handleProfilePictureChange = (e) => {
+        setInputFields({ ...inputFields, profile_picture: e.target.files[0] });
+        setPreviewImage(URL.createObjectURL(e.target.files[0]));
+    };
+
     const displayErrors = () => {
         setErrors(SignUpValidation(inputFields));
+        console.log(errors);
+        console.log(inputFields);
+        console.log(Object.keys(errors).length);
     };
 
     const handleSubmit = (e) => {
@@ -34,7 +47,9 @@ export default function SignupForm() {
     };
 
     useEffect(() => {
+        console.log(submitting);
         if (Object.keys(errors).length === 0 && submitting) {
+            console.log('Submitting');
             CreateNewUser(inputFields).then((result) => {
                 setSubmitting(false);
             });
@@ -50,7 +65,7 @@ export default function SignupForm() {
             {Object.keys(errors).length === 0 && submitting ? (
                 <span className="success">Successfully submitted ✓</span>
             ) : null}
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} encType="multipart/form-data">
                 {/* <label className="label">User Type</label>
                 <select value={prefixId} onChange={handlePrefixIdChange} className="input">
 					<option value={101}>User</option>
@@ -123,24 +138,46 @@ export default function SignupForm() {
                         <p className="error">{errors.password}</p>
                     )}
                 </label>
+                <span>
+                    <label className="label">
+                        Profile Picture
+                        <input
+                            className="input"
+                            type="file"
+                            name="profilePicture"
+                            onChange={handleProfilePictureChange}
+                        />
+                    </label>
+                    {errors.phone_number && (
+                        <p className="error">{errors.profile_picture}</p>
+                    )}
+                </span>
+                <span>
+                    {previewImage != null ? (
+                        <img
+                            src={previewImage}
+                            alt="Profile"
+                            className="profile-image"
+                        />
+                    ) : (
+                        <img
+                            src={defaultProfilePicture}
+                            alt="Profile"
+                            className="profile-image"
+                        />
+                    )}
+                </span>
 
-                {buttonDisabled ? (
-                    <button
-                        className="btn"
-                        type="button"
-                        onClick={displayErrors}
-                    >
-                        Sign up
-                    </button>
-                ) : (
+                <div>
                     <button
                         className="btn"
                         type="submit"
                         disabled={buttonDisabled}
+                        onClick={displayErrors}
                     >
                         Sign up
                     </button>
-                )}
+                </div>
 
                 <p>
                     Already have an account? <a href="/login">Login</a>

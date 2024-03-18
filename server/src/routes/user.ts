@@ -7,9 +7,14 @@ import {
     validateSession,
 } from '../middleware/securityUtils';
 import { UserParams } from '../models/User';
-import inputValidtion from '../middleware/inputValidation';
+import inputValidation from '../middleware/inputValidation';
 import { LogError, LogInfo, LogType } from '../utils/logger';
 import asyncify from 'express-asyncify';
+import bodyParser from 'body-parser';
+import { uploadProfilePicture } from '../utils/multerHandler';
+
+const urlencodedParser = bodyParser.urlencoded({ extended: false });
+const extendedParser = bodyParser.urlencoded({ extended: true });
 
 const router = asyncify(express.Router());
 
@@ -38,7 +43,7 @@ router.post('/validateSession', validateSession());
 
 router.get(
     '/read',
-    inputValidtion.checkEmail,
+    inputValidation.checkEmail,
     async function (req: Request, res: Response) {
         try {
             const getUser = userController.getUser(
@@ -57,12 +62,30 @@ router.get(
 
 router.post(
     '/create',
-    inputValidtion.checkUser,
+    express.json(),
+    extendedParser,
+    uploadProfilePicture,
+    inputValidation.checkProfilePicture,
+    inputValidation.checkUser,
     hashPassword,
     async (req: Request, res: Response) => {
-        const result = await userController.createUser(req, res);
-        LogInfo(result, LogType.TRANSACTION);
-        res.send('User created').status(200);
+        try {
+            const result = await userController.createUser(req, res);
+            if (!result) {
+                LogInfo(`User ${req.body.email} created`, LogType.TRANSACTION);
+                res.send('User created').status(200);
+            } else {
+                LogError(result, 'Error creating user', LogType.TRANSACTION);
+                res.send('Error creating user').status(500);
+            }
+        } catch (e) {
+            LogError(
+                'Error creating user',
+                'Error creating user',
+                LogType.TRANSACTION,
+            );
+            res.send(e).status(500);
+        }
     },
 );
 
@@ -72,7 +95,8 @@ router.post('/changeProfilePicture', (req: Request, res: Response) => {
 
 router.patch(
     '/update',
-    inputValidtion.checkUser,
+    urlencodedParser,
+    inputValidation.checkUser,
     userController.updateUser(
         [UserParams.FIRST_NAME, UserParams.LAST_NAME, UserParams.PHONE_NUMBER],
         [UserParams.EMAIL],

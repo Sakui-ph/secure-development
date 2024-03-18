@@ -11,6 +11,7 @@ import ReservationForm from '../components/pages/roomReservationPage';
 import AmenitiesReservationForm from '../components/pages/amenitiesReservationPage';
 import ViewReservations from '../components/pages/viewReservationPage';
 import Feedback from '../components/pages/shareFeedback';
+import AdminAnnouncement from '../components/pages/adminAnnouncment';
 
 const ADMIN = [UserType.ADMIN];
 // eslint-disable-next-line no-unused-vars
@@ -51,6 +52,7 @@ export const Router = () => (
                         </Protected>
                     }
                 />
+                <Route path="/announcement" element={<AdminAnnouncement />} />
             </Routes>
         </BrowserRouter>
     </div>

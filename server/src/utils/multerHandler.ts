@@ -8,11 +8,11 @@ export const uploadProfilePicture = multer({
     fileFilter: function (req, file, callback) {
         const ext = path.extname(file.originalname);
         if (ext !== '.png' && ext !== '.jpg' && ext !== '.jpeg') {
-            LogError('Only images are allowed', LogType.TRANSACTION);
+            LogError('Only images are allowed', null, LogType.TRANSACTION);
             return callback(new Error('Only images are allowed'));
         }
         if (file.mimetype !== 'image/jpeg' && file.mimetype !== 'image/png') {
-            LogError('Only images are allowed', LogType.TRANSACTION);
+            LogError('Only images are allowed', null, LogType.TRANSACTION);
             return callback(new Error('Only images are allowed'));
         }
 

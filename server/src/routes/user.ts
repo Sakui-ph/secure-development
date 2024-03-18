@@ -30,11 +30,12 @@ router.post(
 router.post('/logout', (req: Request, res: Response) => {
     req.session.user = null;
     req.session.save(function (err) {
-        if (err) LogError(err, 'Error saving session on logout');
+        if (err) LogError('Error saving session on logout', err, LogType.AUTH);
     });
 
     req.session.regenerate(function (err) {
-        if (err) LogError(err, 'Error regenerating session on logout');
+        if (err)
+            LogError('Error regenerating session on logout', err, LogType.AUTH);
         res.send('Logout successful').status(200);
     });
 });
@@ -54,8 +55,8 @@ router.get(
             LogInfo(result, LogType.TRANSACTION);
             res.send();
         } catch (e) {
-            if (e instanceof Error) LogError(e.toString(), LogType.TRANSACTION);
-            if (typeof e === 'string') LogError(e, LogType.TRANSACTION);
+            if (e instanceof Error)
+                LogError('Error reading user', e, LogType.TRANSACTION);
         }
     },
 );
@@ -75,15 +76,11 @@ router.post(
                 LogInfo(`User ${req.body.email} created`, LogType.TRANSACTION);
                 res.send('User created').status(200);
             } else {
-                LogError(result, 'Error creating user', LogType.TRANSACTION);
+                LogError('Error creating user', result, LogType.TRANSACTION);
                 res.send('Error creating user').status(500);
             }
         } catch (e) {
-            LogError(
-                'Error creating user',
-                'Error creating user',
-                LogType.TRANSACTION,
-            );
+            LogError('Error creating user', e as Error, LogType.TRANSACTION);
             res.send(e).status(500);
         }
     },

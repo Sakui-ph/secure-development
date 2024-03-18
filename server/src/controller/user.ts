@@ -28,10 +28,8 @@ module.exports = {
             const result = await UserDB.create(newUser);
             return result;
         } catch (e) {
-            if (typeof e === 'string') {
-                LogError(e, 'Error creating user', LogType.TRANSACTION);
-            } else if (e instanceof Error) {
-                LogError(e.message, 'Error creating user', LogType.TRANSACTION);
+            if (e instanceof Error) {
+                LogError('Error creating user', e, LogType.TRANSACTION);
             }
             res.end('Error creating user').status(500);
         }
@@ -66,8 +64,8 @@ module.exports = {
                 return result;
             } catch (e) {
                 if (e instanceof Error) {
-                    if (e.stack !== undefined)
-                        LogError(e.stack, LogType.TRANSACTION);
+                    if (e !== undefined)
+                        LogError('Could not find user', e, LogType.TRANSACTION);
                 }
             }
         };

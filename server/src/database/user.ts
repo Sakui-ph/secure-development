@@ -30,11 +30,12 @@ class UserDB {
             const result = await db.queryDatabase(query, values);
             return result;
         } catch (e) {
-            if (typeof e === 'string') {
-                LogError(e, 'Error querying database', LogType.TRANSACTION);
-            } else if (e instanceof Error) {
-                return e.message;
-            }
+            LogError(
+                'Error querying database',
+                e as Error,
+                LogType.TRANSACTION,
+            );
+            return (e as Error).message;
         }
     };
 

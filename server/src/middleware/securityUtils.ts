@@ -15,7 +15,7 @@ export const validatePassword = async (
 ) => {
     LogDebug('Validating password...');
     if (req.body.password === undefined || req.body.password === '') {
-        LogError('No password', LogType.AUTH);
+        LogError('No password', null, LogType.AUTH);
         res.send({ message: 'no password' }).status(500);
         return false;
     }
@@ -28,7 +28,7 @@ export const validatePassword = async (
     if (await bcrypt.compare(password, hashedPassword['password'])) {
         next();
     } else {
-        LogError('Wrong password', 'Wrong password');
+        LogError('Wrong password', null, LogType.AUTH);
         res.send({ message: 'wrong password' }).status(500);
         return;
     }
@@ -40,7 +40,7 @@ export const hashPassword = (
     next: NextFunction,
 ) => {
     if (req.body.password === undefined) {
-        LogError('No password', 'No password');
+        LogError('No password', null, LogType.AUTH);
         return;
     }
 
@@ -48,19 +48,13 @@ export const hashPassword = (
 
     bcrypt.genSalt(SALT_ROUNDS, (err, salt) => {
         if (err) {
-            LogError(
-                err.stack ? err.stack : err.message,
-                'Error generating salt',
-            );
+            LogError('Error generating salt', err, LogType.AUTH);
             throw Error('Error generating salt');
         }
         bcrypt.hash(password, salt, (err, hash) => {
             if (err) {
                 if (err instanceof Error) {
-                    LogError(
-                        err.stack ? err.stack : err.message,
-                        'Error hashing password',
-                    );
+                    LogError('Error hashing password', err, LogType.AUTH);
                 }
                 throw Error('Error hashing password');
             }
@@ -84,7 +78,7 @@ export const setSession = async (
 
         req.session.regenerate((err) => {
             if (err) {
-                LogError(err, 'Error regenerating session');
+                LogError('Error regenerating session', null, LogType.AUTH);
                 res.status(500).send('Error regenerating session');
             }
 
@@ -98,7 +92,7 @@ export const setSession = async (
 
         req.session.save((err) => {
             if (err) {
-                LogError(err, 'Error saving session');
+                LogError('Error saving session', err, LogType.AUTH);
                 res.status(500).send('Error saving session');
             } else {
                 next();

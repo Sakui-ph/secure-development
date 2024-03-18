@@ -8,7 +8,6 @@ const JPEG_BLOB_SIGNATURE = 'ffd8ff';
 const customValidators = {
     // check image hex / file sig
     isImage: (buffer: Buffer): any => {
-        console.log(buffer);
         if (buffer === undefined) return true;
 
         const pngHeading = buffer.toString('hex').slice(0, 16);
@@ -20,11 +19,7 @@ const customValidators = {
         } else if (jpegHeading === JPEG_BLOB_SIGNATURE) {
             return '.jpeg';
         } else {
-            LogError(
-                'Invalid image format',
-                'Invalid image format',
-                LogType.AUTH,
-            );
+            LogError('Invalid image format', null, LogType.AUTH);
             return false;
         }
     },
@@ -119,11 +114,7 @@ module.exports = {
         (req: Request, res: Response, next: NextFunction) => {
             const errors = validationResult(req);
             if (!errors.isEmpty()) {
-                LogError(
-                    JSON.stringify(errors.array()),
-                    'Validation error',
-                    LogType.AUTH,
-                );
+                LogError(JSON.stringify(errors.array()), null, LogType.AUTH);
                 return res.status(400).json(errors.array());
             }
             next();
@@ -134,11 +125,7 @@ module.exports = {
         (req: Request, res: Response, next: NextFunction) => {
             const errors = validationResult(req);
             if (!errors.isEmpty()) {
-                LogError(
-                    JSON.stringify(errors.array()),
-                    'Validation error',
-                    LogType.AUTH,
-                );
+                LogError(JSON.stringify(errors.array()), null, LogType.AUTH);
                 return res.status(400).json(errors.array());
             }
             next();

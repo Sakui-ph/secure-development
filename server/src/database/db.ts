@@ -12,8 +12,8 @@ export const makeConnection = async () => {
         } catch (e: unknown) {
             if (e instanceof Error) {
                 LogError(
-                    e.message,
                     'Error connecting to database',
+                    e,
                     LogType.TRANSACTION,
                 );
             }

@@ -161,27 +161,29 @@ if (process.env.STATUS === 'dev') {
 }
 
 export const LogError = (
-    error: string,
     generic = 'An error has occurred',
+    error: Error | null = null,
     type: LogType = LogType.NONE,
 ) => {
-    const time = new Date().toISOString();
-    if (process.env.STATUS !== 'dev') {
-        console.log(`${logHeaders.error}[${time}] ${generic}`);
+    let message = ' ';
+    if (process.env.STATUS !== 'dev' || error === null) {
+        message = `${generic}`;
+    } else {
+        message = error.stack || error.message || error.toString();
     }
 
     switch (type) {
         case LogType.AUTH:
-            authLogger.log('error', error);
+            authLogger.log('error', message);
             break;
         case LogType.TRANSACTION:
-            transactionLogger.log('error', error);
+            transactionLogger.log('error', message);
             break;
         case LogType.ADMIN:
-            adminLogger.log('error', error);
+            adminLogger.log('error', message);
             break;
         default:
-            logger.log('error', error);
+            logger.log('error', message);
     }
 };
 

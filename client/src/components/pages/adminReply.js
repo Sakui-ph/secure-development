@@ -1,7 +1,10 @@
-import React, { useState } from 'react';
-import AdminReply from '../forms/AdminReply';
-import { LogError } from '../../utils/error-handlers/error-logger';
+import React from 'react';
+import AdminInquiryList from '../forms/AdminInquiryList';
 
 export default function InquiriesPage() {
-    return <AdminReply />;
+    return (
+        <div>
+            <AdminInquiryList />
+        </div>
+    );
 }

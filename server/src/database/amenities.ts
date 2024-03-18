@@ -1,5 +1,5 @@
 import db from './db';
-import { buildUpdateQuery, convertSearchByToString } from '../utils/dbHelpers';
+import { convertSearchByToString } from '../utils/dbHelpers';
 import { Reservation } from '../models/Reservation';
 
 class AmenitiesReservationDB {

@@ -2,7 +2,7 @@ export interface Inquiry {
     readonly id?: string;
     name: string;
     phone: string;
-    email: string; 
+    email: string;
     concern: string;
 }
 

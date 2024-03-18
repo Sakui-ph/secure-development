@@ -1,8 +1,8 @@
 export interface Feedback {
     readonly id?: string;
-    author: string; 
+    author: string;
     comment: string;
-    photo: File; 
+    photo: File;
 }
 
 export const FeedbackParams = {

@@ -1,5 +1,5 @@
 import db from './db';
-import { buildUpdateQuery, convertSearchByToString } from '../utils/dbHelpers';
+import { convertSearchByToString } from '../utils/dbHelpers';
 import { Feedback } from '../models/Feedback';
 
 class FeedbackDB {
@@ -14,8 +14,7 @@ class FeedbackDB {
     };
 
     create = async (feedback: Feedback) => {
-        const query: string =
-            'INSERT INTO feedbacks (author, comment, photo) ';
+        const query: string = 'INSERT INTO feedbacks (author, comment, photo) ';
         const values: string = `VALUES 
         ('${feedback.author}', 
         '${feedback.comment}', 

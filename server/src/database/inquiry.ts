@@ -1,11 +1,9 @@
 import db from './db';
-import { buildUpdateQuery, convertSearchByToString } from '../utils/dbHelpers';
 import { Inquiry } from '../models/Inquiry';
 
 class InquiryDB {
     create = async (inquiry: Inquiry) => {
-        const query =
-            'INSERT INTO inquiries (name, phone, email, concern) ';
+        const query = 'INSERT INTO inquiries (name, phone, email, concern) ';
         const values: string = `VALUES 
         ('${inquiry.name}', 
         '${inquiry.phone}', 

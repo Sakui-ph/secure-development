@@ -1,5 +1,5 @@
 import db from './db';
-import { buildUpdateQuery, convertSearchByToString } from '../utils/dbHelpers';
+import { convertSearchByToString } from '../utils/dbHelpers';
 import { Reservation } from '../models/Reservation';
 
 class ReservationDB {
@@ -14,8 +14,7 @@ class ReservationDB {
     };
 
     create = async (reservation: Reservation) => {
-        const query =
-            'INSERT INTO reservations (date, time, email, room) ';
+        const query = 'INSERT INTO reservations (date, time, email, room) ';
         const values = `VALUES 
         ('${reservation.date}', 
         '${reservation.time}', 

@@ -18,7 +18,7 @@ module.exports = {
             if (e instanceof Error) {
                 LogError('Error creating room reservation', e, LogType.TRANSACTION);
             }
-            res.end('Error creating room reservation').status(500);
+            res.end('Error creating reservation').status(500);
         }
     },
     /*
@@ -48,7 +48,10 @@ module.exports = {
             });
 
             try {
-                const result = await ReservationDB.find(projection, searchObject);
+                const result = await ReservationDB.find(
+                    projection,
+                    searchObject,
+                );
                 res.send(result).status(200);
                 return result;
             } catch (e) {
@@ -59,7 +62,7 @@ module.exports = {
             }
         };
     },
-    
+
     deleteReservation: (searchBy: string[]) => {
         return async (req: Request, res: Response): Promise<any> => {
             const searchObject: Record<string, any> = {};

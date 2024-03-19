@@ -4,7 +4,10 @@ import AmenityReservationDB from '../database/amenities';
 import { LogError, LogType, LogWarning } from '../utils/logger';
 
 module.exports = {
-    createAmenityReservation: async (req: Request, res: Response): Promise<any> => {
+    createAmenityReservation: async (
+        req: Request,
+        res: Response,
+    ): Promise<any> => {
         const newAmenityReservation: Reservation = {
             date: req.body.date,
             time: req.body.time,
@@ -12,15 +15,16 @@ module.exports = {
             room: req.body.room,
         };
         try {
-            const result = await AmenityReservationDB.create(newAmenityReservation);
+            const result = await AmenityReservationDB.create(
+                newAmenityReservation,
+            );
             res.send(result).status(200);
         } catch (e) {
-            if (typeof e === 'string') {
-                LogError(e, 'Error creating amenity reservation', LogType.TRANSACTION);
-            }
-            if (e instanceof Error) {
-                LogError(e.message, 'Error creating amenity reservation', LogType.TRANSACTION);
-            }
+            LogError(
+                'Error creating amenity reservation',
+                e as Error,
+                LogType.TRANSACTION,
+            );
             res.status(500).send('Error creating amenity reservation');
         }
     },
@@ -50,18 +54,21 @@ module.exports = {
             });
 
             try {
-                const result = await AmenityReservationDB.find(projection, searchObject);
+                const result = await AmenityReservationDB.find(
+                    projection,
+                    searchObject,
+                );
                 res.send(result).status(200);
                 return result;
             } catch (e) {
                 if (e instanceof Error && e.stack !== undefined) {
-                    LogError(e.stack, LogType.TRANSACTION);
+                    LogError('Could not get amenity', e, LogType.TRANSACTION);
                 }
                 res.status(500).send('Error finding amenity reservation');
             }
         };
     },
-    
+
     deleteAmenityReservation: (searchBy: string[]) => {
         return async (req: Request, res: Response): Promise<any> => {
             const searchObject: Record<string, any> = {};
@@ -76,8 +83,12 @@ module.exports = {
                 const result = await AmenityReservationDB.delete(searchObject);
                 res.send(result).status(200);
             } catch (e) {
-                if (e instanceof Error && e.stack !== undefined) {
-                    LogError(e.stack, LogType.TRANSACTION);
+                if (e instanceof Error) {
+                    LogError(
+                        'Could not delete amenity',
+                        e,
+                        LogType.TRANSACTION,
+                    );
                 }
                 res.status(500).send('Error deleting amenity reservation');
             }

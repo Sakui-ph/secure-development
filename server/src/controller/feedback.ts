@@ -12,20 +12,14 @@ module.exports = {
             comment: req.body.comment,
             photo: req.body.photo, // Assuming the photo is already processed and stored in the database
         };
-    
+
         try {
             const result = await FeedbackDB.create(newFeedback);
             res.send(result.data).status(200);
         } catch (e) {
-            if (typeof e === 'string') {
-                LogError(e, 'Error creating user', LogType.TRANSACTION);
-            }
-            if (e instanceof Error) {
-                LogError(e.message, 'Error creating user', LogType.TRANSACTION);
-            }
+            LogError('Error creating user', e as Error, LogType.TRANSACTION);
         }
     },
-}
+};
 
 export default module.exports;
-

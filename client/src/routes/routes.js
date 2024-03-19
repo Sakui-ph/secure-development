@@ -6,12 +6,9 @@ import Home from '../components/pages/homePage';
 import Admin from '../components/pages/adminPage';
 import { Protected } from '../utils/protected_route';
 import { UserType } from '../models/user';
-import Inquiries from '../components/pages/inquiriesPage';
 import ReservationForm from '../components/pages/roomReservationPage';
 import ViewReservations from '../components/pages/viewReservationPage';
-import Feedback from '../components/pages/shareFeedback';
 import AdminAnnouncement from '../components/pages/adminAnnouncment';
-import AdminReply from '../components/pages/adminReply';
 import { SessionProvider } from '../utils/session_timeout';
 
 const ADMIN = [UserType.ADMIN];
@@ -35,10 +32,6 @@ export const Router = () => (
                             </Protected>
                         }
                     />
-
-                    <Route path="/inquiries" element={<Inquiries />} />
-                    <Route path="/reply" element={<AdminReply />} />
-                    <Route path="/feedback" element={<Feedback />} />
                     <Route
                         path="/roomreservation"
                         element={<ReservationForm />}

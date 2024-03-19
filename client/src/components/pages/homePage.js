@@ -43,7 +43,7 @@ const HomePage = ({ websiteInfo = defaultWebsiteInfo }) => (
                         <a href="/roomreservation">Room Reservation</a>
                     </li>
                     <li>
-                        <a href="/inquiries">Inquiries</a>
+                        <a href="/viewannouncement">Announcements</a>
                     </li>
                 </ul>
             </nav>

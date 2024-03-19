@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { Inquiry } from '../models/Inquiry';
 import InquiryDB from '../database/inquiry';
-import { LogError, LogType, LogWarning } from '../utils/logger';
+import { LogError, LogType } from '../utils/logger';
 
 module.exports = {
     createInquiry: async (req: Request, res: Response): Promise<any> => {
@@ -15,11 +15,8 @@ module.exports = {
             const result = await InquiryDB.create(newInquiry);
             res.send(result.data).status(200);
         } catch (e) {
-            if (typeof e === 'string') {
-                LogError(e, 'Error creating inquiry', LogType.TRANSACTION);
-            }
             if (e instanceof Error) {
-                LogError(e.message, 'Error creating inquiry', LogType.TRANSACTION);
+                LogError('Error creating inquiry', e, LogType.TRANSACTION);
             }
         }
     },

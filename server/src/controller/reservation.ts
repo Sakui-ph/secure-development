@@ -15,11 +15,8 @@ module.exports = {
             const result = await ReservationDB.create(newReservation);
             res.send(result).status(200);
         } catch (e) {
-            if (typeof e === 'string') {
-                LogError(e, 'Error creating reservation', LogType.TRANSACTION);
-            }
             if (e instanceof Error) {
-                LogError(e.message, 'Error creating reservation', LogType.TRANSACTION);
+                LogError('Error creating reservation', e, LogType.TRANSACTION);
             }
             res.status(500).send('Error creating reservation');
         }
@@ -50,18 +47,21 @@ module.exports = {
             });
 
             try {
-                const result = await ReservationDB.find(projection, searchObject);
+                const result = await ReservationDB.find(
+                    projection,
+                    searchObject,
+                );
                 res.send(result).status(200);
                 return result;
             } catch (e) {
                 if (e instanceof Error && e.stack !== undefined) {
-                    LogError(e.stack, LogType.TRANSACTION);
+                    LogError('Reservation not found', e, LogType.TRANSACTION);
                 }
                 res.status(500).send('Error finding reservation');
             }
         };
     },
-    
+
     deleteReservation: (searchBy: string[]) => {
         return async (req: Request, res: Response): Promise<any> => {
             const searchObject: Record<string, any> = {};
@@ -77,7 +77,11 @@ module.exports = {
                 res.send(result).status(200);
             } catch (e) {
                 if (e instanceof Error && e.stack !== undefined) {
-                    LogError(e.stack, LogType.TRANSACTION);
+                    LogError(
+                        `Could not delete reservation`,
+                        e,
+                        LogType.TRANSACTION,
+                    );
                 }
                 res.status(500).send('Error deleting reservation');
             }

@@ -33,7 +33,21 @@ const handleAdminPanel = (e) => {
 
 const HomePage = ({ websiteInfo = defaultWebsiteInfo }) => (
     <div className="home">
-        <header />
+        <header>
+            <nav className="navbar">
+                <ul>
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+                    <li>
+                        <a href="/roomreservation">Room Reservation</a>
+                    </li>
+                    <li>
+                        <a href="/inquiries">Inquiries</a>
+                    </li>
+                </ul>
+            </nav>
+        </header>
 
         <body>
             <div className="content">

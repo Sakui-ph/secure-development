@@ -1,5 +1,6 @@
 import express, { Application } from 'express';
 import { UserRoutes } from './routes/user';
+import { RoomRoutes } from './routes/room';
 import * as dotenv from 'dotenv';
 import cors from 'cors';
 import session from 'express-session';
@@ -63,3 +64,4 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 app.use('/user', UserRoutes);
+app.use('/roomreservation', RoomRoutes);

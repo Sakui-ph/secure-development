@@ -13,17 +13,15 @@ module.exports = {
         };
         try {
             const result = await ReservationDB.create(newReservation);
-            res.send(result).status(200);
+            return result;
         } catch (e) {
-            if (typeof e === 'string') {
-                LogError(e, 'Error creating reservation', LogType.TRANSACTION);
-            }
             if (e instanceof Error) {
-                LogError(e.message, 'Error creating reservation', LogType.TRANSACTION);
+                LogError('Error creating room reservation', e, LogType.TRANSACTION);
             }
-            res.status(500).send('Error creating reservation');
+            res.end('Error creating room reservation').status(500);
         }
     },
+    /*
 
     getReservation: (projection: string[], searchBy: string[]) => {
         return async (req: Request, res: Response) => {
@@ -55,7 +53,7 @@ module.exports = {
                 return result;
             } catch (e) {
                 if (e instanceof Error && e.stack !== undefined) {
-                    LogError(e.stack, LogType.TRANSACTION);
+                    //LogError(e.stack, LogType.TRANSACTION);
                 }
                 res.status(500).send('Error finding reservation');
             }
@@ -77,10 +75,13 @@ module.exports = {
                 res.send(result).status(200);
             } catch (e) {
                 if (e instanceof Error && e.stack !== undefined) {
-                    LogError(e.stack, LogType.TRANSACTION);
+                    //LogError(e.stack, LogType.TRANSACTION);
                 }
                 res.status(500).send('Error deleting reservation');
             }
         };
     },
+    */
 };
+
+export default module.exports;

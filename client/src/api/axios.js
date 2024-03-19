@@ -51,3 +51,35 @@ export const userEndpoints = (endpoint) => {
                 }),
     };
 };
+
+export const roomEndpoints = (endpoint) => {
+    axios.defaults.headers = {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        Accept: 'application/json',
+    };
+    const url = `${BASE_URL}/roomreservation/${endpoint}`;
+
+    return {
+        fetch: (username) => axios.get(url, { params: { username } }),
+        post: (data) =>
+            axios
+                .post(url, data, {
+                    headers: {
+                        'content-type': 'application/x-www-form-urlencoded',
+                    },
+                })
+                .catch((error) => {
+                    LogError(error, 'Request failed');
+                }),
+        create: (formData) =>
+            axios
+                .post(url, formData, {
+                    headers: {
+                        'content-type': 'multipart/form-data',
+                    },
+                })
+                .catch((error) => {
+                    LogError(error, 'Request failed');
+                }),
+    };
+};

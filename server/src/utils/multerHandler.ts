@@ -22,3 +22,7 @@ export const uploadProfilePicture = multer({
         fileSize: 1024 * 1024 * 10,
     },
 }).single('profile_picture');
+
+export const uploadFormdata = multer({
+    storage: storageEngine,
+}).none();

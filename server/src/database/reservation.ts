@@ -1,12 +1,13 @@
 import db from './db';
 import { convertSearchByToString } from '../utils/dbHelpers';
 import { Reservation } from '../models/Reservation';
+import { LogError, LogType } from '../utils/logger';
 
 class ReservationDB {
     find = async (projection: string[], searchBy: Record<string, any>) => {
         const searchParams = convertSearchByToString(searchBy);
         const result = await db.executeDatabase(
-            `SELECT ${projection.join(', ')} FROM reservations WHERE ${searchParams}`,
+            `SELECT ${projection.join(', ')} FROM reservation WHERE ${searchParams}`,
             [],
         );
 
@@ -14,15 +15,25 @@ class ReservationDB {
     };
 
     create = async (reservation: Reservation) => {
-        const query = 'INSERT INTO reservations (date, time, email, room) ';
-        const values = `VALUES 
-        ('${reservation.date}', 
-        '${reservation.time}', 
-        '${reservation.email}', 
-        '${reservation.room}')`;
+        const query: string = 'INSERT INTO `reservation` SET ?';
+        const values = {
+            date: reservation.date,
+            email: reservation.email,
+            room: reservation.room,
+            time: reservation.time,
+        }
 
-        const result = await db.executeDatabase(query + values, []);
-        return result[0][0];
+        try{
+            const result = await db.queryDatabase(query, values);
+            return result;
+        } catch (e) {
+            LogError(
+                'Error querying database',
+                e as Error,
+                LogType.TRANSACTION,
+            );
+            return (e as Error).message;
+        }
     };
 
     delete = async (searchBy: Record<string, any>) => {

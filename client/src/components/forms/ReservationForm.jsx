@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { CreateRoomReservation } from '../../api/room';
 
 export default function ReservationForm() {
     const [formFields, setFormFields] = useState({
@@ -28,7 +29,9 @@ export default function ReservationForm() {
                 email: '',
                 room: '',
             });
-
+            CreateRoomReservation(formFields).then((response) => {
+                setSubmitting(false);
+            });
             setSubmitting(false);
         }
     }, [submitting, formFields]);

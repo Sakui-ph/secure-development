@@ -1,26 +1,11 @@
-@font-face {
-    font-family: 'Serif';
-    src: url('../resources/fonts/RomanSerif.ttf') format('truetype');
-}
-
-h1 {
-    font-family: 'Serif', sans-serif;
-    letter-spacing: 2px;
-    font-size: 30px;
-    margin-top: 30px;
-}
-
 .home {
-    text-align: center;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
+    overflow-y: auto;
 }
 
 img {
-    margin-top: 275%;
-    width: 110%;
-    height: 110%;
+    /* margin-top: 275%; */
+    /* width: 110%;
+    height: 110%; */
     object-fit: cover;
 }
 
@@ -45,7 +30,7 @@ h3 {
     line-height: 1.5;
 }
 footer {
-    margin-top: 165%;
+    /* margin-top: 165%; */
     background-color: #262d19;
     padding: 1%;
 }

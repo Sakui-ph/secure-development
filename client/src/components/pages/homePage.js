@@ -33,7 +33,7 @@ const handleAdminPanel = (e) => {
 
 const HomePage = ({ websiteInfo = defaultWebsiteInfo }) => (
     <div className="home">
-        <header>
+        <body>
             <nav className="navbar">
                 <ul>
                     <li>
@@ -47,9 +47,6 @@ const HomePage = ({ websiteInfo = defaultWebsiteInfo }) => (
                     </li>
                 </ul>
             </nav>
-        </header>
-
-        <body>
             <div className="content">
                 <img src={cottageImg} alt="cottage" />
                 <h1>{websiteInfo.title}</h1>

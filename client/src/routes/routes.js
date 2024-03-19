@@ -8,7 +8,6 @@ import { Protected } from '../utils/protected_route';
 import { UserType } from '../models/user';
 import Inquiries from '../components/pages/inquiriesPage';
 import ReservationForm from '../components/pages/roomReservationPage';
-import AmenitiesReservationForm from '../components/pages/amenitiesReservationPage';
 import ViewReservations from '../components/pages/viewReservationPage';
 import Feedback from '../components/pages/shareFeedback';
 import AdminAnnouncement from '../components/pages/adminAnnouncment';
@@ -47,10 +46,6 @@ export const Router = () => (
                     <Route
                         path="/viewreservations"
                         element={<ViewReservations />}
-                    />
-                    <Route
-                        path="/amenitiesreservation"
-                        element={<AmenitiesReservationForm />}
                     />
                     <Route
                         path="/admin"

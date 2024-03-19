@@ -13,6 +13,7 @@ import ViewReservations from '../components/pages/viewReservationPage';
 import Feedback from '../components/pages/shareFeedback';
 import AdminAnnouncement from '../components/pages/adminAnnouncment';
 import AdminReply from '../components/pages/adminReply';
+import { SessionProvider } from '../utils/session_timeout';
 
 const ADMIN = [UserType.ADMIN];
 // eslint-disable-next-line no-unused-vars
@@ -26,35 +27,44 @@ export const Router = () => (
             <Routes>
                 <Route path="/" element={<Signup />} />
                 <Route path="/login" element={<Login />} />
-                <Route
-                    path="/home"
-                    element={
-                        <Protected allowedTypes={ALL}>
-                            <Home />
-                        </Protected>
-                    }
-                />
-                <Route path="/inquiries" element={<Inquiries />} />
-                <Route path="/reply" element={<AdminReply />} />
-                <Route path="/feedback" element={<Feedback />} />
-                <Route path="/roomreservation" element={<ReservationForm />} />
-                <Route
-                    path="/viewreservations"
-                    element={<ViewReservations />}
-                />
-                <Route
-                    path="/amenitiesreservation"
-                    element={<AmenitiesReservationForm />}
-                />
-                <Route
-                    path="/admin"
-                    element={
-                        <Protected allowedTypes={ADMIN}>
-                            <Admin />
-                        </Protected>
-                    }
-                />
-                <Route path="/announcement" element={<AdminAnnouncement />} />
+                <Route element={<SessionProvider />}>
+                    <Route
+                        path="/home"
+                        element={
+                            <Protected allowedTypes={ALL}>
+                                <Home />
+                            </Protected>
+                        }
+                    />
+
+                    <Route path="/inquiries" element={<Inquiries />} />
+                    <Route path="/reply" element={<AdminReply />} />
+                    <Route path="/feedback" element={<Feedback />} />
+                    <Route
+                        path="/roomreservation"
+                        element={<ReservationForm />}
+                    />
+                    <Route
+                        path="/viewreservations"
+                        element={<ViewReservations />}
+                    />
+                    <Route
+                        path="/amenitiesreservation"
+                        element={<AmenitiesReservationForm />}
+                    />
+                    <Route
+                        path="/admin"
+                        element={
+                            <Protected allowedTypes={ADMIN}>
+                                <Admin />
+                            </Protected>
+                        }
+                    />
+                    <Route
+                        path="/announcement"
+                        element={<AdminAnnouncement />}
+                    />
+                </Route>
             </Routes>
         </BrowserRouter>
     </div>

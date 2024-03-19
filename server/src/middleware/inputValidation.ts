@@ -5,26 +5,6 @@ import { LogError, LogType } from '../utils/logger';
 const PNG_BLOB_SIGNATURE = '89504e470d0a1a0a';
 const JPEG_BLOB_SIGNATURE = 'ffd8ff';
 
-const customValidators = {
-    // check image hex / file sig
-    isImage: (buffer: Buffer): any => {
-        if (buffer === undefined) return true;
-
-        const pngHeading = buffer.toString('hex').slice(0, 16);
-        const jpegHeading = buffer.toString('hex').slice(0, 6);
-
-        // check if headings match
-        if (pngHeading === PNG_BLOB_SIGNATURE) {
-            return '.png';
-        } else if (jpegHeading === JPEG_BLOB_SIGNATURE) {
-            return '.jpeg';
-        } else {
-            LogError('Invalid image format', null, LogType.AUTH);
-            return false;
-        }
-    },
-};
-
 const validateEmail = check('email')
     .trim()
     .normalizeEmail()
@@ -42,10 +22,24 @@ const validateEmail = check('email')
     .withMessage('Invalid email');
 
 const validateProfilePicture = check('profile_picture')
-    .optional()
-    .bail()
-    .custom(({ req }) => {
-        return customValidators.isImage(req.file.buffer);
+    .custom((value, { req }) => {
+        const buffer = req.file.buffer;
+        if (buffer === undefined) return true;
+
+        const pngHeading = buffer.toString('hex').slice(0, 16);
+        const jpegHeading = buffer.toString('hex').slice(0, 6);
+
+        console.log(pngHeading === PNG_BLOB_SIGNATURE);
+        console.log(jpegHeading === JPEG_BLOB_SIGNATURE);
+        // check if headings match
+        if (pngHeading === PNG_BLOB_SIGNATURE) {
+            return '.png';
+        } else if (jpegHeading === JPEG_BLOB_SIGNATURE) {
+            return '.jpeg';
+        } else {
+            LogError('Invalid image format', null, LogType.AUTH);
+            return false;
+        }
     })
     .withMessage('Invalid image format (nice try)');
 
@@ -123,6 +117,7 @@ module.exports = {
     checkProfilePicture: [
         validateProfilePicture,
         (req: Request, res: Response, next: NextFunction) => {
+            console.log(req.file?.filename);
             const errors = validationResult(req);
             if (!errors.isEmpty()) {
                 LogError(JSON.stringify(errors.array()), null, LogType.AUTH);

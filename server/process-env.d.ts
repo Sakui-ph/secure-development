@@ -2,6 +2,7 @@ declare global {
     namespace NodeJS {
         interface ProcessEnv {
             STATUS: 'dev' | 'prod';
+            DEBUG: 'true' | 'false';
             HTTPS: 'true' | 'false';
             DB_CONNECTION_STRING: string;
             SESSION_SECRET: string;

@@ -20,10 +20,11 @@ const router = asyncify(express.Router());
 
 router.post(
     '/login',
+    urlencodedParser,
     validatePassword,
     setSession,
     (req: Request, res: Response) => {
-        res.send({ success: true }).status(200);
+        res.send({ success: true, message: 'Login successful' });
     },
 );
 
@@ -40,7 +41,7 @@ router.post('/logout', (req: Request, res: Response) => {
     });
 });
 
-router.post('/validateSession', validateSession());
+router.post('/validateSession', urlencodedParser, validateSession());
 
 router.get(
     '/read',

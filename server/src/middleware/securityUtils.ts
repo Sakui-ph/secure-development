@@ -2,7 +2,7 @@ import bcrypt from 'bcrypt';
 import { Request, Response, NextFunction } from 'express';
 import UserDB from '../database/user';
 import { UserType } from '../models/User';
-import { LogDebug, LogError, LogType } from '../utils/logger';
+import { LogDebug, LogError, LogInfo, LogType } from '../utils/logger';
 
 const SALT_ROUNDS = 15;
 const PASSWORD_PROJECTION_STRING: string =
@@ -13,11 +13,18 @@ export const validatePassword = async (
     res: Response,
     next: NextFunction,
 ) => {
-    LogDebug('Validating password...');
+    LogDebug(`Validating password... ${req.body.password}`);
     if (req.body.password === undefined || req.body.password === '') {
-        LogError('No password', null, LogType.AUTH);
-        res.send({ message: 'no password' }).status(500);
-        return false;
+        LogError(
+            `No password provided for email ${req.body.email}`,
+            null,
+            LogType.AUTH,
+        );
+        res.send({ success: false, message: 'no password provided' }).status(
+            500,
+        );
+        res.end();
+        return;
     }
 
     const password = req.body.password;
@@ -25,11 +32,29 @@ export const validatePassword = async (
         email: req.body.email,
     });
 
+    if (hashedPassword === undefined) {
+        LogError(
+            `Wrong account attempt for ${req.body.email}`,
+            null,
+            LogType.AUTH,
+        );
+        res.send({ success: false, message: 'Wrong account' }).status(500);
+        res.end();
+        return;
+    }
+
     if (await bcrypt.compare(password, hashedPassword['password'])) {
+        LogInfo(`Login for ${req.body.email} successful`, LogType.AUTH);
+
         next();
     } else {
-        LogError('Wrong password', null, LogType.AUTH);
-        res.send({ message: 'wrong password' }).status(500);
+        LogError(
+            `Wrong password attempt for ${req.body.email}`,
+            null,
+            LogType.AUTH,
+        );
+        res.send({ success: false, message: 'wrong password' }).status(500);
+        res.end();
         return;
     }
 };

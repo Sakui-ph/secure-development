@@ -152,7 +152,7 @@ export const httpLogger: Logger = createLogger({
     ],
 });
 
-if (process.env.STATUS === 'dev') {
+if (process.env.DEBUG === 'true') {
     authLogger.add(consoleTransport);
     transactionLogger.add(consoleTransport);
     adminLogger.add(consoleTransport);
@@ -166,7 +166,7 @@ export const LogError = (
     type: LogType = LogType.NONE,
 ) => {
     let message = ' ';
-    if (process.env.STATUS !== 'dev' || error === null) {
+    if (process.env.DEBUG !== 'true' || error === null) {
         message = `${generic}`;
     } else {
         message = error.stack || error.message || error.toString();
@@ -238,5 +238,5 @@ export class LoggerStream {
 }
 
 export const LogDebug = (debug: string) => {
-    if (process.env.STATUS === 'dev') debugLogger.log('debug', debug);
+    if (process.env.DEBUG === 'true') debugLogger.log('debug', debug);
 };

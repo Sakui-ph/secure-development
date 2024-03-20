@@ -1,6 +1,6 @@
 import { LogError } from '../utils/error-handlers/error-logger';
-import { roomEndpoints } from './axios';
-import { ENDPOINTS } from './endpoints';
+import { createAPIEndpoints } from './axios';
+import { ROOM_ENDPOINTS } from './endpoints';
 
 export const CreateRoomReservation = async ({ date, time, email, room }) => {
     const formData = new FormData();
@@ -11,7 +11,7 @@ export const CreateRoomReservation = async ({ date, time, email, room }) => {
     formData.append('room', room);
 
     console.log('Form Data:', formData.get('date'));
-    await roomEndpoints(ENDPOINTS.create)
+    await createAPIEndpoints(ROOM_ENDPOINTS.create)
         .create(formData)
         .catch((error) => {
             LogError(

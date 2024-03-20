@@ -1,12 +1,12 @@
-import { userEndpoints } from '../api/axios';
-import { ENDPOINTS } from '../api/endpoints';
+import { createAPIEndpoints } from '../api/axios';
+import { USER_ENDPOINTS } from '../api/endpoints';
 import { UserType } from '../models/user';
 import { LogError } from './error-handlers/error-logger';
 
 export const isAuthenticated = async (allowedTypes) => {
     let result = false;
     try {
-        await userEndpoints(ENDPOINTS.validate_session)
+        await createAPIEndpoints(USER_ENDPOINTS.validate_session)
             .post({ data: allowedTypes })
             .then((response) => {
                 if (response.data.auth) {

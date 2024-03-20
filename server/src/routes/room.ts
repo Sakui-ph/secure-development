@@ -19,7 +19,10 @@ router.post(
     uploadFormdata,
     async (req: Request, res: Response) => {
         try {
-            const result = await reservationContoller.createReservation(req, res);
+            const result = await reservationContoller.createReservation(
+                req,
+                res,
+            );
             if (!result) {
                 LogInfo(`Room reserved!`, LogType.TRANSACTION);
                 res.send('Room reserved!').status(200);

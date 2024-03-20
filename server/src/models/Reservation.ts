@@ -5,7 +5,6 @@ export interface Reservation {
     email: string;
     room: string;
     adminApproved: ReservationStatus;
-    adminId: string;
 }
 
 export const ReservationParams = {

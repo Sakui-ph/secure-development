@@ -5,7 +5,6 @@ import asyncify from 'express-asyncify';
 import bodyParser from 'body-parser';
 import { uploadFormdata } from '../utils/multerHandler';
 
-const urlencodedParser = bodyParser.urlencoded({ extended: false });
 const extendedParser = bodyParser.urlencoded({ extended: true });
 
 const router = asyncify(express.Router());

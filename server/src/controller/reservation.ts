@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { Reservation } from '../models/Reservation';
 import ReservationDB from '../database/reservation';
-import { LogError, LogType, LogWarning } from '../utils/logger';
+import { LogError, LogType } from '../utils/logger';
 
 module.exports = {
     createReservation: async (req: Request, res: Response): Promise<any> => {
@@ -10,13 +10,18 @@ module.exports = {
             time: req.body.time,
             email: req.body.email,
             room: req.body.room,
+            adminApproved: 0,
         };
         try {
             const result = await ReservationDB.create(newReservation);
             return result;
         } catch (e) {
             if (e instanceof Error) {
-                LogError('Error creating room reservation', e, LogType.TRANSACTION);
+                LogError(
+                    'Error creating room reservation',
+                    e,
+                    LogType.TRANSACTION,
+                );
             }
             res.end('Error creating reservation').status(500);
         }

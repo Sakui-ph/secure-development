@@ -3,12 +3,9 @@ import { convertSearchByToString } from '../utils/dbHelpers';
 import { Comment } from '../models/Comment';
 import { LogError, LogType } from '../utils/logger';
 
-class CommentDB {    
+class CommentDB {
     find = async () => {
-        const result = await db.executeDatabase(
-            `SELECT * FROM comments`,
-            [],
-        );
+        const result = await db.executeDatabase(`SELECT * FROM comments`, []);
 
         return result[0];
     };
@@ -22,7 +19,7 @@ class CommentDB {
             date: comment.date,
         };
 
-        try{
+        try {
             const result = await db.queryDatabase(query, values);
             return result;
         } catch (e) {
@@ -45,4 +42,3 @@ class CommentDB {
 }
 
 export default new CommentDB();
-

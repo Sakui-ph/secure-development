@@ -1,6 +1,6 @@
 import { LogError } from '../utils/error-handlers/error-logger';
-import { commentEndpoints } from './axios';
-import { ENDPOINTS } from './endpoints';
+import { createAPIEndpoints } from './axios';
+import { COMMENT_ENDPOINTS } from './endpoints';
 
 export const CreateComment = async ({ author, text, date }) => {
     const formData = new FormData();
@@ -10,18 +10,15 @@ export const CreateComment = async ({ author, text, date }) => {
     formData.append('date', date);
 
     console.log('Form Data:', formData.get('date'));
-    await commentEndpoints(ENDPOINTS.create)
+    await createAPIEndpoints(COMMENT_ENDPOINTS.create)
         .create(formData)
         .catch((error) => {
-            LogError(
-                error,
-                'An error occurred while creating a new comment',
-            );
+            LogError(error, 'An error occurred while creating a new comment');
         });
 };
 
 export const fetchAllComments = () => {
-    commentEndpoints(ENDPOINTS.create)
+    createAPIEndpoints(COMMENT_ENDPOINTS.create)
         .fetch()
         .then((data) => {
             setComments(data);

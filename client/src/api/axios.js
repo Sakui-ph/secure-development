@@ -5,15 +5,16 @@ const DEVELOPMENT_BASE_URL = process.env.REACT_APP_HTTPS
     ? 'https://localhost:5555'
     : 'http://localhost:5555';
 
-export const BASE_URL = DEVELOPMENT_BASE_URL;
+const BASE_URL = DEVELOPMENT_BASE_URL;
 
-export const userEndpoints = (endpoint) => {
+export const createAPIEndpoints = (endpoint) => {
     axios.defaults.withCredentials = true;
     axios.defaults.headers = {
         'Content-Type': 'application/x-www-form-urlencoded',
         Accept: 'application/json',
     };
-    const url = `${BASE_URL}/user/${endpoint}`;
+
+    const url = `${BASE_URL}/${endpoint}`;
 
     return {
         fetch: (username) => axios.get(url, { params: { username } }),
@@ -38,90 +39,6 @@ export const userEndpoints = (endpoint) => {
                     LogError(error, 'Request failed');
                 }),
         get: () =>
-            axios.get(url).catch((error) => LogError(error, 'Request failed')),
-        create: (formData) =>
-            axios
-                .post(url, formData, {
-                    headers: {
-                        'content-type': 'multipart/form-data',
-                    },
-                })
-                .catch((error) => {
-                    LogError(error, 'Request failed');
-                }),
-    };
-};
-
-export const roomEndpoints = (endpoint) => {
-    axios.defaults.headers = {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        Accept: 'application/json',
-    };
-    const url = `${BASE_URL}/roomreservation/${endpoint}`;
-
-    return {
-        fetch: (username) => axios.get(url, { params: { username } }),
-        post: (data) =>
-            axios
-                .post(url, data, {
-                    headers: {
-                        'content-type': 'application/x-www-form-urlencoded',
-                    },
-                })
-                .catch((error) => {
-                    LogError(error, 'Request failed');
-                }),
-        create: (formData) =>
-            axios
-                .post(url, formData, {
-                    headers: {
-                        'content-type': 'multipart/form-data',
-                    },
-                })
-                .catch((error) => {
-                    LogError(error, 'Request failed');
-                }),
-    };
-};
-
-export const commentEndpoints = (endpoint) => {
-    axios.defaults.headers = {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        Accept: 'application/json',
-    };
-    const url = `${BASE_URL}/viewannouncement/${endpoint}`;
-
-    return {
-        fetch: () =>
-            axios.get(url).catch((error) => LogError(error, 'Request failed')),
-        create: (formData) =>
-            axios
-                .post(url, formData, {
-                    headers: {
-                        'content-type': 'multipart/form-data',
-                    },
-                })
-                .catch((error) => {
-                    LogError(error, 'Request failed');
-                }),
-        /* deleteById: (id) =>
-            axios
-                .delete(`${url}/${id}`)
-                .catch((error) => {
-                    LogError(error, 'Request failed');
-                }), */
-    };
-};
-
-export const announcementEndpoints = (endpoint) => {
-    axios.defaults.headers = {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        Accept: 'application/json',
-    };
-    const url = `${BASE_URL}/announcement/${endpoint}`;
-
-    return {
-        fetch: () =>
             axios.get(url).catch((error) => LogError(error, 'Request failed')),
         create: (formData) =>
             axios

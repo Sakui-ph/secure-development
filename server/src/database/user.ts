@@ -16,7 +16,7 @@ class UserDB {
     create = async (user: User) => {
         const query: string = 'INSERT INTO `users` SET ?';
         const values = {
-            prefix_id: user.prefix_id,
+            prefix_id: 101,
             first_name: user.first_name,
             last_name: user.last_name,
             email: user.email,

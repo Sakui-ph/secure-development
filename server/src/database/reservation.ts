@@ -21,9 +21,9 @@ class ReservationDB {
             email: reservation.email,
             room: reservation.room,
             time: reservation.time,
-        }
+        };
 
-        try{
+        try {
             const result = await db.queryDatabase(query, values);
             return result;
         } catch (e) {

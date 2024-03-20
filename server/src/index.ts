@@ -12,6 +12,7 @@ import https from 'https';
 import fs from 'fs';
 import path from 'path';
 import asyncify from 'express-asyncify';
+import { AdminRoutes } from './routes/admin';
 
 dotenv.config();
 
@@ -64,4 +65,5 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 app.use('/user', UserRoutes);
+app.use('/admin', AdminRoutes);
 app.use('/roomreservation', RoomRoutes);

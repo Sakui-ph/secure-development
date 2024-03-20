@@ -1,11 +1,11 @@
 import { LogError } from '../utils/error-handlers/error-logger';
-import { userEndpoints } from './axios';
-import { ENDPOINTS } from './endpoints';
+import { createAPIEndpoints } from './axios';
+import { USER_ENDPOINTS } from './endpoints';
 
 export const Login = async (email, password) => {
     let result = false;
     try {
-        await userEndpoints(ENDPOINTS.login)
+        await createAPIEndpoints(USER_ENDPOINTS.login)
             .post({ email, password })
             .then((response) => {
                 if (response.data.success) {
@@ -24,7 +24,7 @@ export const Login = async (email, password) => {
 
 export const Logout = async () => {
     try {
-        await userEndpoints(ENDPOINTS.logout).post();
+        await createAPIEndpoints(USER_ENDPOINTS.logout).post();
     } catch (error) {
         LogError(error, 'An error occurred while logging out, logout failed');
         return false;
@@ -50,7 +50,7 @@ export const CreateNewUser = async ({
     formData.append('phone_number', phone_number);
     formData.append('profile_picture', profile_picture);
 
-    await userEndpoints(ENDPOINTS.create)
+    await createAPIEndpoints(USER_ENDPOINTS.create)
         .create(formData)
         .catch((error) => {
             LogError(error, 'An error occurred while creating a new user');
@@ -66,7 +66,7 @@ export function CreateNewAdmin({
     phone_number,
     profile_picture,
 }) {
-    userEndpoints(ENDPOINTS.create)
+    createAPIEndpoints(USER_ENDPOINTS.create)
         .post({
             prefix_id,
             first_name,

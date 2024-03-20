@@ -127,3 +127,4 @@ dist
 .pnp.*
 *.pem
 .server/public/images
+/server/uploads

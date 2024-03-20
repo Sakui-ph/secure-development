@@ -5,6 +5,7 @@ import asyncify from 'express-asyncify';
 import bodyParser from 'body-parser';
 import { uploadPDF } from '../utils/multerHandler';
 import { validateLoggedIn } from '../middleware/securityUtils';
+import inputValidation from '../middleware/inputValidation';
 
 const urlencodedParser = bodyParser.urlencoded({ extended: false });
 const extendedParser = bodyParser.urlencoded({ extended: true });
@@ -17,6 +18,7 @@ router.post(
     express.json(),
     extendedParser,
     uploadPDF.single('clientIdFile'),
+    inputValidation.checkClientIDPDF,
     async (req: Request, res: Response) => {
         try {
             const result = await reservationContoller.createReservation(

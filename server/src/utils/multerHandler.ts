@@ -5,7 +5,7 @@ import fs from 'fs';
 const memoryEngine = multer.memoryStorage();
 const storageEnginePDF = multer.diskStorage({
     destination: (req, file, callback) => {
-        const path = `./uploads/gallery/${req.session.user}`;
+        const path = `./uploads/tmp/${req.session.user}`;
         fs.mkdirSync(path, { recursive: true });
         callback(null, path);
     },
@@ -54,6 +54,26 @@ export const uploadPDF = multer({
             LogError('Session user is not defined', null, LogType.TRANSACTION);
             return callback(new Error('Session user is not defined'));
         }
+        if (ext !== '.pdf') {
+            LogError('Only PDFs are allowed', null, LogType.TRANSACTION);
+            return callback(new Error('Only PDFs are allowed'));
+        }
+        if (file.mimetype !== 'application/pdf') {
+            LogError('Only PDFs are allowed', null, LogType.TRANSACTION);
+            return callback(new Error('Only PDFs are allowed'));
+        }
+
+        callback(null, true);
+    },
+    limits: {
+        fileSize: 209715200, //25mb
+    },
+});
+
+export const uploadPDFBuffer = multer({
+    storage: memoryEngine,
+    fileFilter: function (req, file, callback) {
+        const ext = path.extname(file.originalname);
         if (ext !== '.pdf') {
             LogError('Only PDFs are allowed', null, LogType.TRANSACTION);
             return callback(new Error('Only PDFs are allowed'));

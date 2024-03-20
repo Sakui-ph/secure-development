@@ -77,7 +77,6 @@ router.get(
 
 router.post(
     '/create',
-    validateLoggedIn,
     express.json(),
     extendedParser,
     uploadProfilePicture,

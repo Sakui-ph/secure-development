@@ -32,8 +32,7 @@ router.post(
     },
 );
 
-// Find all comments route
-router.get(
+/*router.get(
     '/find-all',
     async (req: Request, res: Response) => {
         try {
@@ -64,6 +63,6 @@ router.delete(
             res.send('Error deleting comment').status(500);
         }
     },
-);
+);*/
 
 export { router as CommentRoutes };

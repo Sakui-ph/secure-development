@@ -16,3 +16,14 @@ export const CreateAnnouncement = async ({ text, image }) => {
             );
         });
 }
+
+export const fetchAnnouncement = () => {
+    announcementEndpoints(ENDPOINTS.create)
+        .fetch()
+        .then((data) => {
+            setAnnouncement(data);
+        })
+        .catch((error) => {
+            LogError('Error fetching announcements:', error);
+        });
+};

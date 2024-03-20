@@ -9,6 +9,7 @@ export const USER_ENDPOINTS = {
 
 export const ADMIN_ENDPOINTS = {
     create: 'admin/create',
+    readAll: 'admin/readUsers',
 };
 
 export const COMMENT_ENDPOINTS = {

@@ -41,24 +41,29 @@ export default function ClientViewAnnouncementPage() {
                 <p>No announcement available</p>
             ) : (
                 announcement.map((value) => (
-                    <div key={value.id} className="announcement">
-                        <h2>Announcement</h2>
-                        <p>{value.content}</p>
+                    <div>
+                        <div key={value.id} className="announcement">
+                            <h2>Announcement</h2>
+                            <p>{value.content}</p>
+                        </div>
+                        <h3>Comments</h3>
+                        {comments.map(
+                            (comment) =>
+                                comment.announcementId === value.id && (
+                                    <div key={comment.id} className="comment">
+                                        <p>{comment.content}</p>
+                                        <small>
+                                            {comment.author} -{' '}
+                                            {new Date(
+                                                comment.createdAt,
+                                            ).toLocaleString()}
+                                        </small>
+                                    </div>
+                                ),
+                        )}
                     </div>
                 ))
             )}
-            <div className="comments">
-                <h3>Comments</h3>
-                {comments.map((comment) => (
-                    <div key={comment.id} className="comment">
-                        <p>{comment.content}</p>
-                        <small>
-                            {comment.author} -{' '}
-                            {new Date(comment.createdAt).toLocaleString()}
-                        </small>
-                    </div>
-                ))}
-            </div>
             <ClientViewAnnouncementForm fetchCommentData={fetchCommentData} />
         </div>
     );

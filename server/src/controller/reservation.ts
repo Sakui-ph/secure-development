@@ -1,13 +1,14 @@
 import { Request, Response } from 'express';
 import { Reservation, ReservationStatus } from '../models/Reservation';
 import ReservationDB from '../database/reservation';
-import { LogError, LogType } from '../utils/logger';
+import { LogError, LogType, LogWarning } from '../utils/logger';
+import { Console } from 'console';
 
 module.exports = {
     createReservation: async (req: Request, res: Response): Promise<any> => {
         const newReservation: Reservation = {
             reservation_date: req.body.date,
-            email: req.body.email,
+            email: req.session.email ?? '',
             room: req.body.room,
             adminApproved: ReservationStatus.pending,
         };
@@ -25,44 +26,29 @@ module.exports = {
             res.end('Error creating reservation').status(500);
         }
     },
-    /*
 
     getReservation: (projection: string[], searchBy: string[]) => {
-        return async (req: Request, res: Response) => {
-            if (req.query.email === undefined && req.body.email === undefined) {
-                res.status(500).send('Email is undefined');
-                return;
-            }
-            if (projection === undefined) {
-                LogWarning(
-                    'Projection is undefined for getReservation',
-                    'Projection is undefined',
-                    LogType.TRANSACTION,
-                );
-                res.status(500).send('Projection is undefined');
-                return;
-            }
-
+        return async (req: Request, res: Response): Promise<any> => {
             const searchObject: Record<string, any> = {};
 
             searchBy.forEach((key) => {
-                if (req.query[key] !== undefined) {
-                    searchObject[key] = req.query[key];
+                if (req.body[key] !== undefined) {
+                    searchObject[key] = req.body[key];
                 }
             });
 
             try {
-                const result = await ReservationDB.find(
-                    projection,
-                    searchObject,
-                );
-                res.send(result).status(200);
+                const result = await ReservationDB.find(projection, searchObject);
                 return result;
             } catch (e) {
-                if (e instanceof Error && e.stack !== undefined) {
-                    //LogError(e.stack, LogType.TRANSACTION);
+                if (e instanceof Error) {
+                    LogError(
+                        'Error getting reservation',
+                        e,
+                        LogType.TRANSACTION,
+                    );
                 }
-                res.status(500).send('Error finding reservation');
+                res.end('Error getting reservation').status(500);
             }
         };
     },
@@ -88,7 +74,6 @@ module.exports = {
             }
         };
     },
-    */
 };
 
 export default module.exports;

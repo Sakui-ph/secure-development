@@ -34,11 +34,19 @@ export const Router = () => (
                     />
                     <Route
                         path="/roomreservation"
-                        element={<ReservationForm />}
+                        element={
+                            <Protected allowedTypes={ALL}>
+                                <ReservationForm />
+                            </Protected>
+                        }
                     />
                     <Route
                         path="/viewreservations"
-                        element={<ViewReservations />}
+                        element={
+                            <Protected allowedTypes={ALL}>
+                                <ViewReservations />
+                            </Protected>
+                        }
                     />
                     <Route
                         path="/admin"

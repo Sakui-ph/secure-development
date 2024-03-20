@@ -3,7 +3,7 @@ export interface Reservation {
     reservation_date: string;
     email: string;
     room: string;
-    adminApproved: ReservationStatus;
+    adminApproved: string;
     clientId?: File;
 }
 

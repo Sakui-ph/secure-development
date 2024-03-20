@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
-import { Reservation, ReservationStatus } from '../models/Reservation';
+//import { Reservation, ReservationStatus } from '../models/Reservation';
+import { Reservation } from '../models/Reservation';
 import ReservationDB from '../database/reservation';
 import { LogError, LogType, LogWarning } from '../utils/logger';
 import { Console } from 'console';
@@ -10,7 +11,7 @@ module.exports = {
             reservation_date: req.body.date,
             email: req.session.email ?? '',
             room: req.body.room,
-            adminApproved: ReservationStatus.pending,
+            adminApproved: 'pending',
         };
         try {
             const result = await ReservationDB.create(newReservation);

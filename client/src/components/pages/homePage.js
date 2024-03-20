@@ -53,6 +53,9 @@ const HomePage = ({ websiteInfo = defaultWebsiteInfo }) => (
                         <li>
                             <a href="/viewannouncement">Announcements</a>
                         </li>
+                        <li>
+                            <a href="/viewreservations">Check Reservation</a>
+                        </li>
                     </ul>
                 </nav>
                 <button onClick={handleLogout} className="btn" type="submit">

@@ -1,17 +1,21 @@
 import { Request, Response } from 'express';
 //import { Reservation, ReservationStatus } from '../models/Reservation';
-import { Reservation } from '../models/Reservation';
+import { Reservation, ReservationStatus } from '../models/Reservation';
 import ReservationDB from '../database/reservation';
-import { LogError, LogType, LogWarning } from '../utils/logger';
-import { Console } from 'console';
+import { LogError, LogType } from '../utils/logger';
 
 module.exports = {
     createReservation: async (req: Request, res: Response): Promise<any> => {
+        if (req.session.email === undefined) {
+            res.status(400).send('Session email is not defined');
+            return;
+        }
+
         const newReservation: Reservation = {
             reservation_date: req.body.date,
-            email: req.session.email ?? '',
+            email: req.session.email,
             room: req.body.room,
-            adminApproved: 'pending',
+            adminApproved: ReservationStatus[0],
         };
         try {
             const result = await ReservationDB.create(newReservation);
@@ -28,7 +32,7 @@ module.exports = {
         }
     },
 
-    getReservation: (projection: string[], searchBy: string[]) => {
+    getReservation: (projection: string[]) => {
         return async (req: Request, res: Response): Promise<any> => {
             const searchObject: Record<string, any> = {};
             if (!req.session.email) {
@@ -40,7 +44,10 @@ module.exports = {
                 : projection;
             searchObject['email'] = req.session.email;
             try {
-                const result = await ReservationDB.find(sanitizedProjection, searchObject);
+                const result = await ReservationDB.find(
+                    sanitizedProjection,
+                    searchObject,
+                );
                 return result;
             } catch (e) {
                 if (e instanceof Error) {
@@ -54,8 +61,6 @@ module.exports = {
             }
         };
     },
-    
-    
 
     deleteReservation: (searchBy: string[]) => {
         return async (req: Request, res: Response): Promise<any> => {

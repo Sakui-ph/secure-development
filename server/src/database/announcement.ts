@@ -4,7 +4,7 @@ import { Announcement } from '../models/Announcement';
 import { LogError, LogType } from '../utils/logger';
 
 class AnnouncementDB {
-    find = async (projection: string[], searchBy: Record<string, any>) => {
+    /*find = async (projection: string[], searchBy: Record<string, any>) => {
         const searchParams = convertSearchByToString(searchBy);
         const result = await db.executeDatabase(
             `SELECT ${projection.join(', ')} FROM announcement WHERE ${searchParams}`,
@@ -12,6 +12,15 @@ class AnnouncementDB {
         );
 
         return result[0][0];
+    };*/
+
+    find = async () => {
+        const result = await db.executeDatabase(
+            `SELECT * FROM announcement`,
+            [],
+        );
+
+        return result[0];
     };
 
     create = async (announcement: Announcement) => {

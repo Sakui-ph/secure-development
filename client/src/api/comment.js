@@ -23,7 +23,7 @@ export const CreateComment = async ({
         });
 };
 
-export const fetchAllComments = async () => {
+export const GetComments = async () => {
     try {
         const response = await createAPIEndpoints(
             COMMENT_ENDPOINTS.read,

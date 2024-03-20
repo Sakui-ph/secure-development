@@ -23,7 +23,7 @@ module.exports = {
         const projection = ['text'];
         const searchBy = { id: req.params.id }; 
         try {
-            const result = await AnnouncementDB.find(projection, searchBy);
+            const result = await AnnouncementDB.find();
             res.send(result).status(200);
         } catch (e) {
             if (e instanceof Error) {

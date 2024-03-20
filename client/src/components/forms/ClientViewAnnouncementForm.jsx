@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { fetchAllComments, CreateComment } from '../../api/comment';
-import { fetchAnnouncement } from '../../api/announcement';
+import { GetComments, CreateComment } from '../../api/comment';
+import { GetAnnouncement } from '../../api/announcement';
 
 export default function AnnouncementViewForm() {
     const [announcement, setAnnouncement] = useState(null);
@@ -9,7 +9,7 @@ export default function AnnouncementViewForm() {
     const [submittingComment, setSubmittingComment] = useState(false);
 
     const fetchAnnouncementData = () => {
-        fetchAnnouncement()
+        GetAnnouncement()
             .then((data) => {
                 setAnnouncement(data);
             })
@@ -19,7 +19,7 @@ export default function AnnouncementViewForm() {
     };
 
     const fetchCommentData = () => {
-        fetchAllComments()
+        GetComments()
             .then((data) => {
                 setComments(data);
             })
@@ -44,7 +44,8 @@ export default function AnnouncementViewForm() {
         const newCommentData = {
             author: 'User', // get first name from session
             content: newComment,
-            // get announcement id from session
+            createdAt: new Date(),
+            announcementId: '1', // get announcement id from session
         };
 
         CreateComment(newCommentData)

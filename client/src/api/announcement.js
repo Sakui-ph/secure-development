@@ -16,7 +16,7 @@ export const CreateAnnouncement = async ({ text }) => {
         });
 };
 
-export const fetchAnnouncement = async () => {
+export const GetAnnouncement = async () => {
     try {
         const response = await createAPIEndpoints(
             ANNOUNCEMENT_ENDPOINTS.read,

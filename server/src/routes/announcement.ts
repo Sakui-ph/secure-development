@@ -32,4 +32,17 @@ router.post(
     },
 );
 
+router.get(
+    '/read',
+    async (req: Request, res: Response) => {
+        try {
+            const announcements = await announcementController.getAnnouncement(req, res);
+            res.send(announcements).status(200);
+        } catch (e) {
+            LogError('Error fetching announcements', e as Error, LogType.TRANSACTION);
+            res.send('Error fetching announcements').status(500);
+        }
+    },
+);
+
 export { router as AnnouncementRoutes };

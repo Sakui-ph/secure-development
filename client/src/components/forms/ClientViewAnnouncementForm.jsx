@@ -59,11 +59,53 @@ export default function AnnouncementViewForm() {
     };
 
     return (
+<<<<<<< HEAD
         <div>
             {announcement && (
                 <div className="announcement">
                     <h2>{announcement.title}</h2>
                     <p>{announcement.text}</p>
+=======
+        <div className="announcement-view">
+            {announcements.map((announcement) => (
+                <div key={announcement.id} className="announcement">
+                    <img src={announcement.imageUrl} alt="Announcement" />
+                    <h2>{announcement.title}</h2>
+                    <p>{announcement.text}</p>
+                    <form
+                        onSubmit={(e) =>
+                            handleCommentSubmit(e, announcement.id)
+                        }
+                    >
+                        <label htmlFor={`comment_${announcement.id}`}>
+                            Post Comment:
+                        </label>
+                        <p> </p>
+                        <textarea
+                            id={`comment_${announcement.id}`}
+                            value={newComment}
+                            onChange={handleCommentChange}
+                            rows="3"
+                            required
+                        />
+                        <p> </p>
+                        <button type="submit">Submit Comment</button>
+                    </form>
+
+                    <div className="comments">
+                        <h1>Comments:</h1>
+                        {comments
+                            .filter(
+                                (comment) =>
+                                    comment.announcementId === announcement.id,
+                            )
+                            .map((comment) => (
+                                <div key={comment.id} className="comment">
+                                    <p>{comment.text}</p>
+                                </div>
+                            ))}
+                    </div>
+>>>>>>> 4f4e9dadab011cee2aa8a326ee51843201317c3f
                 </div>
             )}
             <div className="comments">

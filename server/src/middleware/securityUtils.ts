@@ -99,6 +99,8 @@ export const setSession = async (
             email: req.body.email,
         });
 
+        req.session.email = req.body.email;
+
         const user = data['prefix_id'] + data['id'].toString().padStart(5, '0');
 
         req.session.regenerate((err) => {

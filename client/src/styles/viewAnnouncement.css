@@ -22,3 +22,8 @@ button {
     border: none;
     margin-bottom: 40px;
 }
+
+.comments {
+    border: 2px solid rgba(255, 191, 0, 0.9);
+    padding: 50px; 
+}

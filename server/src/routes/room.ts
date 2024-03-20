@@ -19,7 +19,6 @@ router.post(
     uploadPDF.single('clientIdFile'),
     async (req: Request, res: Response) => {
         try {
-            console.log(req.body.clientIdFile);
             const result = await reservationContoller.createReservation(
                 req,
                 res,

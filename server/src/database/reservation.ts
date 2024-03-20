@@ -17,10 +17,10 @@ class ReservationDB {
     create = async (reservation: Reservation) => {
         const query: string = 'INSERT INTO `reservation` SET ?';
         const values = {
-            date: reservation.date,
+            reservation_date: reservation.reservation_date,
             email: reservation.email,
             room: reservation.room,
-            time: reservation.time,
+            adminApproved: reservation.adminApproved.toString(), // should be pending on create
         };
 
         try {

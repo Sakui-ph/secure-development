@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { fetchAllComments, postComment } from '../../api/comments'; // Import your API functions for fetching and posting comments
-import { fetchAnnouncement } from '../../api/announcement'; // Import your API function for fetching announcement
+import { fetchAllComments, postComment } from '../../api/comment';
+import { fetchAnnouncement } from '../../api/announcement';
 
 export default function AnnouncementViewForm() {
     const [announcement, setAnnouncement] = useState(null);
@@ -9,7 +9,7 @@ export default function AnnouncementViewForm() {
     const [submittingComment, setSubmittingComment] = useState(false);
 
     const fetchAnnouncementData = () => {
-        fetchAnnouncement() // Fetch announcement from API
+        fetchAnnouncement()
             .then((data) => {
                 setAnnouncement(data);
             })
@@ -19,7 +19,7 @@ export default function AnnouncementViewForm() {
     };
 
     const fetchCommentData = () => {
-        fetchAllComments() // Fetch all comments from API
+        fetchAllComments()
             .then((data) => {
                 setComments(data);
             })
@@ -71,7 +71,10 @@ export default function AnnouncementViewForm() {
                 {comments.map((comment) => (
                     <div key={comment.id} className="comment">
                         <p>{comment.text}</p>
-                        <small>{comment.author} - {new Date(comment.date).toLocaleString()}</small>
+                        <small>
+                            {comment.author} -{' '}
+                            {new Date(comment.date).toLocaleString()}
+                        </small>
                     </div>
                 ))}
                 <form onSubmit={handleCommentSubmit}>

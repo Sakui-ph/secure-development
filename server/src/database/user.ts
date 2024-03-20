@@ -13,6 +13,14 @@ class UserDB {
         return result[0];
     };
 
+    findAll = async (projection: string[]) => {
+        const result = await db.readFromDatabase(
+            `SELECT ${projection.join(', ')} FROM users`,
+            [],
+        );
+        return result;
+    };
+
     create = async (user: User) => {
         const query: string = 'INSERT INTO `users` SET ?';
         const values = {

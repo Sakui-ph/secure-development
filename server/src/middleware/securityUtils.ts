@@ -149,12 +149,24 @@ export const validateSession = () => {
     };
 };
 
-export const validateAdmin = () => {
-    return (req: Request, res: Response, next: NextFunction) => {
-        if (req.session.userType === UserType.ADMIN) {
-            next();
-        } else {
-            res.send({ auth: false, message: 'Not authorized' }).status(401);
-        }
-    };
+export const validateAdmin = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+) => {
+    console.log('Validating admin');
+
+    if (req.session.userType === UserType.ADMIN) {
+        console.log('Admin validated');
+        next();
+        return;
+    } else {
+        LogError(
+            `User ${req.session.user} is not authorized to access this route`,
+            null,
+            LogType.AUTH,
+        );
+        res.send({ auth: false, message: 'Not authorized' }).status(401);
+        return;
+    }
 };

@@ -1,13 +1,10 @@
 import express, { Request, Response } from 'express';
-import { Reservation } from '../models/Reservation';
 import reservationContoller from '../controller/reservation';
 import { LogError, LogInfo, LogType } from '../utils/logger';
 import asyncify from 'express-asyncify';
 import bodyParser from 'body-parser';
-import reservation from '../database/reservation';
 import { uploadFormdata } from '../utils/multerHandler';
 
-const urlencodedParser = bodyParser.urlencoded({ extended: false });
 const extendedParser = bodyParser.urlencoded({ extended: true });
 
 const router = asyncify(express.Router());

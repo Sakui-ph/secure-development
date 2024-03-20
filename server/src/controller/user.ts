@@ -69,6 +69,20 @@ module.exports = {
             }
         };
     },
+    getAllUsers: (projection: string[]) => {
+        return async (req: Request, res: Response) => {
+            try {
+                const result = await UserDB.findAll(projection);
+                return result;
+            } catch (e) {
+                if (e instanceof Error) {
+                    LogError('Could not find users', e, LogType.TRANSACTION);
+                }
+                res.send('Error finding users').status(500);
+                return e;
+            }
+        };
+    },
     updateUser: (projection: string[], searchBy: string[]) => {
         return async (req: Request, res: Response): Promise<any> => {
             // TODO: Add check for if email they want to change to exists

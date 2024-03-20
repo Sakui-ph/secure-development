@@ -58,6 +58,16 @@ export default function ReservationForm() {
                 <option value="room1">Room 1</option>
                 <option value="room2">Room 2</option>
             </select>
+            <label htmlFor="pdf">Upload PDF:</label>
+            <input
+                className="input"
+                type="file"
+                id="pdf"
+                name="pdf"
+                accept=".pdf"
+                // onChange={handleFileInputChange}
+                required
+            />
             <button type="submit">Submit</button>
         </form>
     );

@@ -5,7 +5,7 @@ import { LogError, LogType } from '../utils/logger';
 
 class CommentDB {
     find = async () => {
-        const result = await db.executeDatabase(`SELECT * FROM comments`, []);
+        const result = await db.readFromDatabase(`SELECT * FROM comments`, []);
 
         return result[0];
     };
@@ -13,7 +13,6 @@ class CommentDB {
     create = async (comment: Comment) => {
         const query: string = 'INSERT INTO comments SET ?';
         const values = {
-            id: comment.id,
             content: comment.content,
             author: comment.author,
             createdAt: comment.createdAt,

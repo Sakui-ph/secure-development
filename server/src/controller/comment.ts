@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { Comment } from '../models/Comment';
 import CommentDB from '../database/comment';
-import { LogError, LogType, LogWarning } from '../utils/logger';
+import { LogError, LogType } from '../utils/logger';
 
 module.exports = {
     createComment: async (req: Request, res: Response): Promise<any> => {
@@ -13,7 +13,7 @@ module.exports = {
         };
         try {
             const result = await CommentDB.create(newComment);
-            res.send(result).status(200);
+            return result;
         } catch (e) {
             if (e instanceof Error) {
                 LogError('Error creating comment', e, LogType.TRANSACTION);

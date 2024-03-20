@@ -22,10 +22,10 @@ module.exports = {
         }
     },
 
-    getComment: async (req: Request, res: Response): Promise<any> => {
+    getComments: async (req: Request, res: Response): Promise<any> => {
         try {
-            const allComments = await CommentDB.find();
-            res.send(allComments).status(200);
+            const allComments = await CommentDB.findAll();
+            return allComments;
         } catch (e) {
             if (e instanceof Error) {
                 LogError('Error fetching all comments', e, LogType.TRANSACTION);

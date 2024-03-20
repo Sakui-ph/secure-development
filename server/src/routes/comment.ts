@@ -31,6 +31,16 @@ router.post(
     },
 );
 
+router.get('/read', async (req: Request, res: Response) => {
+    try {
+        const comments = await commentController.getComments(req, res);
+        res.send(comments).status(200);
+    } catch (e) {
+        LogError('Error fetching comments', e as Error, LogType.TRANSACTION);
+        res.send('Error fetching comments').status(500);
+    }
+});
+
 /*router.get(
     '/find-all',
     async (req: Request, res: Response) => {

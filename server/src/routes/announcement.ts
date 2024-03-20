@@ -51,7 +51,6 @@ router.get('/read', async (req: Request, res: Response) => {
             req,
             res,
         );
-        console.log(announcements);
         res.send(announcements).status(200);
     } catch (e) {
         LogError(

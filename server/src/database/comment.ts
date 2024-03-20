@@ -4,10 +4,9 @@ import { Comment } from '../models/Comment';
 import { LogError, LogType } from '../utils/logger';
 
 class CommentDB {
-    find = async () => {
+    findAll = async () => {
         const result = await db.readFromDatabase(`SELECT * FROM comment`, []);
-
-        return result[0];
+        return result;
     };
 
     create = async (comment: Comment) => {

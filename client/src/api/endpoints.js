@@ -14,6 +14,7 @@ export const ADMIN_ENDPOINTS = {
 
 export const COMMENT_ENDPOINTS = {
     create: 'comment/create',
+    read: 'comment/read',
 };
 
 export const ROOM_ENDPOINTS = {

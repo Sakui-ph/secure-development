@@ -3,6 +3,7 @@ export interface Comment {
     author: string;
     content: string;
     createdAt?: Date;
+    announcementId?: string;
 }
 
 export const CommentParams = {
@@ -10,4 +11,5 @@ export const CommentParams = {
     AUTHOR: 'author',
     CONTENT: 'text',
     CREATEDAT: 'date',
+    ANNOUNCEMENTID: 'announcementId',
 };

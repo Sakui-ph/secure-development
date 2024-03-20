@@ -17,6 +17,7 @@ class CommentDB {
             content: comment.content,
             author: comment.author,
             createdAt: comment.createdAt,
+            announcementId: comment.announcementId,
         };
 
         try {

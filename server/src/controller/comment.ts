@@ -9,6 +9,7 @@ module.exports = {
             author: req.body.author,
             content: req.body.content,
             createdAt: new Date(),
+            announcementId: req.body.announcementId,
         };
         try {
             const result = await CommentDB.create(newComment);

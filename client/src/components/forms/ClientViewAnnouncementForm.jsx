@@ -42,15 +42,16 @@ export default function AnnouncementViewForm() {
         setSubmittingComment(true);
 
         const newCommentData = {
-            author: 'User', // You can set the author to the current user's name or fetch it from the server
+            author: 'User', // get first name from session
             content: newComment,
+            // get announcement id from session
         };
 
-        CreateComment(newCommentData) // Post new comment to API
+        CreateComment(newCommentData)
             .then(() => {
                 setNewComment('');
                 setSubmittingComment(false);
-                fetchCommentData(); // Refresh comments after posting comment
+                fetchCommentData();
             })
             .catch((error) => {
                 console.error('Error posting comment:', error);

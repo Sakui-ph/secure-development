@@ -4,5 +4,6 @@ declare module 'express-session' {
     export interface SessionData {
         user: string | null;
         userType: UserType;
+        email: string;
     }
 }

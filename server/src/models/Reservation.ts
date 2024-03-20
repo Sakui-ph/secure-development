@@ -4,6 +4,8 @@ export interface Reservation {
     time: string;
     email: string;
     room: string;
+    adminApproved: ReservationStatus;
+    adminId: string;
 }
 
 export const ReservationParams = {
@@ -13,3 +15,9 @@ export const ReservationParams = {
     EMAIL: 'email',
     ROOM: 'room',
 };
+
+enum ReservationStatus {
+    Pending,
+    Approved,
+    NotApproved,
+}

@@ -92,7 +92,8 @@ export const announcementEndpoints = (endpoint) => {
     const url = `${BASE_URL}/announcement/${endpoint}`;
 
     return {
-        fetch: () => axios.get(url).catch((error) => LogError(error, 'Request failed')),
+        fetch: () =>
+            axios.get(url).catch((error) => LogError(error, 'Request failed')),
         create: (formData) =>
             axios
                 .post(url, formData, {
@@ -104,4 +105,4 @@ export const announcementEndpoints = (endpoint) => {
                     LogError(error, 'Request failed');
                 }),
     };
-}
+};

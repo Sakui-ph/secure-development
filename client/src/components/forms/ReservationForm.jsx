@@ -5,12 +5,17 @@ export default function ReservationForm() {
     const [formFields, setFormFields] = useState({
         date: '',
         room: '',
+        clientIdFile: '',
     });
 
     const [submitting, setSubmitting] = useState(false);
 
     const handleInputChange = (e) => {
         setFormFields({ ...formFields, [e.target.name]: e.target.value });
+    };
+
+    const handleFileInputChange = (e) => {
+        setFormFields({ ...formFields, clientIdFile: e.target.files[0] });
     };
 
     const handleSubmit = (e) => {
@@ -65,7 +70,7 @@ export default function ReservationForm() {
                 id="pdf"
                 name="pdf"
                 accept=".pdf"
-                // onChange={handleFileInputChange}
+                onChange={handleFileInputChange}
                 required
             />
             <button type="submit">Submit</button>

@@ -9,7 +9,7 @@ class ReservationDB {
         const query = `SELECT ${projection.join(',')} FROM reservation WHERE ${searchParams}`;
         const result = await db.readFromDatabase(query, []);
         return result;
-    }
+    };
 
     create = async (reservation: Reservation) => {
         const query: string = 'INSERT INTO `reservation` SET ?';
@@ -17,8 +17,9 @@ class ReservationDB {
             reservation_date: reservation.reservation_date,
             email: reservation.email,
             room: reservation.room,
-            //adminApproved: reservation.adminApproved.toString(), // should be pending on create
-            adminApproved: 'pending',
+            adminApproved: reservation.adminApproved,
+            clientIdFile: reservation.clientIdFile,
+            reservationStatus: reservation.reservationStatus,
         };
 
         try {

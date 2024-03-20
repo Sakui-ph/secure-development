@@ -3,7 +3,7 @@ import reservationContoller from '../controller/reservation';
 import { LogError, LogInfo, LogType } from '../utils/logger';
 import asyncify from 'express-asyncify';
 import bodyParser from 'body-parser';
-import { uploadFormdata } from '../utils/multerHandler';
+import { uploadPDF } from '../utils/multerHandler';
 import { validateLoggedIn } from '../middleware/securityUtils';
 
 const urlencodedParser = bodyParser.urlencoded({ extended: false });
@@ -16,9 +16,10 @@ router.post(
     validateLoggedIn,
     express.json(),
     extendedParser,
-    uploadFormdata,
+    uploadPDF.single('clientIdFile'),
     async (req: Request, res: Response) => {
         try {
+            console.log(req.body.clientIdFile);
             const result = await reservationContoller.createReservation(
                 req,
                 res,

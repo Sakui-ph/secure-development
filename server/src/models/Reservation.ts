@@ -4,7 +4,7 @@ export interface Reservation {
     email: string;
     room: string;
     adminApproved: string;
-    clientId?: File;
+    clientIdFile?: Buffer;
     reservationStatus?: string;
 }
 

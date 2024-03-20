@@ -20,6 +20,7 @@ module.exports = {
             email: req.session.email,
             room: req.body.room,
             adminApproved: AdminApprovedStatus[0],
+            clientIdFile: req.body.clientId,
             reservationStatus: ReservationStatus[0],
         };
         try {

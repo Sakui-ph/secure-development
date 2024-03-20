@@ -11,6 +11,7 @@ import ViewReservations from '../components/pages/viewReservationPage';
 import AdminAnnouncement from '../components/pages/adminAnnouncment';
 import ViewAnnouncement from '../components/pages/clientAnnouncement';
 import { SessionProvider } from '../utils/session_timeout';
+import AdminReservationPage from '../components/pages/adminReservationPage';
 
 const ADMIN = [UserType.ADMIN];
 // eslint-disable-next-line no-unused-vars
@@ -70,6 +71,14 @@ export const Router = () => (
                         element={
                             <Protected allowedTypes={ADMIN}>
                                 <AdminAnnouncement />
+                            </Protected>
+                        }
+                    />
+                    <Route
+                        path="/adminReservation"
+                        element={
+                            <Protected allowedTypes={ADMIN}>
+                                <AdminReservationPage />
                             </Protected>
                         }
                     />

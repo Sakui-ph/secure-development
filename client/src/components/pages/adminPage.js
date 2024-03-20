@@ -25,6 +25,18 @@ const AdminPanel = () => {
     return (
         <div className="admin-panel">
             <h1>Admin Panel</h1>
+            <div className="nav">
+                <nav className="navbar">
+                    <ul>
+                        <li>
+                            <a href="/announcement">Create Announcement</a>
+                        </li>
+                        <li>
+                            <a href="/adminReservation">Reservations</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
             <div className="user-list">
                 <h2>User List</h2>
                 <ul>

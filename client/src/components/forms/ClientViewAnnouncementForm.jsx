@@ -2,7 +2,10 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { CreateComment } from '../../api/comment';
 
-export default function AnnouncementViewForm({ fetchCommentData }) {
+export default function AnnouncementViewForm({
+    fetchCommentData,
+    announcementId,
+}) {
     const [newComment, setNewComment] = useState('');
     const [submittingComment, setSubmittingComment] = useState(false);
 
@@ -18,7 +21,7 @@ export default function AnnouncementViewForm({ fetchCommentData }) {
             author: 'User', // get first name from session
             content: newComment,
             createdAt: new Date(),
-            announcementId: '1', // get announcement id from session
+            announcementId, // get announcement id from session
         };
 
         try {
@@ -52,4 +55,5 @@ export default function AnnouncementViewForm({ fetchCommentData }) {
 
 AnnouncementViewForm.propTypes = {
     fetchCommentData: PropTypes.func.isRequired,
+    announcementId: PropTypes.number.isRequired,
 };

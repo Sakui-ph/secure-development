@@ -37,14 +37,13 @@ export default function ClientViewAnnouncementPage() {
     return (
         <div>
             <h1>View Announcement</h1>
-
+            <h2>Announcement</h2>
             {announcement.length === 0 ? (
                 <p>No announcement available</p>
             ) : (
                 announcement.map((value) => (
                     <div>
                         <div key={value.id} className="announcement">
-                            <h2>Announcement</h2>
                             <p>{value.content}</p>
                         </div>
                         <h3>Comments</h3>
@@ -62,10 +61,13 @@ export default function ClientViewAnnouncementPage() {
                                     </div>
                                 ),
                         )}
+                        <ClientViewAnnouncementForm
+                            fetchCommentData={fetchCommentData}
+                            announcementId={value.id}
+                        />
                     </div>
                 ))
             )}
-            <ClientViewAnnouncementForm fetchCommentData={fetchCommentData} />
         </div>
     );
 }

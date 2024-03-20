@@ -76,10 +76,9 @@ const AnnouncementView = () => {
         <div className="announcement-view">
             {announcements.map((announcement) => (
                 <div key={announcement.id} className="announcement">
+                    <img src={announcement.imageUrl} alt="Announcement" />
                     <h2>{announcement.title}</h2>
                     <p>{announcement.text}</p>
-                    <img src={announcement.imageUrl} alt="Announcement" />
-
                     <form
                         onSubmit={(e) =>
                             handleCommentSubmit(e, announcement.id)
@@ -88,6 +87,7 @@ const AnnouncementView = () => {
                         <label htmlFor={`comment_${announcement.id}`}>
                             Post Comment:
                         </label>
+                        <p> </p>
                         <textarea
                             id={`comment_${announcement.id}`}
                             value={newComment}
@@ -95,11 +95,12 @@ const AnnouncementView = () => {
                             rows="3"
                             required
                         />
+                        <p> </p>
                         <button type="submit">Submit Comment</button>
                     </form>
 
                     <div className="comments">
-                        <h3>Comments:</h3>
+                        <h1>Comments:</h1>
                         {comments
                             .filter(
                                 (comment) =>

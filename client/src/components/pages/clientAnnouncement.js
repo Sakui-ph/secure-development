@@ -36,12 +36,17 @@ export default function ClientViewAnnouncementPage() {
     return (
         <div>
             <h1>View Announcement</h1>
-            {announcement.map((value) => (
-                <div key={value.id} className="announcement">
-                    <h2>Announcement</h2>
-                    <p>{value.content}</p>
-                </div>
-            ))}
+
+            {announcement.length === 0 ? (
+                <p>No announcement available</p>
+            ) : (
+                announcement.map((value) => (
+                    <div key={value.id} className="announcement">
+                        <h2>Announcement</h2>
+                        <p>{value.content}</p>
+                    </div>
+                ))
+            )}
             <div className="comments">
                 <h3>Comments</h3>
                 {comments.map((comment) => (

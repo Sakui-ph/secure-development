@@ -2,9 +2,9 @@ import { LogError } from '../utils/error-handlers/error-logger';
 import { createAPIEndpoints } from './axios';
 import { ANNOUNCEMENT_ENDPOINTS } from './endpoints';
 
-export const CreateAnnouncement = async ({ text }) => {
+export const CreateAnnouncement = async ({ content }) => {
     const formData = new FormData();
-    formData.append('text', text);
+    formData.append('content', content);
 
     await createAPIEndpoints(ANNOUNCEMENT_ENDPOINTS.create)
         .create(formData)
@@ -21,7 +21,7 @@ export const GetAnnouncement = async () => {
         const response = await createAPIEndpoints(
             ANNOUNCEMENT_ENDPOINTS.read,
         ).fetch();
-        return response.data;
+        return response;
     } catch (error) {
         LogError('Error fetching announcement:', error);
         throw error;

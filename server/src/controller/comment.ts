@@ -7,8 +7,8 @@ module.exports = {
     createComment: async (req: Request, res: Response): Promise<any> => {
         const newComment: Comment = {
             author: req.body.author,
-            text: req.body.text,
-            date: new Date(),
+            content: req.body.content,
+            createdAt: new Date(),
         };
         try {
             const result = await CommentDB.create(newComment);

@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 export default function PostAnnouncementForm() {
     const [announcement, setAnnouncement] = useState({
         text: '',
-        image: null,
+        image_data: null,
     });
 
     const handleTextChange = (e) => {
@@ -18,7 +18,7 @@ export default function PostAnnouncementForm() {
         e.preventDefault();
         const formData = new FormData();
         formData.append('text', announcement.text);
-        formData.append('image', announcement.image);
+        formData.append('image', announcement.image_data);
 
         // Perform API call here to submit the form data KUNWARE
         // fetch('/api/postAnnouncement', {
@@ -29,7 +29,7 @@ export default function PostAnnouncementForm() {
         // });
 
         // Reset form fields after submission
-        setAnnouncement({ text: '', image: null });
+        setAnnouncement({ text: '', image_data: null });
     };
 
     return (

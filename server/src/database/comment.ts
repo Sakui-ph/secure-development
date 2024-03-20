@@ -14,9 +14,9 @@ class CommentDB {
         const query: string = 'INSERT INTO comments SET ?';
         const values = {
             id: comment.id,
-            text: comment.text,
+            content: comment.content,
             author: comment.author,
-            date: comment.date,
+            createdAt: comment.createdAt,
         };
 
         try {

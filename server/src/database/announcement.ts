@@ -18,7 +18,7 @@ class AnnouncementDB {
         const query: string = 'INSERT INTO `announcement` SET ?';
         const values = {
             text: announcement.text,
-            image: announcement.image,
+            image_data: announcement.image_data,
         }
 
         try {

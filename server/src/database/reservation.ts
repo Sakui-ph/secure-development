@@ -6,13 +6,10 @@ import { LogError, LogType } from '../utils/logger';
 class ReservationDB {
     find = async (projection: string[], searchBy: Record<string, any>) => {
         const searchParams = convertSearchByToString(searchBy);
-        const result = await db.executeDatabase(
-            `SELECT ${projection.join(', ')} FROM reservation WHERE ${searchParams}`,
-            [],
-        );
-
-        return result[0][0];
-    };
+        const query = `SELECT * FROM reservation WHERE ${searchParams}`;
+        const result = await db.readFromDatabase(query, []);
+        return result;
+    }
 
     create = async (reservation: Reservation) => {
         const query: string = 'INSERT INTO `reservation` SET ?';

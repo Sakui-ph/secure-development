@@ -9,6 +9,7 @@ import { UserType } from '../models/user';
 import ReservationForm from '../components/pages/roomReservationPage';
 import ViewReservations from '../components/pages/viewReservationPage';
 import AdminAnnouncement from '../components/pages/adminAnnouncment';
+import ViewAnnouncement from '../components/pages/clientAnnouncement';
 import { SessionProvider } from '../utils/session_timeout';
 
 const ADMIN = [UserType.ADMIN];
@@ -34,11 +35,28 @@ export const Router = () => (
                     />
                     <Route
                         path="/roomreservation"
-                        element={<ReservationForm />}
+                        element={
+                            <Protected allowedTypes={ALL}>
+                                <ReservationForm />
+                            </Protected>
+                        }
                     />
                     <Route
                         path="/viewreservations"
-                        element={<ViewReservations />}
+                        element={
+                            <Protected allowedTypes={ALL}>
+                                <ViewReservations />
+                            </Protected>
+                        }
+                    />
+                    <Route
+                        path="/viewannouncement"
+                        element={
+                            /* <Protected allowedTypes={ALL}>
+                                <ViewAnnouncement />
+                            </Protected> */
+                            <ViewAnnouncement />
+                        }
                     />
                     <Route
                         path="/admin"

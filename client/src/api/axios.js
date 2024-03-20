@@ -83,3 +83,55 @@ export const roomEndpoints = (endpoint) => {
                 }),
     };
 };
+
+export const commentEndpoints = (endpoint) => {
+    axios.defaults.headers = {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        Accept: 'application/json',
+    };
+    const url = `${BASE_URL}/viewannouncement/${endpoint}`;
+
+    return {
+        fetch: () =>
+            axios.get(url).catch((error) => LogError(error, 'Request failed')),
+        create: (formData) =>
+            axios
+                .post(url, formData, {
+                    headers: {
+                        'content-type': 'multipart/form-data',
+                    },
+                })
+                .catch((error) => {
+                    LogError(error, 'Request failed');
+                }),
+        /* deleteById: (id) =>
+            axios
+                .delete(`${url}/${id}`)
+                .catch((error) => {
+                    LogError(error, 'Request failed');
+                }), */
+    };
+};
+
+export const announcementEndpoints = (endpoint) => {
+    axios.defaults.headers = {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        Accept: 'application/json',
+    };
+    const url = `${BASE_URL}/announcement/${endpoint}`;
+
+    return {
+        fetch: () =>
+            axios.get(url).catch((error) => LogError(error, 'Request failed')),
+        create: (formData) =>
+            axios
+                .post(url, formData, {
+                    headers: {
+                        'content-type': 'multipart/form-data',
+                    },
+                })
+                .catch((error) => {
+                    LogError(error, 'Request failed');
+                }),
+    };
+};

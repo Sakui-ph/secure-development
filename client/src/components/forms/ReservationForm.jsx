@@ -5,7 +5,6 @@ export default function ReservationForm() {
     const [formFields, setFormFields] = useState({
         date: '',
         time: '',
-        email: '',
         room: '',
     });
 
@@ -26,7 +25,7 @@ export default function ReservationForm() {
             setFormFields({
                 date: '',
                 time: '',
-                email: '',
+                email: '', // TODO: set email to current user's email
                 room: '',
             });
             CreateRoomReservation(formFields).then((response) => {
@@ -39,16 +38,6 @@ export default function ReservationForm() {
     return (
         <form className="form" onSubmit={handleSubmit}>
             <h1>Rooms Reservation Form</h1>
-            <label htmlFor="email">Email:</label>
-            <input
-                className="input"
-                type="email"
-                id="email"
-                name="email"
-                value={formFields.email}
-                onChange={handleInputChange}
-                required
-            />
             <label htmlFor="date">Date:</label>
             <input
                 className="input"

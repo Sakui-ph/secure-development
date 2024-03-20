@@ -18,10 +18,9 @@ export default function AnnouncementViewForm({
         setSubmittingComment(true);
 
         const newCommentData = {
-            author: 'User', // get first name from session
             content: newComment,
             createdAt: new Date(),
-            announcementId, // get announcement id from session
+            announcementId,
         };
 
         try {

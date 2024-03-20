@@ -5,8 +5,12 @@ import { LogError, LogType } from '../utils/logger';
 
 module.exports = {
     createComment: async (req: Request, res: Response): Promise<any> => {
+        if (req.session.firstName === undefined) {
+            res.status(400).send('Session is not defined');
+            return;
+        }
         const newComment: Comment = {
-            author: req.body.author,
+            author: req.session.firstName,
             content: req.body.content,
             createdAt: new Date(),
             announcementId: req.body.announcementId,

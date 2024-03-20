@@ -96,10 +96,10 @@ export const setSession = async (
 ) => {
     if (req.session !== undefined) {
         const email = req.body.email;
-        const data = await UserDB.find(['prefix_id', 'id'], {
+        const data = await UserDB.find(['prefix_id', 'id', 'first_name'], {
             email: email,
         });
-
+        const firstName = data['first_name'];
         const user = data['prefix_id'] + data['id'].toString().padStart(5, '0');
 
         req.session.regenerate((err) => {
@@ -107,6 +107,7 @@ export const setSession = async (
                 LogError('Error regenerating session', null, LogType.AUTH);
                 res.status(500).send('Error regenerating session');
             }
+            req.session.firstName = firstName;
             req.session.email = email;
             req.session.user = user;
             if (data['prefix_id'] === '100') {

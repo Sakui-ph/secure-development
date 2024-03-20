@@ -17,7 +17,8 @@ class ReservationDB {
             reservation_date: reservation.reservation_date,
             email: reservation.email,
             room: reservation.room,
-            adminApproved: reservation.adminApproved.toString(), // should be pending on create
+            //adminApproved: reservation.adminApproved.toString(), // should be pending on create
+            adminApproved: 'pending',
         };
 
         try {

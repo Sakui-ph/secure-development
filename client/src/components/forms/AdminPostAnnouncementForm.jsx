@@ -1,30 +1,25 @@
 import React, { useState } from 'react';
+import { CreateAnnouncement } from '../../api/announcement';
 
 export default function PostAnnouncementForm() {
     const [announcement, setAnnouncement] = useState({
-        text: '',
-        image_data: null,
+        content: '',
     });
 
     const handleTextChange = (e) => {
-        setAnnouncement({ ...announcement, text: e.target.value });
+        setAnnouncement({ ...announcement, content: e.target.value });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        const formData = new FormData();
-        formData.append('text', announcement.text);
 
-        // Perform API call here to submit the form data KUNWARE
-        // fetch('/api/postAnnouncement', {
-        //     method: 'POST',
-        //     body: formData,
-        // }).then(response => {
-        //     // Handle response
-        // });
-
-        // Reset form fields after submission
-        setAnnouncement({ text: '' });
+        try {
+            await CreateAnnouncement(announcement);
+            console.log('Announcement created successfully!');
+        } catch (error) {
+            console.error('Error creating announcement:', error);
+        }
+        setAnnouncement({ content: '' });
     };
 
     return (
@@ -33,7 +28,7 @@ export default function PostAnnouncementForm() {
             <textarea
                 className="input"
                 id="announcementText"
-                value={announcement.text}
+                value={announcement.content}
                 onChange={handleTextChange}
                 rows="5"
                 required

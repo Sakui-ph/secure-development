@@ -8,6 +8,6 @@
   },
   "devDependencies": {
     "@types/multer": "^1.4.11",
-    "concurrently": "^6.0.2"
+    "concurrently": "^6.5.1"
   }
 }

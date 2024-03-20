@@ -148,3 +148,13 @@ export const validateSession = () => {
         return;
     };
 };
+
+export const validateAdmin = () => {
+    return (req: Request, res: Response, next: NextFunction) => {
+        if (req.session.userType === UserType.ADMIN) {
+            next();
+        } else {
+            res.send({ auth: false, message: 'Not authorized' }).status(401);
+        }
+    };
+};

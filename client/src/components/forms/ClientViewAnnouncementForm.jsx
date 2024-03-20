@@ -43,7 +43,7 @@ export default function AnnouncementViewForm() {
 
         const newCommentData = {
             author: 'User', // You can set the author to the current user's name or fetch it from the server
-            text: newComment,
+            content: newComment,
         };
 
         postComment(newCommentData) // Post new comment to API

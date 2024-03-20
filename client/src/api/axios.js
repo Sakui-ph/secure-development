@@ -83,3 +83,25 @@ export const roomEndpoints = (endpoint) => {
                 }),
     };
 };
+
+export const announcementEndpoints = (endpoint) => {
+    axios.defaults.headers = {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        Accept: 'application/json',
+    };
+    const url = `${BASE_URL}/announcement/${endpoint}`;
+
+    return {
+        fetch: () => axios.get(url).catch((error) => LogError(error, 'Request failed')),
+        create: (formData) =>
+            axios
+                .post(url, formData, {
+                    headers: {
+                        'content-type': 'multipart/form-data',
+                    },
+                })
+                .catch((error) => {
+                    LogError(error, 'Request failed');
+                }),
+    };
+}

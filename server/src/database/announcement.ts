@@ -14,20 +14,19 @@ class AnnouncementDB {
         return result[0][0];
     };*/
 
-    find = async () => {
-        const result = await db.executeDatabase(
+    findAll = async () => {
+        const result = await db.readFromDatabase(
             `SELECT * FROM announcement`,
             [],
         );
-
-        return result[0];
+        return result;
     };
 
     create = async (announcement: Announcement) => {
         const query: string = 'INSERT INTO `announcement` SET ?';
         const values = {
-            text: announcement.text,
-        }
+            text: announcement.content,
+        };
 
         try {
             const result = await db.queryDatabase(query, values);

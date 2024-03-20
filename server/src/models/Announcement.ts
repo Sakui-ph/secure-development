@@ -1,9 +1,9 @@
 export interface Announcement {
     id?: string;
-    text: string;
+    content: string;
 }
 
 export const AnnouncementParams = {
     ID: 'id',
-    TEXT: 'text',
+    CONTENT: 'content',
 };

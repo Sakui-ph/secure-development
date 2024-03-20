@@ -1,12 +1,12 @@
 import { Request, Response } from 'express';
-import { Announcement } from '../models/Announcement';
 import AnnouncementDB from '../database/announcement';
-import { LogError, LogType, LogWarning } from '../utils/logger';
+import { LogError, LogType } from '../utils/logger';
+import { Announcement } from '../models/Announcement';
 
 module.exports = {
     createAnnouncement: async (req: Request, res: Response) => {
-        const newAnnouncement = {
-            text: req.body.text,
+        const newAnnouncement: Announcement = {
+            content: req.body.text,
         };
         try {
             const result = await AnnouncementDB.create(newAnnouncement);
@@ -20,11 +20,11 @@ module.exports = {
     },
 
     getAnnouncement: async (req: Request, res: Response) => {
-        const projection = ['text'];
-        const searchBy = { id: req.params.id }; 
+        // const projection = ['text'];
+        // const searchBy = { id: req.params.id };
         try {
-            const result = await AnnouncementDB.find();
-            res.send(result).status(200);
+            const result = await AnnouncementDB.findAll();
+            return result;
         } catch (e) {
             if (e instanceof Error) {
                 LogError('Error finding announcement', e, LogType.TRANSACTION);

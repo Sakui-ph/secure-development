@@ -13,6 +13,8 @@ import fs from 'fs';
 import path from 'path';
 import asyncify from 'express-asyncify';
 import { AdminRoutes } from './routes/admin';
+import { AnnouncementRoutes } from './routes/announcement';
+import { CommentRoutes } from './routes/comment';
 
 dotenv.config();
 
@@ -71,3 +73,5 @@ app.use(cors(corsOptions));
 app.use('/user', UserRoutes);
 app.use('/admin', AdminRoutes);
 app.use('/roomreservation', RoomRoutes);
+app.use('/announcement', AnnouncementRoutes);
+app.use('/comment', CommentRoutes);

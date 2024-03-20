@@ -13,7 +13,7 @@ export const ADMIN_ENDPOINTS = {
 };
 
 export const COMMENT_ENDPOINTS = {
-    create: 'viewannouncement/create',
+    create: 'comment/create',
 };
 
 export const ROOM_ENDPOINTS = {

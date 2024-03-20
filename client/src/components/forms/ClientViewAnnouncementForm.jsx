@@ -86,6 +86,7 @@ export default function AnnouncementViewForm() {
                         placeholder="Enter your comment..."
                         required
                     />
+                    <p> </p>
                     <button type="submit" disabled={submittingComment}>
                         {submittingComment ? 'Submitting...' : 'Submit Comment'}
                     </button>

@@ -5,6 +5,7 @@ import {
     validatePassword,
     setSession,
     validateSession,
+    validateLoggedIn,
 } from '../middleware/securityUtils';
 import { UserParams } from '../models/User';
 import inputValidation from '../middleware/inputValidation';
@@ -41,10 +42,16 @@ router.post('/logout', (req: Request, res: Response) => {
     });
 });
 
-router.post('/validateSession', urlencodedParser, validateSession());
+router.post(
+    '/validateSession',
+    validateLoggedIn,
+    urlencodedParser,
+    validateSession(),
+);
 
 router.get(
     '/read',
+    validateLoggedIn,
     inputValidation.checkEmail,
     async function (req: Request, res: Response) {
         try {
@@ -70,6 +77,7 @@ router.get(
 
 router.post(
     '/create',
+    validateLoggedIn,
     express.json(),
     extendedParser,
     uploadProfilePicture,
@@ -99,6 +107,7 @@ router.post('/changeProfilePicture', (req: Request, res: Response) => {
 
 router.patch(
     '/update',
+    validateLoggedIn,
     urlencodedParser,
     inputValidation.checkUser,
     userController.updateUser(

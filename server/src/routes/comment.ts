@@ -4,6 +4,7 @@ import { LogError, LogInfo, LogType } from '../utils/logger';
 import asyncify from 'express-asyncify';
 import bodyParser from 'body-parser';
 import { uploadFormdata } from '../utils/multerHandler';
+import { validateLoggedIn } from '../middleware/securityUtils';
 
 const extendedParser = bodyParser.urlencoded({ extended: true });
 
@@ -11,6 +12,7 @@ const router = asyncify(express.Router());
 
 router.post(
     '/create',
+    validateLoggedIn,
     express.json(),
     extendedParser,
     uploadFormdata,
@@ -31,7 +33,7 @@ router.post(
     },
 );
 
-router.get('/read', async (req: Request, res: Response) => {
+router.get('/read', validateLoggedIn, async (req: Request, res: Response) => {
     try {
         const comments = await commentController.getComments(req, res);
         res.send(comments).status(200);

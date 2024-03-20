@@ -1,6 +1,10 @@
 import express, { Request, Response } from 'express';
 import userController from '../controller/user';
-import { hashPassword, validateAdmin } from '../middleware/securityUtils';
+import {
+    hashPassword,
+    validateAdmin,
+    validateLoggedIn,
+} from '../middleware/securityUtils';
 import inputValidation from '../middleware/inputValidation';
 import { LogError, LogInfo, LogType } from '../utils/logger';
 import asyncify from 'express-asyncify';
@@ -14,6 +18,7 @@ const router = asyncify(express.Router());
 
 router.post(
     '/create',
+    validateLoggedIn,
     validateAdmin,
     express.json(),
     extendedParser,
@@ -43,6 +48,7 @@ router.post(
 
 router.post(
     '/readUsers',
+    validateLoggedIn,
     validateAdmin,
     async (req: Request, res: Response) => {
         try {

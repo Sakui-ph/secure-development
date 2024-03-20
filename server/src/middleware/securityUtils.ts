@@ -168,3 +168,32 @@ export const validateAdmin = async (
         return;
     }
 };
+
+export const validateLoggedIn = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+) => {
+    if (req.session.email === undefined) {
+        LogError('User is not logged in', null, LogType.AUTH);
+        res.send({ auth: false, message: 'Not authorized' }).status(401);
+        return;
+    }
+
+    const data = await UserDB.find(['prefix_id', 'id', 'first_name'], {
+        email: req.session.email,
+    });
+    const userID = data['prefix_id'] + data['id'].toString().padStart(5, '0');
+
+    if (
+        req.session.user === userID &&
+        req.session.firstName === data['first_name']
+    ) {
+        next();
+        return;
+    }
+
+    LogError('User is not logged in', null, LogType.AUTH);
+    res.send({ auth: false, message: 'Not authorized' }).status(401);
+    return;
+};

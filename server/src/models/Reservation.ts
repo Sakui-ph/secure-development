@@ -5,6 +5,7 @@ export interface Reservation {
     room: string;
     adminApproved: string;
     clientId?: File;
+    reservationStatus?: string;
 }
 
 export const ReservationParams = {
@@ -15,8 +16,14 @@ export const ReservationParams = {
     ROOM: 'room',
 };
 
-export enum ReservationStatus {
+export enum AdminApprovedStatus {
     'pending',
     'approved',
     'not approved',
+}
+
+export enum ReservationStatus {
+    'ongoing',
+    'cancelled',
+    'finished',
 }

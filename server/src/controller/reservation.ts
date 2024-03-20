@@ -30,13 +30,11 @@ module.exports = {
     getReservation: (projection: string[], searchBy: string[]) => {
         return async (req: Request, res: Response): Promise<any> => {
             const searchObject: Record<string, any> = {};
-
-            searchBy.forEach((key) => {
-                if (req.body[key] !== undefined) {
-                    searchObject[key] = req.body[key];
-                }
-            });
-
+            if (!req.session.email) {
+                res.status(400).send('Session email is not defined');
+                return;
+            }
+            searchObject['email'] = req.session.email;
             try {
                 const result = await ReservationDB.find(projection, searchObject);
                 return result;
@@ -48,10 +46,11 @@ module.exports = {
                         LogType.TRANSACTION,
                     );
                 }
-                res.end('Error getting reservation').status(500);
+                res.status(500).send('Error getting reservation');
             }
         };
     },
+    
 
     deleteReservation: (searchBy: string[]) => {
         return async (req: Request, res: Response): Promise<any> => {

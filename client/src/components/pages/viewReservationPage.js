@@ -1,19 +1,17 @@
 import React, { useState, useEffect } from 'react';
+import { getRoomReservations } from '../../api/room';
 
 const ViewReservationPage = () => {
     const [reservations, setReservations] = useState([]);
 
     useEffect(() => {
-        // sample info - ardcoded for now
-        const getCurrentReservations = () => [
-            { id: 1, date: '2024-03-15', time: '10:00 AM', room: 'Room 1' },
-            { id: 2, date: '2024-03-16', time: '11:00 AM', room: 'Room 2' },
-            { id: 3, date: '2024-03-17', time: '12:00 PM', room: 'Room 1' },
-        ];
-
         const fetchReservations = async () => {
-            const currentReservations = getCurrentReservations();
-            setReservations(currentReservations);
+            try {
+                const currentReservations = await getRoomReservations();
+                setReservations(currentReservations);
+            } catch (error) {
+                console.error('Error fetching reservations:', error);
+            }
         };
 
         fetchReservations();
@@ -27,21 +25,25 @@ const ViewReservationPage = () => {
         <div>
             <h1>Current Reservations</h1>
             <ul>
-                {reservations.map((reservation) => (
-                    <li key={reservation.id}>
-                        <p>Date: {reservation.date}</p>
-                        <p>Time: {reservation.time}</p>
-                        <p>Room: {reservation.room}</p>
-                        <button
-                            onClick={() =>
-                                handleCancelReservation(reservation.id)
-                            }
-                            type="button"
-                        >
-                            Cancel
-                        </button>
-                    </li>
-                ))}
+                {reservations && reservations.length > 0 ? (
+                    reservations.map((reservation) => (
+                        <li key={reservation.id}>
+                            <p>Date: {reservation.reservation_date}</p>
+                            <p>Room: {reservation.room}</p>
+                            <p>Status: {reservation.adminApproved}</p>
+                            <button
+                                onClick={() =>
+                                    handleCancelReservation(reservation.id)
+                                }
+                                type="button"
+                            >
+                                Cancel
+                            </button>
+                        </li>
+                    ))
+                ) : (
+                    <li>No reservations found</li>
+                )}
             </ul>
         </div>
     );

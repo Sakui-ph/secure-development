@@ -2,12 +2,9 @@ import { LogError } from '../utils/error-handlers/error-logger';
 import { createAPIEndpoints } from './axios';
 import { ROOM_ENDPOINTS } from './endpoints';
 
-export const CreateRoomReservation = async ({ date, time, email, room }) => {
+export const CreateRoomReservation = async ({ date, room }) => {
     const formData = new FormData();
-    // formData.append('id', id);
     formData.append('date', date);
-    formData.append('time', time);
-    formData.append('email', email);
     formData.append('room', room);
 
     console.log('Form Data:', formData.get('date'));
@@ -19,4 +16,14 @@ export const CreateRoomReservation = async ({ date, time, email, room }) => {
                 'An error occurred while creating a new room reservation',
             );
         });
+};
+
+export const getRoomReservations = async () => {
+    try {
+        const response = await createAPIEndpoints(ROOM_ENDPOINTS.read).fetch();
+        return response.data;
+    } catch (error) {
+        LogError('Error fetching room reservations:', error);
+        throw error;
+    }
 };

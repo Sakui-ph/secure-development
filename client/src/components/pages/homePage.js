@@ -34,32 +34,27 @@ const handleAdminPanel = (e) => {
 const HomePage = ({ websiteInfo = defaultWebsiteInfo }) => (
     <div className="home">
         <body>
-            <nav className="navbar">
-                <ul>
-                    <li>
-                        <a href="/">Home</a>
-                    </li>
-                    <li>
-                        <a href="/roomreservation">Room Reservation</a>
-                    </li>
-                    <li>
-                        <a href="/viewannouncement">Announcements</a>
-                    </li>
-                </ul>
-            </nav>
             <div className="content">
                 <img src={cottageImg} alt="cottage" />
-                <h1>{websiteInfo.title}</h1>
-                <p>{websiteInfo.description}</p>
+                <div className="title">
+                    <h1>{websiteInfo.title}</h1>
+                    <p>{websiteInfo.description}</p>
+                </div>
             </div>
-        </body>
-
-        <footer className="footer" id="contact">
-            <div className="contact-info">
-                <h3>Contact Us</h3>
-                <p>Address: {websiteInfo.address}</p>
-                <p>Phone: {websiteInfo.phone}</p>
-                <p>Email: {websiteInfo.email}</p>
+            <div className="nav">
+                <nav className="navbar">
+                    <ul>
+                        <li>
+                            <a href="/">Home</a>
+                        </li>
+                        <li>
+                            <a href="/roomreservation">Room Reservation</a>
+                        </li>
+                        <li>
+                            <a href="/viewannouncement">Announcements</a>
+                        </li>
+                    </ul>
+                </nav>
                 <button onClick={handleLogout} className="btn" type="submit">
                     Logout
                 </button>
@@ -70,6 +65,15 @@ const HomePage = ({ websiteInfo = defaultWebsiteInfo }) => (
                 >
                     Admin Access
                 </button>
+            </div>
+        </body>
+
+        <footer className="footer" id="contact">
+            <div className="contact-info">
+                <p style={{ fontWeight: 'bold' }}>Contact Us</p>
+                <p>Address: {websiteInfo.address}</p>
+                <p>Phone: {websiteInfo.phone}</p>
+                <p>Email: {websiteInfo.email}</p>
             </div>
         </footer>
     </div>

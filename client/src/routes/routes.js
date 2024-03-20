@@ -52,10 +52,9 @@ export const Router = () => (
                     <Route
                         path="/viewannouncement"
                         element={
-                            /* <Protected allowedTypes={ALL}>
+                            <Protected allowedTypes={ALL}>
                                 <ViewAnnouncement />
-                            </Protected> */
-                            <ViewAnnouncement />
+                            </Protected>
                         }
                     />
                     <Route

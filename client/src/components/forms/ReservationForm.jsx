@@ -4,7 +4,6 @@ import { CreateRoomReservation } from '../../api/room';
 export default function ReservationForm() {
     const [formFields, setFormFields] = useState({
         date: '',
-        time: '',
         room: '',
     });
 
@@ -24,8 +23,6 @@ export default function ReservationForm() {
             console.log('Form submitted:', formFields);
             setFormFields({
                 date: '',
-                time: '',
-                email: '', // TODO: set email to current user's email
                 room: '',
             });
             CreateRoomReservation(formFields).then((response) => {
@@ -45,16 +42,6 @@ export default function ReservationForm() {
                 id="date"
                 name="date"
                 value={formFields.date}
-                onChange={handleInputChange}
-                required
-            />
-            <label htmlFor="time">Time:</label>
-            <input
-                className="input"
-                type="time"
-                id="time"
-                name="time"
-                value={formFields.time}
                 onChange={handleInputChange}
                 required
             />

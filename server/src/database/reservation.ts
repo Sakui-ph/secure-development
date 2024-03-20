@@ -6,7 +6,7 @@ import { LogError, LogType } from '../utils/logger';
 class ReservationDB {
     find = async (projection: string[], searchBy: Record<string, any>) => {
         const searchParams = convertSearchByToString(searchBy);
-        const query = `SELECT * FROM reservation WHERE ${searchParams}`;
+        const query = `SELECT ${projection.join(',')} FROM reservation WHERE ${searchParams}`;
         const result = await db.readFromDatabase(query, []);
         return result;
     }

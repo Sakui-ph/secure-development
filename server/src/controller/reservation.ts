@@ -34,9 +34,12 @@ module.exports = {
                 res.status(400).send('Session email is not defined');
                 return;
             }
+            const sanitizedProjection = projection.includes('*')
+                ? projection.filter((column) => column !== '*')
+                : projection;
             searchObject['email'] = req.session.email;
             try {
-                const result = await ReservationDB.find(projection, searchObject);
+                const result = await ReservationDB.find(sanitizedProjection, searchObject);
                 return result;
             } catch (e) {
                 if (e instanceof Error) {
@@ -50,6 +53,7 @@ module.exports = {
             }
         };
     },
+    
     
 
     deleteReservation: (searchBy: string[]) => {

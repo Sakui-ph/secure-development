@@ -2,10 +2,10 @@ import { LogError } from '../utils/error-handlers/error-logger';
 import { createAPIEndpoints } from './axios';
 import { ANNOUNCEMENT_ENDPOINTS } from './endpoints';
 
-export const CreateAnnouncement = async ({ text, image }) => {
+export const CreateAnnouncement = async ({ text, image_data }) => {
     const formData = new FormData();
     formData.append('text', text);
-    formData.append('image', image);
+    formData.append('image_data', image_data);
 
     await createAPIEndpoints(ANNOUNCEMENT_ENDPOINTS.create)
         .create(formData)

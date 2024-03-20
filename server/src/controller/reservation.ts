@@ -1,16 +1,15 @@
 import { Request, Response } from 'express';
-import { Reservation } from '../models/Reservation';
+import { Reservation, ReservationStatus } from '../models/Reservation';
 import ReservationDB from '../database/reservation';
 import { LogError, LogType } from '../utils/logger';
 
 module.exports = {
     createReservation: async (req: Request, res: Response): Promise<any> => {
         const newReservation: Reservation = {
-            date: req.body.date,
-            time: req.body.time,
+            reservation_date: req.body.date,
             email: req.body.email,
             room: req.body.room,
-            adminApproved: 0,
+            adminApproved: ReservationStatus.pending,
         };
         try {
             const result = await ReservationDB.create(newReservation);

@@ -2,12 +2,12 @@ import { LogError } from '../utils/error-handlers/error-logger';
 import { createAPIEndpoints } from './axios';
 import { COMMENT_ENDPOINTS } from './endpoints';
 
-export const CreateComment = async ({ author, text, date }) => {
+export const CreateComment = async ({ author, content, createdAt }) => {
     const formData = new FormData();
     // formData.append('id', id);
     formData.append('author', author);
-    formData.append('text', text);
-    formData.append('date', date);
+    formData.append('content', content);
+    formData.append('createdAt', createdAt);
 
     console.log('Form Data:', formData.get('date'));
     await createAPIEndpoints(COMMENT_ENDPOINTS.create)

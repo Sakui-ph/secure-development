@@ -1,13 +1,13 @@
 export interface Comment {
     id?: string;
     author: string;
-    text: string;
-    date?: Date;
+    content: string;
+    createdAt?: Date;
 }
 
 export const CommentParams = {
     ID: 'id',
     AUTHOR: 'author',
-    TEXT: 'text',
-    DATE: 'date',
+    CONTENT: 'text',
+    CREATEDAT: 'date',
 };

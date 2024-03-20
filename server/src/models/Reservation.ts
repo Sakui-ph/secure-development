@@ -1,10 +1,10 @@
 export interface Reservation {
     id?: string;
-    date: string;
-    time: string;
+    reservation_date: string;
     email: string;
     room: string;
     adminApproved: ReservationStatus;
+    clientId?: File;
 }
 
 export const ReservationParams = {
@@ -15,8 +15,8 @@ export const ReservationParams = {
     ROOM: 'room',
 };
 
-enum ReservationStatus {
-    Pending,
-    Approved,
-    NotApproved,
+export enum ReservationStatus {
+    'pending',
+    'approved',
+    'not approved',
 }

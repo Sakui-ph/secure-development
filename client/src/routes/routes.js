@@ -68,7 +68,11 @@ export const Router = () => (
                     />
                     <Route
                         path="/announcement"
-                        element={<AdminAnnouncement />}
+                        element={
+                            <Protected allowedTypes={ADMIN}>
+                                <AdminAnnouncement />
+                            </Protected>
+                        }
                     />
                 </Route>
             </Routes>

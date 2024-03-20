@@ -64,7 +64,7 @@ export default function AnnouncementViewForm() {
         <div>
             {announcement && (
                 <div className="announcement">
-                    <h2>{announcement.title}</h2>
+                    <h2>Announcement</h2>
                     <p>{announcement.text}</p>
                 </div>
             )}

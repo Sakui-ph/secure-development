@@ -104,12 +104,12 @@ export const commentEndpoints = (endpoint) => {
                 .catch((error) => {
                     LogError(error, 'Request failed');
                 }),
-        /*deleteById: (id) =>
+        /* deleteById: (id) =>
             axios
                 .delete(`${url}/${id}`)
                 .catch((error) => {
                     LogError(error, 'Request failed');
-                }),*/
+                }), */
     };
 };
 

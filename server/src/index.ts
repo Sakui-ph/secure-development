@@ -25,15 +25,19 @@ app.use(
     ),
 );
 
-const options = {
-    key: fs.readFileSync(
-        path.resolve(__dirname, '../certificate/localhost-key.pem'),
-    ),
-    cert: fs.readFileSync(
-        path.resolve(__dirname, '../certificate/localhost.pem'),
-    ),
-    rejectUnauthorized: false,
-};
+let options = {};
+// if using https
+if (process.env.STATUS === 'prod') {
+    options = {
+        key: fs.readFileSync(
+            path.resolve(__dirname, '../certificate/localhost-key.pem'),
+        ),
+        cert: fs.readFileSync(
+            path.resolve(__dirname, '../certificate/localhost.pem'),
+        ),
+        rejectUnauthorized: false,
+    };
+}
 
 let PORT: string | undefined;
 process.env.STATUS === 'dev'

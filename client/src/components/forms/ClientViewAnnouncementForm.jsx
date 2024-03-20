@@ -10,7 +10,7 @@ export default function AnnouncementViewForm({ fetchCommentData }) {
         setNewComment(e.target.value);
     };
 
-    const handleCommentSubmit = (e) => {
+    const handleCommentSubmit = async (e) => {
         e.preventDefault();
         setSubmittingComment(true);
 
@@ -21,16 +21,15 @@ export default function AnnouncementViewForm({ fetchCommentData }) {
             announcementId: '1', // get announcement id from session
         };
 
-        CreateComment(newCommentData)
-            .then(() => {
-                setNewComment('');
-                setSubmittingComment(false);
-                fetchCommentData();
-            })
-            .catch((error) => {
-                console.error('Error posting comment:', error);
-                setSubmittingComment(false);
-            });
+        try {
+            await CreateComment(newCommentData);
+            setNewComment('');
+            setSubmittingComment(false);
+            fetchCommentData(); // Refresh comments after posting comment
+        } catch (error) {
+            console.error('Error posting comment:', error);
+            setSubmittingComment(false);
+        }
     };
 
     return (

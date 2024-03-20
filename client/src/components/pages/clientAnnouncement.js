@@ -10,12 +10,12 @@ export default function ClientViewAnnouncementPage() {
     useEffect(() => {
         fetchAnnouncementData();
         fetchCommentData();
-        console.log(comments);
     }, []);
 
     const fetchAnnouncementData = () => {
         GetAnnouncement()
             .then((data) => {
+                console.log(data);
                 setAnnouncement(data);
             })
             .catch((error) => {
@@ -26,6 +26,7 @@ export default function ClientViewAnnouncementPage() {
     const fetchCommentData = () => {
         GetComments()
             .then((data) => {
+                console.log(data);
                 setComments(data);
             })
             .catch((error) => {

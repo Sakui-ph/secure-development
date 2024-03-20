@@ -21,7 +21,7 @@ export const GetAnnouncement = async () => {
         const response = await createAPIEndpoints(
             ANNOUNCEMENT_ENDPOINTS.read,
         ).fetch();
-        return response;
+        return response.data;
     } catch (error) {
         LogError('Error fetching announcement:', error);
         throw error;

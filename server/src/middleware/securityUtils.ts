@@ -13,7 +13,7 @@ export const validatePassword = async (
     res: Response,
     next: NextFunction,
 ) => {
-    LogDebug(`Validating password... ${req.body.password}`);
+    LogDebug(`Validating password...`);
     if (req.body.password === undefined || req.body.password === '') {
         LogError(
             `No password provided for email ${req.body.email}`,
@@ -95,11 +95,10 @@ export const setSession = async (
     next: NextFunction,
 ) => {
     if (req.session !== undefined) {
+        const email = req.body.email;
         const data = await UserDB.find(['prefix_id', 'id'], {
-            email: req.body.email,
+            email: email,
         });
-
-        req.session.email = req.body.email;
 
         const user = data['prefix_id'] + data['id'].toString().padStart(5, '0');
 
@@ -108,7 +107,7 @@ export const setSession = async (
                 LogError('Error regenerating session', null, LogType.AUTH);
                 res.status(500).send('Error regenerating session');
             }
-
+            req.session.email = email;
             req.session.user = user;
             if (data['prefix_id'] === '100') {
                 req.session.userType = UserType.ADMIN;
@@ -154,8 +153,6 @@ export const validateAdmin = async (
     res: Response,
     next: NextFunction,
 ) => {
-    console.log('Validating admin');
-
     if (req.session.userType === UserType.ADMIN) {
         console.log('Admin validated');
         next();

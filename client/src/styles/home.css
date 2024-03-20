@@ -1,13 +1,4 @@
-.home {
-    overflow-y: auto;
-}
 
-img {
-    /* margin-top: 275%; */
-    /* width: 110%;
-    height: 110%; */
-    object-fit: cover;
-}
 
 p {
     font-size: 15px;
@@ -16,7 +7,11 @@ p {
     line-height: 2.5;
     text-align: justify;
 }
-
+.title {
+    margin: 50px;
+    width: 90%;
+    padding: 20px;
+}
 h3 {
     font-family: 'Serif', sans-serif;
     letter-spacing: 2px;
@@ -30,7 +25,45 @@ h3 {
     line-height: 1.5;
 }
 footer {
-    /* margin-top: 165%; */
+    margin-top: 10%;
     background-color: #262d19;
     padding: 1%;
+    position: relative;
 }
+.nav {
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
+    padding: 10px;
+    text-align: center;
+}
+.navbar {
+    background-color: #303f14;
+    padding: 10px 0;
+    display: inline-block; /* Ensures the navbar stays inline */
+}
+
+.navbar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: inline-flex; /* Aligns navbar items horizontally */
+}
+
+.navbar ul li {
+    margin-right: 20px;
+}
+
+.navbar ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-family: 'Serif', sans-serif;
+    font-size: 16px;
+    padding: 10px 15px;
+    transition: background-color 0.3s ease;
+}
+
+.navbar ul li a:hover {
+    background-color: #534c33;
+}
+

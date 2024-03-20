@@ -6,7 +6,7 @@ import { Announcement } from '../models/Announcement';
 module.exports = {
     createAnnouncement: async (req: Request, res: Response) => {
         const newAnnouncement: Announcement = {
-            content: req.body.text,
+            content: req.body.content,
         };
         try {
             const result = await AnnouncementDB.create(newAnnouncement);

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { fetchAllComments, CreateComment } from '../../api/comment';
 import { fetchAnnouncement } from '../../api/announcement';
+import '../../styles/viewAnnouncement.css';
 
 export default function AnnouncementViewForm() {
     const [announcement, setAnnouncement] = useState(null);
@@ -85,6 +86,7 @@ export default function AnnouncementViewForm() {
                         placeholder="Enter your comment..."
                         required
                     />
+                    <p> </p>
                     <button type="submit" disabled={submittingComment}>
                         {submittingComment ? 'Submitting...' : 'Submit Comment'}
                     </button>

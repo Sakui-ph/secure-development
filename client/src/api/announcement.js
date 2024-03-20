@@ -17,13 +17,14 @@ export const CreateAnnouncement = async ({ text, image_data }) => {
         });
 };
 
-export const fetchAnnouncement = () => {
-    createAPIEndpoints(ANNOUNCEMENT_ENDPOINTS.read)
-        .fetch()
-        .then((data) => {
-            setAnnouncement(data);
-        })
-        .catch((error) => {
-            LogError('Error fetching announcements:', error);
-        });
+export const fetchAnnouncement = async () => {
+    try {
+        const response = await createAPIEndpoints(
+            ANNOUNCEMENT_ENDPOINTS.read,
+        ).fetch();
+        return response.data;
+    } catch (error) {
+        LogError('Error fetching announcement:', error);
+        throw error;
+    }
 };

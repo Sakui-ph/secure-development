@@ -17,13 +17,14 @@ export const CreateComment = async ({ author, content, createdAt }) => {
         });
 };
 
-export const fetchAllComments = () => {
-    createAPIEndpoints(COMMENT_ENDPOINTS.create)
-        .fetch()
-        .then((data) => {
-            setComments(data);
-        })
-        .catch((error) => {
-            LogError('Error fetching comments:', error);
-        });
+export const fetchAllComments = async () => {
+    try {
+        const response = await createAPIEndpoints(
+            COMMENT_ENDPOINTS.read,
+        ).fetch();
+        return response.data;
+    } catch (error) {
+        LogError('Error fetching comments:', error);
+        throw error;
+    }
 };

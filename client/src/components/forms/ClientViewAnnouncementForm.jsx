@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { fetchAllComments, postComment } from '../../api/comment';
+import { fetchAllComments, CreateComment } from '../../api/comment';
 import { fetchAnnouncement } from '../../api/announcement';
 
 export default function AnnouncementViewForm() {
@@ -29,8 +29,8 @@ export default function AnnouncementViewForm() {
     };
 
     useEffect(() => {
-        fetchAnnouncementData(); // Fetch announcement on component mount
-        fetchCommentData(); // Fetch all comments on component mount
+        fetchAnnouncementData();
+        fetchCommentData();
     }, []);
 
     const handleCommentChange = (e) => {
@@ -46,7 +46,7 @@ export default function AnnouncementViewForm() {
             content: newComment,
         };
 
-        postComment(newCommentData) // Post new comment to API
+        CreateComment(newCommentData) // Post new comment to API
             .then(() => {
                 setNewComment('');
                 setSubmittingComment(false);

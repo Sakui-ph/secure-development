@@ -43,16 +43,6 @@ export default function PostAnnouncementForm() {
                 rows="5"
                 required
             />
-
-            <label htmlFor="announcementImage">Upload Image:</label>
-            <input
-                className="input"
-                type="file"
-                id="announcementImage"
-                accept="image/*"
-                onChange={handleImageChange}
-            />
-
             <button type="submit">Post Announcement</button>
         </form>
     );

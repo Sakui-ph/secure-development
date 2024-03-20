@@ -19,3 +19,14 @@ export const CreateComment = async ({ author, text, date }) => {
             );
         });
 };
+
+export const fetchAllComments = () => {
+    commentEndpoints(ENDPOINTS.create)
+        .fetch()
+        .then((data) => {
+            setComments(data);
+        })
+        .catch((error) => {
+            LogError('Error fetching comments:', error);
+        });
+};

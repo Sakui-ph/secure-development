@@ -6,15 +6,15 @@ import fs from 'fs';
 
 module.exports = {
     createAnnouncement: async (req: Request, res: Response) => {
-        let image: Buffer | undefined = req.file?.buffer;
-        if (image === undefined) {
-            image = fs.readFileSync(
+        let image_data: Buffer | undefined = req.file?.buffer;
+        if (image_data === undefined) {
+            image_data = fs.readFileSync(
                 '../../resources/default-profile-picture.jpg',
             );
         }
         const newAnnouncement = {
             text: req.body.text,
-            image: image,
+            image_data: image_data,
         };
         try {
             const result = await AnnouncementDB.create(newAnnouncement);

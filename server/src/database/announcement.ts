@@ -25,7 +25,7 @@ class AnnouncementDB {
     create = async (announcement: Announcement) => {
         const query: string = 'INSERT INTO `announcement` SET ?';
         const values = {
-            text: announcement.content,
+            content: announcement.content,
         };
 
         try {

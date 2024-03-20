@@ -25,7 +25,7 @@ router.post(
                     `Announcement created successfully!`,
                     LogType.TRANSACTION,
                 );
-                return res.status(200).send('Announcement created successfully!');
+                //return res.status(200).send('Announcement created successfully!');
             } else {
                 LogError(
                     'Error creating announcement',
@@ -40,7 +40,7 @@ router.post(
                 e as Error,
                 LogType.TRANSACTION,
             );
-            return res.status(500).send('Error creating announcement');
+            //return res.status(500).send('Error creating announcement');
         }
     },
 );

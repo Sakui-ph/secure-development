@@ -10,15 +10,10 @@ export default function PostAnnouncementForm() {
         setAnnouncement({ ...announcement, text: e.target.value });
     };
 
-    const handleImageChange = (e) => {
-        setAnnouncement({ ...announcement, image: e.target.files[0] });
-    };
-
     const handleSubmit = (e) => {
         e.preventDefault();
         const formData = new FormData();
         formData.append('text', announcement.text);
-        formData.append('image', announcement.image_data);
 
         // Perform API call here to submit the form data KUNWARE
         // fetch('/api/postAnnouncement', {
@@ -29,7 +24,7 @@ export default function PostAnnouncementForm() {
         // });
 
         // Reset form fields after submission
-        setAnnouncement({ text: '', image_data: null });
+        setAnnouncement({ text: '' });
     };
 
     return (

@@ -204,6 +204,12 @@ module.exports = {
             next();
         },
     ],
+    sanitizeAnnouncement: [
+        (req: Request, res: Response, next: NextFunction) => {
+            req.body.content = sanitizeAll(req.body.content);
+            next();
+        },
+    ],
 };
 
 export default module.exports;

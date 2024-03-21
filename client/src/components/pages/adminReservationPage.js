@@ -56,29 +56,36 @@ const AdminReservationPage = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {reservations.map((reservation) => (
-                        <tr key={reservation.id}>
-                            <td>{reservation.reservation_date}</td>
-                            <td>{reservation.email}</td>
-                            <td>{reservation.room}</td>
-                            <td>{reservation.adminApproved}</td>
-                            <td>{reservation.clientId}</td>
-                            <td>
-                                <button
-                                    type="button"
-                                    onClick={() => handleApprove(reservation)}
-                                >
-                                    Approve
-                                </button>
-                                <button
-                                    type="button"
-                                    onClick={() => handleReject(reservation)}
-                                >
-                                    Reject
-                                </button>
-                            </td>
-                        </tr>
-                    ))}
+                    {reservations.map(
+                        (reservation) =>
+                            reservation.reservationStatus === 'ongoing' && (
+                                <tr key={reservation.id}>
+                                    <td>{reservation.reservation_date}</td>
+                                    <td>{reservation.email}</td>
+                                    <td>{reservation.room}</td>
+                                    <td>{reservation.adminApproved}</td>
+                                    <td>{reservation.clientIdFile}</td>
+                                    <td>
+                                        <button
+                                            type="button"
+                                            onClick={() =>
+                                                handleApprove(reservation)
+                                            }
+                                        >
+                                            Approve
+                                        </button>
+                                        <button
+                                            type="button"
+                                            onClick={() =>
+                                                handleReject(reservation)
+                                            }
+                                        >
+                                            Reject
+                                        </button>
+                                    </td>
+                                </tr>
+                            ),
+                    )}
                 </tbody>
             </table>
         </div>

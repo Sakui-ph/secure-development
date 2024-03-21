@@ -4,7 +4,8 @@ import { LogError, LogInfo, LogType } from '../utils/logger';
 import asyncify from 'express-asyncify';
 import bodyParser from 'body-parser';
 import { uploadFormdata } from '../utils/multerHandler';
-import { validateLoggedIn } from '../middleware/securityUtils';
+import { validateAdmin, validateLoggedIn } from '../middleware/securityUtils';
+import inputValidation from '../middleware/inputValidation';
 
 const extendedParser = bodyParser.urlencoded({ extended: true });
 
@@ -13,9 +14,11 @@ const router = asyncify(express.Router());
 router.post(
     '/create',
     validateLoggedIn,
+    validateAdmin,
     express.json(),
     extendedParser,
     uploadFormdata,
+    inputValidation.sanitizeAnnouncement,
     async (req: Request, res: Response) => {
         try {
             const result = await announcementController.createAnnouncement(

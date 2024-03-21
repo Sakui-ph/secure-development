@@ -44,7 +44,14 @@ router.get('/read', urlencodedParser, async (req: Request, res: Response) => {
     try {
         LogInfo('Router', LogType.TRANSACTION);
         const result = await reservationContoller.getReservation(
-            ['id', 'reservation_date', 'email', 'room', 'adminApproved', 'reservationStatus'],
+            [
+                'id',
+                'reservation_date',
+                'email',
+                'room',
+                'adminApproved',
+                'reservationStatus',
+            ],
             ['email'],
         )(req, res);
         LogInfo(result, LogType.TRANSACTION);
@@ -67,6 +74,7 @@ router.get(
                 'room',
                 'adminApproved',
                 'clientIdFile',
+                'reservationStatus',
             ])(req, res);
             res.send(result);
         } catch (e) {
@@ -161,11 +169,19 @@ router.patch(
                 LogInfo('Reservation cancelled', LogType.TRANSACTION);
                 res.send('Reservation cancelled').status(200);
             } else {
-                LogError('Error cancelling reservation', result, LogType.TRANSACTION);
+                LogError(
+                    'Error cancelling reservation',
+                    result,
+                    LogType.TRANSACTION,
+                );
                 res.send('Error cancelling reservation').status(500);
             }
         } catch (e) {
-            LogError('Error cancelling reservation', e as Error, LogType.TRANSACTION);
+            LogError(
+                'Error cancelling reservation',
+                e as Error,
+                LogType.TRANSACTION,
+            );
             res.send('Error cancelling reservation').status(500);
         }
     },

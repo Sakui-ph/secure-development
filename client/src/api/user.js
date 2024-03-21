@@ -80,3 +80,19 @@ export function CreateNewAdmin({
             LogError(error, 'An error occurred while creating a new user');
         });
 }
+
+export const UpdatePrefixId = async (newPrefixId) => {
+    try {
+        await createAPIEndpoints(USER_ENDPOINTS.update_prefix_id)
+            .patch({ newPrefixId })
+            .then((response) => {
+                if (response.data.success) {
+                    console.log('Prefix ID updated successfully');
+                } else {
+                    console.log('Failed to update prefix ID');
+                }
+            });
+    } catch (error) {
+        LogError(error, 'An error occurred while updating prefix ID');
+    }
+};

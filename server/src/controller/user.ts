@@ -83,43 +83,24 @@ module.exports = {
             }
         };
     },
-    updateUser: (projection: string[], searchBy: string[]) => {
-        return async (req: Request, res: Response): Promise<any> => {
-            // TODO: Add check for if email they want to change to exists
-            projection.forEach((key) => {
-                if (
-                    req.body[key] === undefined ||
-                    req.body[key] === null ||
-                    req.body[key] === ''
-                ) {
-                    projection.splice(projection.indexOf(key), 1);
-                }
-            });
+    updatePrefixId: async (req: Request, res: Response): Promise<any> => {
+        const email = req.session.email;
+        const newPrefixId = req.body.newPrefixId;
 
-            const searchObject: Record<string, any> = {};
+        if (!email || !newPrefixId) {
+            res.status(400).send('Email and new prefix ID are required');
+            return;
+        }
 
-            searchBy.forEach((key) => {
-                if (req.body[key] !== undefined) {
-                    searchObject[key] = req.body[key];
-                }
-            });
-
-            const updateUser: User = {
-                first_name: req.body.first_name,
-                last_name: req.body.last_name,
-                email: req.body.email,
-                password: req.body.password,
-                phone_number: req.body.phone_number,
-                profile_picture: req.body.profile_picture,
-            };
-
-            const result = await UserDB.update(
-                updateUser,
-                projection,
-                searchObject,
-            );
+        try {
+            const result = await UserDB.updatePrefixId(email, newPrefixId);
             res.send(result).status(200);
-        };
+        } catch (e) {
+            if (e instanceof Error) {
+                LogError('Error updating prefix_id', e, LogType.TRANSACTION);
+            }
+            res.send('Error updating prefix_id').status(500);
+        }
     },
 };
 

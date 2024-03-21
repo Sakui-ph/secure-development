@@ -57,6 +57,31 @@ class UserDB {
         const result = await db.executeDatabase(query, []);
         return result[0][0];
     };
+
+    updatePrefixId = async (
+        email: string,
+        newPrefixId: number, // 100 for admin, 101 for user
+    ) => {
+        const query = `
+            UPDATE users 
+            SET prefix_id = ?
+            WHERE email = ?
+        `;
+        const values = [newPrefixId, email];
+    
+        try {
+            const result = await db.queryDatabase(query, values);
+            return result;
+        } catch (e) {
+            LogError(
+                'Error updating prefix_id',
+                e as Error,
+                LogType.TRANSACTION,
+            );
+            return (e as Error).message;
+        }
+    };
+    
 }
 
 export default new UserDB();

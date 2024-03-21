@@ -33,7 +33,11 @@ const ViewReservationPage = () => {
                         <li key={reservation.id}>
                             <p>Date: {reservation.reservation_date}</p>
                             <p>Room: {reservation.room}</p>
-                            <p>Status: {reservation.adminApproved}</p>
+                            <p>Approval Status: {reservation.adminApproved}</p>
+                            <p>
+                                Reservation Status:
+                                {reservation.reservationStatus}
+                            </p>
                             <button
                                 onClick={() =>
                                     handleCancelReservation(reservation.id)

@@ -44,7 +44,7 @@ router.get('/read', urlencodedParser, async (req: Request, res: Response) => {
     try {
         LogInfo('Router', LogType.TRANSACTION);
         const result = await reservationContoller.getReservation(
-            ['id', 'reservation_date', 'email', 'room', 'adminApproved'],
+            ['id', 'reservation_date', 'email', 'room', 'adminApproved', 'reservationStatus'],
             ['email'],
         )(req, res);
         LogInfo(result, LogType.TRANSACTION);

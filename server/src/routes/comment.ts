@@ -22,7 +22,10 @@ router.post(
         try {
             const result = await commentController.createComment(req, res);
             if (!result) {
-                LogInfo(`Comment created successfully!`, LogType.TRANSACTION);
+                LogInfo(
+                    `Comment created successfully by ${req.session.firstName}!`,
+                    LogType.TRANSACTION,
+                );
                 res.send('Comment created successfully!').status(200);
             } else {
                 LogError('Error creating comment', result, LogType.TRANSACTION);

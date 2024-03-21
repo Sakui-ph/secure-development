@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../../styles/admin.css';
 import { readAllUsers } from '../../api/admin';
+import { UpdatePrefixId } from '../../api/user';
 
 const AdminPanel = () => {
     const [users, setUsers] = useState([]);
@@ -20,7 +21,15 @@ const AdminPanel = () => {
         }
     };
 
-    const handleRoleChange = async (userId) => {};
+    const handleRoleChange = async (userId, newRole) => {
+        try {
+            const newPrefixId = newRole === 'admin' ? 100 : 101;
+            await UpdatePrefixId(newPrefixId);
+            fetchUsers();
+        } catch (error) {
+            console.error('Error updating role:', error);
+        }
+    };
 
     return (
         <div className="admin-panel">
@@ -47,17 +56,22 @@ const AdminPanel = () => {
                                 Name: {user.first_name} {user.last_name}
                             </p>
                             <p>Email: {user.email}</p>
-                            <select
-                                value={
-                                    user.prefix_id === 100 ? 'admin' : 'user'
-                                }
-                                onChange={(e) =>
-                                    handleRoleChange(user.id, e.target.value)
+                            <button
+                                type="button"
+                                onClick={() =>
+                                    handleRoleChange(user.id, 'user')
                                 }
                             >
-                                <option value="user">User</option>
-                                <option value="admin">Admin</option>
-                            </select>
+                                Set as User
+                            </button>
+                            <button
+                                type="button"
+                                onClick={() =>
+                                    handleRoleChange(user.id, 'admin')
+                                }
+                            >
+                                Set as Admin
+                            </button>
                         </li>
                     ))}
                 </ul>

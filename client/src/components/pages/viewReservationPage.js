@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { getRoomReservations, cancelRoomReservation } from '../../api/room';
-import { LogError } from '../../utils/error-handlers/error-logger';
+import { LogError, LogInfo } from '../../utils/error-handlers/error-logger';
 
 const ViewReservationPage = () => {
     const [reservations, setReservations] = useState([]);

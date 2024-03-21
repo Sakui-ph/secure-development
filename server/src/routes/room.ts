@@ -68,7 +68,6 @@ router.get(
                 'adminApproved',
                 'clientIdFile',
             ])(req, res);
-            LogInfo(result, LogType.TRANSACTION);
             res.send(result);
         } catch (e) {
             LogError(

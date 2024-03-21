@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { getAllRoomReservations } from '../../api/room';
 
 const AdminReservationPage = () => {
     const [reservations, setReservations] = useState([]);
-    React.useEffect(() => {
+
+    useEffect(() => {
         getAllRoomReservations().then((data) => {
             setReservations(data);
         });
@@ -11,13 +12,20 @@ const AdminReservationPage = () => {
 
     const handleStatusChange = (reservationId, newStatus) => {
         setReservations((prevReservations) =>
-            prevReservations.map((reservation) => {
-                if (reservation.id === reservationId) {
-                    return { ...reservation, status: newStatus };
-                }
-                return reservation;
-            }),
+            prevReservations.map((reservation) =>
+                reservation.id === reservationId
+                    ? { ...reservation, status: newStatus }
+                    : reservation,
+            ),
         );
+    };
+
+    const handleApprove = (reservationId) => {
+        handleStatusChange(reservationId, 'approved');
+    };
+
+    const handleReject = (reservationId) => {
+        handleStatusChange(reservationId, 'rejected');
     };
 
     return (
@@ -43,19 +51,20 @@ const AdminReservationPage = () => {
                             <td>{reservation.adminApproved}</td>
                             <td>{reservation.clientId}</td>
                             <td>
-                                <select
-                                    value={reservation.status}
-                                    onChange={(e) =>
-                                        handleStatusChange(
-                                            reservation.id,
-                                            e.target.value,
-                                        )
+                                <button
+                                    type="button"
+                                    onClick={() =>
+                                        handleApprove(reservation.id)
                                     }
                                 >
-                                    <option value="pending">Pending</option>
-                                    <option value="approved">Approved</option>
-                                    <option value="rejected">Rejected</option>
-                                </select>
+                                    Approve
+                                </button>
+                                <button
+                                    type="button"
+                                    onClick={() => handleReject(reservation.id)}
+                                >
+                                    Reject
+                                </button>
                             </td>
                         </tr>
                     ))}

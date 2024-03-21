@@ -43,7 +43,7 @@ export const SessionProvider = () => {
     }, [remainingTime, navigate]); // this is responsoble for logging user out after timer is down to zero and they have not clicked anything
 
     return (
-        <SessionContext.Provider>
+        <SessionContext.Provider value="">
             <Outlet />
         </SessionContext.Provider>
     );

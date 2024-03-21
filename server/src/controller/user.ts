@@ -104,6 +104,29 @@ module.exports = {
             res.send('Error updating prefix_id').status(500);
         }
     },
+    getProfilePicture: async (req: Request, res: Response): Promise<any> => {
+        if (req.session.email === undefined) {
+            res.status(500).send('Email is undefined');
+            return;
+        }
+
+        try {
+            let result = await UserDB.find(['profile_picture'], {
+                email: req.session.email,
+            });
+            result = result.profile_picture.toString('hex');
+            return result;
+        } catch (e) {
+            if (e instanceof Error) {
+                LogError(
+                    'Error getting profile picture',
+                    e,
+                    LogType.TRANSACTION,
+                );
+            }
+            res.send('Error getting profile picture').status(500);
+        }
+    },
 };
 
 export default module.exports;

@@ -37,7 +37,7 @@ const HomePage = ({ websiteInfo = defaultWebsiteInfo }) => {
 
     return (
         <div className="home">
-            <body>
+            <div>
                 <div className="content">
                     <img src={cottageImg} alt="cottage" />
                     <div className="title">
@@ -91,7 +91,7 @@ const HomePage = ({ websiteInfo = defaultWebsiteInfo }) => {
                         handleClose={() => setProfileModalOpen(false)}
                     />
                 </div>
-            </body>
+            </div>
 
             <footer className="footer" id="contact">
                 <div className="contact-info">

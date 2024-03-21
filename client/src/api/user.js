@@ -57,26 +57,12 @@ export const CreateNewUser = async ({
         });
 };
 
-export function CreateNewAdmin({
-    prefix_id,
-    first_name,
-    last_name,
-    email,
-    password,
-    phone_number,
-    profile_picture,
-}) {
-    createAPIEndpoints(USER_ENDPOINTS.create)
-        .post({
-            prefix_id,
-            first_name,
-            last_name,
-            email,
-            password,
-            phone_number,
-            profile_picture,
-        })
+export const GetProfilePicture = async (email, profile_picture) => {
+    const result = await createAPIEndpoints(USER_ENDPOINTS.getProfilePicture)
+        .fetch()
         .catch((error) => {
-            LogError(error, 'An error occurred while creating a new user');
+            LogError(error, 'An error occurred while updating profile picture');
         });
-}
+    console.log('Result:', result);
+    return result;
+};

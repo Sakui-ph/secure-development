@@ -68,7 +68,6 @@ router.get(
                 'adminApproved',
                 'clientIdFile',
             ])(req, res);
-            LogInfo(result, LogType.TRANSACTION);
             res.send(result);
         } catch (e) {
             LogError(
@@ -89,6 +88,39 @@ router.patch(
     async (req: Request, res: Response) => {
         try {
             const result = await reservationContoller.updateReservationStatus(
+                req,
+                res,
+            );
+            if (result) {
+                LogInfo('Admin approved status updated', LogType.TRANSACTION);
+                res.send('Admin approved status updated').status(200);
+            } else {
+                LogError(
+                    'Error updating Admin approved status',
+                    result,
+                    LogType.TRANSACTION,
+                );
+                res.send('Error updating Admin approved status').status(500);
+            }
+        } catch (e) {
+            LogError(
+                'Error updating Admin approved status',
+                e as Error,
+                LogType.TRANSACTION,
+            );
+            res.send('Error updating Admin approved status').status(500);
+        }
+    },
+);
+
+router.patch(
+    '/updateReservationStatus',
+    express.json(),
+    extendedParser,
+    validateLoggedIn,
+    async (req: Request, res: Response) => {
+        try {
+            const result = await reservationContoller.updateReservationStatus2(
                 req,
                 res,
             );

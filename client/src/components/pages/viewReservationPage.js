@@ -38,14 +38,16 @@ const ViewReservationPage = () => {
                                 Reservation Status:
                                 {reservation.reservationStatus}
                             </p>
-                            <button
-                                onClick={() =>
-                                    handleCancelReservation(reservation.id)
-                                }
-                                type="button"
-                            >
-                                Cancel
-                            </button>
+                            {reservation.reservationStatus !== 'cancelled' && (
+                                <button
+                                    onClick={() =>
+                                        handleCancelReservation(reservation.id)
+                                    }
+                                    type="button"
+                                >
+                                    Cancel
+                                </button>
+                            )}
                         </li>
                     ))
                 ) : (

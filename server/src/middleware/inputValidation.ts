@@ -34,8 +34,11 @@ const validatePDF = check('clientIdFile')
         }
 
         const oldPath = `uploads/tmp/${req.session.user}/${req.body.clientIdFile}`;
-        const newPath = `uploads/tmp/${req.session.user}/${req.body.clientIdFile}`;
+        const newPath = `uploads/clients/${req.session.user}/${req.body.clientIdFile}`;
         fs.mkdirSync(`uploads/tmp/${req.session.user}`, { recursive: true });
+        fs.mkdirSync(`uploads/clients/${req.session.user}`, {
+            recursive: true,
+        });
 
         let pdfHeading = '';
 

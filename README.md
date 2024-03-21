@@ -3,7 +3,8 @@
 # DEPLOYMENT INSTRUCTIONS
 
 1. Create mySQL database, and import the schemas provided. (Announcements go **before** comments)
-2. Inside the `server` folder, create a .env containing these values.
+
+2. Inside the `server` folder, if it does not exist already, create a .env containing these values.
 
 ```
 STATUS='prod'
@@ -18,10 +19,11 @@ SESSION_SECRET=d!ynZJp#@+XRSmWts6s6sNBSeNn5cNBZj@%Ww9PjSpOT$6c6C=
 
 ```
 
+_Edit the db connection string as needed_
 _Set STATUS to 'dev' if you want to use HTTP, update HTTPS accordingly_
 _Set DEBUG to 'true' if you want long logs_
 
-3. Inside the `client` folder, create a .env containing these values.
+3. Inside the `client` folder, if it does not exist already, create a .env containing these values.
 
 ```
 REACT_APP_DEBUG='false'

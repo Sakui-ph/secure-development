@@ -13,11 +13,13 @@ class UserDB {
         return result[0];
     };
 
-    findAll = async (projection: string[]) => {
-        const result = await db.readFromDatabase(
-            `SELECT ${projection.join(', ')} FROM users`,
-            [],
-        );
+    findAll = async (projection: string[], exception?: string) => {
+        let query = `SELECT ${projection.join(', ')} FROM users WHERE email != ?`;
+        if (exception === undefined || exception === null || exception === '') {
+            query = `SELECT ${projection.join(', ')} FROM users`;
+        }
+
+        const result = await db.readFromDatabase(query, [exception]);
         return result;
     };
 

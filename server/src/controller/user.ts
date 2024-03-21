@@ -72,7 +72,10 @@ module.exports = {
     getAllUsers: (projection: string[]) => {
         return async (req: Request, res: Response) => {
             try {
-                const result = await UserDB.findAll(projection);
+                const result = await UserDB.findAll(
+                    projection,
+                    req.session.email,
+                );
                 return result;
             } catch (e) {
                 if (e instanceof Error) {
@@ -84,6 +87,7 @@ module.exports = {
         };
     },
     updatePrefixId: async (req: Request, res: Response): Promise<any> => {
+        console.log(req.body);
         const { email, newPrefixId } = req.body;
 
         if (!email || !newPrefixId) {

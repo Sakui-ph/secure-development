@@ -83,6 +83,8 @@ export function CreateNewAdmin({
 
 export const UpdatePrefixId = async (email, newPrefixId) => {
     try {
+        console.log('Email:', email, 'New Prefix ID:', newPrefixId);
+
         await createAPIEndpoints(USER_ENDPOINTS.update_prefix_id)
             .patch({ email, newPrefixId })
             .then((response) => {

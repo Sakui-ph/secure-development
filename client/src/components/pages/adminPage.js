@@ -15,6 +15,7 @@ const AdminPanel = () => {
     const fetchUsers = async () => {
         try {
             const response = await readAllUsers();
+
             setUsers(response.data);
         } catch (error) {
             LogError(error, 'Error fetching users:');
@@ -22,8 +23,6 @@ const AdminPanel = () => {
     };
 
     const handleRoleChange = async (email, newRole) => {
-        console.log('Email:', email); // Log email value
-        console.log('New Role:', newRole); // Log newRole value
         try {
             const newPrefixId = newRole === 'admin' ? '100' : '101';
             await UpdatePrefixId(email, newPrefixId);

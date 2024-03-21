@@ -28,3 +28,16 @@ export const getRoomReservations = async () => {
         throw error;
     }
 };
+
+export const getAllRoomReservations = async () => {
+    try {
+        const response = await createAPIEndpoints(
+            ROOM_ENDPOINTS.readAll,
+        ).fetch();
+        console.log('Response:', response);
+        return response.data;
+    } catch (error) {
+        LogError('Error fetching all room reservations:', error);
+        throw error;
+    }
+};

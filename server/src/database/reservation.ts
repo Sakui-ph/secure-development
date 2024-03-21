@@ -11,6 +11,12 @@ class ReservationDB {
         return result;
     };
 
+    findAll = async (projection: string[]) => {
+        const query = `SELECT ${projection.join(',')} FROM reservation`;
+        const result = await db.readFromDatabase(query, []);
+        return result;
+    };
+
     create = async (reservation: Reservation) => {
         const query: string = 'INSERT INTO `reservation` SET ?';
         const values = {

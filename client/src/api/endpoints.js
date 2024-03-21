@@ -20,6 +20,7 @@ export const COMMENT_ENDPOINTS = {
 export const ROOM_ENDPOINTS = {
     create: 'roomreservation/create',
     read: 'roomreservation/read',
+    readAll: 'roomreservation/readAll',
 };
 
 export const ANNOUNCEMENT_ENDPOINTS = {

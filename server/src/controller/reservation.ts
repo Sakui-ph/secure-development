@@ -68,6 +68,28 @@ module.exports = {
         };
     },
 
+    getAllReservations: (projection: string[]) => {
+        return async (req: Request, res: Response): Promise<any> => {
+            const sanitizedProjection = projection.includes('*')
+                ? projection.filter((column) => column !== '*')
+                : projection;
+            try {
+                const result = await ReservationDB.findAll(sanitizedProjection);
+                console.log("CONTROLLER: " + result);
+                return result;
+            } catch (e) {
+                if (e instanceof Error) {
+                    LogError(
+                        'Error getting all reservations',
+                        e,
+                        LogType.TRANSACTION,
+                    );
+                }
+                res.status(500).send('Error getting all reservations');
+            }
+        };
+    },
+
     deleteReservation: (searchBy: string[]) => {
         return async (req: Request, res: Response): Promise<any> => {
             const searchObject: Record<string, any> = {};

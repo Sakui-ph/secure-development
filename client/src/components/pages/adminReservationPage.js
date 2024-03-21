@@ -1,26 +1,13 @@
 import React, { useState } from 'react';
+import { getAllRoomReservations } from '../../api/room';
 
 const AdminReservationPage = () => {
-    const [reservations, setReservations] = useState([
-        {
-            id: 1,
-            reservation_date: '2024-03-21',
-            email: 'user1@example.com',
-            room: 'Room A',
-            adminApproved: 'pending',
-            clientId: 'client1.pdf',
-            status: 'pending',
-        },
-        {
-            id: 2,
-            reservation_date: '2024-03-22',
-            email: 'user2@example.com',
-            room: 'Room B',
-            adminApproved: 'approved',
-            clientId: 'client2.pdf',
-            status: 'approved',
-        },
-    ]);
+    const [reservations, setReservations] = useState([]);
+    React.useEffect(() => {
+        getAllRoomReservations().then((data) => {
+            setReservations(data);
+        });
+    }, []);
 
     const handleStatusChange = (reservationId, newStatus) => {
         setReservations((prevReservations) =>

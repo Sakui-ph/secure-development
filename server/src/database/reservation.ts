@@ -1,6 +1,6 @@
 import db from './db';
 import { convertSearchByToString } from '../utils/dbHelpers';
-import { Reservation } from '../models/Reservation';
+import { AdminApprovedStatus, Reservation } from '../models/Reservation';
 import { LogError, LogType } from '../utils/logger';
 
 class ReservationDB {
@@ -41,25 +41,29 @@ class ReservationDB {
         }
     };
 
-    update = async (reservation: Reservation, searchBy: Record<string, any>) => {
-        const searchParams = convertSearchByToString(searchBy);
-        const query = `UPDATE reservations SET ? WHERE ${searchParams}`;
-        const values = [
-            reservation.reservation_date,
-            reservation.email,
-            reservation.room,
-            reservation.adminApproved,
-            reservation.clientIdFile,
-            reservation.reservationStatus,
-        ];
+    update = async (reservationId: any, adminApproved: string) => {
+        const query = `UPDATE reservation SET adminApproved = ? WHERE id = ?`;
+        const approvedValue =
+            adminApproved === 'approved'
+                ? AdminApprovedStatus[1]
+                : AdminApprovedStatus[2];
+        const values = [approvedValue, reservationId];
 
-        const result = await db.executeDatabase(query, values);
-        return result[0][0];
+        try {
+            await db.queryDatabase(query, values);
+        } catch (e) {
+            LogError(
+                'Error changing approved status',
+                e as Error,
+                LogType.TRANSACTION,
+            );
+            return (e as Error).message;
+        }
     };
 
     delete = async (searchBy: Record<string, any>) => {
         const searchParams = convertSearchByToString(searchBy);
-        const query = `DELETE FROM reservations WHERE ${searchParams}`;
+        const query = `DELETE FROM reservation WHERE ${searchParams}`;
 
         const result = await db.executeDatabase(query, []);
         return result[0][0];

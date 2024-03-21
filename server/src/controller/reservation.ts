@@ -111,25 +111,28 @@ module.exports = {
         };
     },
 
-    updateReservationStatus: async (req: Request, res: Response): Promise<any> => {
-        const searchObject: Record<string, any> = {};
-        const updateObject: Record<string, any> = {};
-
+    updateReservationStatus: async (
+        req: Request,
+        res: Response,
+    ): Promise<any> => {
         if (req.body.id === undefined) {
             res.status(400).send('Reservation id is not defined');
             return;
         }
 
-        searchObject['id'] = req.body.id;
+        const reservationId = req.body.id;
         console.log('id: ', req.body.id);
 
-        if (req.body.adminApproved !== undefined) {
-            updateObject['adminApproved'] = req.body.adminApproved;
+        let adminApproved = '';
+        if (req.body.adminApproved === undefined) {
+            res.status(400).send('Admin approval status is not defined');
+            return;
         }
+        adminApproved = req.body.adminApproved;
 
         try {
-            const result = await ReservationDB.update(searchObject as Reservation, updateObject as Reservation);
-            return result;
+            await ReservationDB.update(reservationId, adminApproved);
+            return true;
         } catch (e) {
             if (e instanceof Error) {
                 LogError(
@@ -138,10 +141,9 @@ module.exports = {
                     LogType.TRANSACTION,
                 );
             }
-            res.status(500).send('Error updating reservation status');
+            return false;
         }
     },
-
 };
 
 export default module.exports;

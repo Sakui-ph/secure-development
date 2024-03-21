@@ -61,6 +61,7 @@ router.get(
     async (req: Request, res: Response) => {
         try {
             const result = await reservationContoller.getAllReservations([
+                'id',
                 'reservation_date',
                 'email',
                 'room',
@@ -86,22 +87,29 @@ router.patch(
     extendedParser,
     validateLoggedIn,
     async (req: Request, res: Response) => {
-        console.log('ROUTER: update');
         try {
             const result = await reservationContoller.updateReservationStatus(
                 req,
                 res,
             );
-            if (!result) {
+            if (result) {
                 LogInfo('Reservation status updated', LogType.TRANSACTION);
-                //res.send('Reservation status updated').status(200);
+                res.send('Reservation status updated').status(200);
             } else {
-                LogError('Error updating reservation status', result, LogType.TRANSACTION);
-                //res.send('Error updating reservation status').status(500);
+                LogError(
+                    'Error updating reservation status',
+                    result,
+                    LogType.TRANSACTION,
+                );
+                res.send('Error updating reservation status').status(500);
             }
         } catch (e) {
-            LogError('Error updating reservation status', e as Error, LogType.TRANSACTION);
-            //res.send('Error updating reservation status').status(500);
+            LogError(
+                'Error updating reservation status',
+                e as Error,
+                LogType.TRANSACTION,
+            );
+            res.send('Error updating reservation status').status(500);
         }
     },
 );

@@ -49,7 +49,7 @@ export async function queryDatabase(query: string, params: any): Promise<any> {
         try {
             // query db and return the result
             await connection.query(query, params);
-            return false;
+            return false; // idk why its false but im too scared to change it
         } catch (e: unknown) {
             if (e instanceof Error) {
                 return e.message;

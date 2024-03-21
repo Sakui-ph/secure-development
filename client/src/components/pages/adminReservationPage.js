@@ -28,7 +28,6 @@ const AdminReservationPage = () => {
         }
 
         handleStatusChange(reservation.id, 'approved');
-        console.log('Reservation:', reservation.id);
         await updateRoomReservation(reservation.id, 'approved');
     };
 

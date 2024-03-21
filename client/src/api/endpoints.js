@@ -6,6 +6,7 @@ export const USER_ENDPOINTS = {
     logout: 'user/logout',
     validate_session: 'user/validateSession',
     getProfilePicture: 'user/getProfilePicture',
+    changeProfilePicture: 'user/changeProfilePicture',
 };
 
 export const ADMIN_ENDPOINTS = {

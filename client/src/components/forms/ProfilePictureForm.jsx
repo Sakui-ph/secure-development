@@ -5,9 +5,8 @@ import '../../styles/profilePicture.css';
 export default function ProfilePictureForm({
     setPreviewImage,
     setProfilePicture,
+    setSubmitting,
 }) {
-    const [submitting, setSubmitting] = useState(false);
-
     const handleInputChange = (e) => {
         const file = e.target.files[0];
         setProfilePicture(file);
@@ -19,14 +18,6 @@ export default function ProfilePictureForm({
         setSubmitting(true);
     };
 
-    useEffect(() => {
-        if (submitting) {
-            setProfilePicture(null);
-
-            setSubmitting(false);
-        }
-    }, [submitting, setProfilePicture]);
-
     return (
         <span>
             <span>
@@ -36,6 +27,7 @@ export default function ProfilePictureForm({
                         name="profilePicture"
                         onChange={handleInputChange}
                     />
+                    <button type="submit">Submit</button>
                 </form>
             </span>
         </span>
@@ -45,4 +37,5 @@ export default function ProfilePictureForm({
 ProfilePictureForm.propTypes = {
     setPreviewImage: PropTypes.func.isRequired,
     setProfilePicture: PropTypes.func.isRequired,
+    setSubmitting: PropTypes.func.isRequired,
 };

@@ -84,18 +84,14 @@ class UserDB {
         }
     };
 
-    updateProfilePicture = async (
-        email: string,
-        profile_picture: Blob,
-    ) => {
-
+    updateProfilePicture = async (profile_picture: Buffer, email: string) => {
         const query = `
             UPDATE users 
             SET profile_picture = ?
             WHERE email = ?
         `;
         const values = [profile_picture, email];
-    
+
         try {
             const result = await db.queryDatabase(query, values);
             return result;

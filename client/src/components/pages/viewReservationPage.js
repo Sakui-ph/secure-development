@@ -19,6 +19,7 @@ const ViewReservationPage = () => {
     }, []);
 
     const handleCancelReservation = (id) => {
+        LogInfo(`Canceling reservation with ID: ${id}`);
         console.log('Cancel reservation with id:', id);
         cancelRoomReservation(id);
     };

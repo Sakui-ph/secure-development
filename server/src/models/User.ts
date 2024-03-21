@@ -1,5 +1,5 @@
 export interface User {
-    readonly prefix_id?: number; // (3) 100 for admin, 101 for user ig
+    prefix_id?: number; // (3) 100 for admin, 101 for user ig
     readonly id?: string; // (7) 7 digit unique id INT
 
     first_name: string; // varchar(50)

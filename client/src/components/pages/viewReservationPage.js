@@ -4,24 +4,25 @@ import { LogError, LogInfo } from '../../utils/error-handlers/error-logger';
 
 const ViewReservationPage = () => {
     const [reservations, setReservations] = useState([]);
+    const fetchReservations = async () => {
+        try {
+            const currentReservations = await getRoomReservations();
+            setReservations(currentReservations);
+        } catch (error) {
+            LogError(error, 'Error fetching reservations:');
+        }
+    };
 
     useEffect(() => {
-        const fetchReservations = async () => {
-            try {
-                const currentReservations = await getRoomReservations();
-                setReservations(currentReservations);
-            } catch (error) {
-                LogError(error, 'Error fetching reservations:');
-            }
-        };
-
         fetchReservations();
     }, []);
 
     const handleCancelReservation = (id) => {
         LogInfo(`Canceling reservation with ID: ${id}`);
         console.log('Cancel reservation with id:', id);
-        cancelRoomReservation(id);
+        cancelRoomReservation(id).then(() => {
+            fetchReservations();
+        });
     };
 
     return (

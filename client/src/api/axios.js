@@ -38,6 +38,16 @@ export const createAPIEndpoints = (endpoint) => {
                 .catch((error) => {
                     LogError(error, 'Request failed');
                 }),
+        cancel: (data) =>
+            axios
+                .patch(url, data, {
+                    headers: {
+                        'content-type': 'application/x-www-form-urlencoded',
+                    },
+                })
+                .catch((error) => {
+                    LogError(error, 'Request failed');
+                }),
         get: () =>
             axios.get(url).catch((error) => LogError(error, 'Request failed')),
         create: (formData) =>

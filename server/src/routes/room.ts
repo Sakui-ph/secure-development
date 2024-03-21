@@ -44,7 +44,7 @@ router.get('/read', urlencodedParser, async (req: Request, res: Response) => {
     try {
         LogInfo('Router', LogType.TRANSACTION);
         const result = await reservationContoller.getReservation(
-            ['reservation_date', 'email', 'room', 'adminApproved'],
+            ['id', 'reservation_date', 'email', 'room', 'adminApproved'],
             ['email'],
         )(req, res);
         LogInfo(result, LogType.TRANSACTION);
@@ -142,6 +142,31 @@ router.patch(
                 LogType.TRANSACTION,
             );
             res.send('Error updating reservation status').status(500);
+        }
+    },
+);
+
+router.patch(
+    '/cancel',
+    express.json(),
+    extendedParser,
+    validateLoggedIn,
+    async (req: Request, res: Response) => {
+        try {
+            const result = await reservationContoller.cancelReservation(
+                req,
+                res,
+            );
+            if (result) {
+                LogInfo('Reservation cancelled', LogType.TRANSACTION);
+                res.send('Reservation cancelled').status(200);
+            } else {
+                LogError('Error cancelling reservation', result, LogType.TRANSACTION);
+                res.send('Error cancelling reservation').status(500);
+            }
+        } catch (e) {
+            LogError('Error cancelling reservation', e as Error, LogType.TRANSACTION);
+            res.send('Error cancelling reservation').status(500);
         }
     },
 );

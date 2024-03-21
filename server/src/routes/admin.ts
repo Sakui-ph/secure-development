@@ -13,6 +13,7 @@ import { uploadProfilePicture } from '../utils/multerHandler';
 import { UserParams } from '../models/User';
 
 const extendedParser = bodyParser.urlencoded({ extended: true });
+const urlencodedParser = bodyParser.urlencoded({ extended: false });
 
 const router = asyncify(express.Router());
 
@@ -68,6 +69,30 @@ router.post(
         } catch (e) {
             if (e instanceof Error)
                 LogError('Error reading users', e, LogType.TRANSACTION);
+        }
+    },
+);
+
+router.patch(
+    '/updatePrefixId',
+    validateLoggedIn,
+    validateAdmin,
+    urlencodedParser,
+    async (req: Request, res: Response) => {
+        try {
+            const result = await userController.updatePrefixId(req, res);
+            LogInfo(
+                `User ${req.body.email} has been changed into a ${req.body.newPrefixId == '100' ? 'admin' : 'user'}`,
+                LogType.TRANSACTION,
+            );
+            res.send(result).status(200);
+        } catch (e) {
+            LogError(
+                'Error updating prefix ID',
+                e as Error,
+                LogType.TRANSACTION,
+            );
+            res.send('Error updating prefix ID').status(500);
         }
     },
 );

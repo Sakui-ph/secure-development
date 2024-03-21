@@ -5,12 +5,12 @@ export const USER_ENDPOINTS = {
     login: 'user/login',
     logout: 'user/logout',
     validate_session: 'user/validateSession',
-    update_prefix_id: 'user/updatePrefixId',
 };
 
 export const ADMIN_ENDPOINTS = {
     create: 'admin/create',
     readAll: 'admin/readUsers',
+    update_prefix_id: 'admin/updatePrefixId',
 };
 
 export const COMMENT_ENDPOINTS = {

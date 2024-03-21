@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import '../../styles/admin.css';
-import { readAllUsers } from '../../api/admin';
-import { UpdatePrefixId } from '../../api/user';
+import { readAllUsers, UpdatePrefixId } from '../../api/admin';
 import { LogError } from '../../utils/error-handlers/error-logger';
 
 const AdminPanel = () => {

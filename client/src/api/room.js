@@ -46,8 +46,6 @@ export const updateRoomReservation = async (reservationId, newStatus) => {
             id: reservationId,
             adminApproved: newStatus,
         });
-        console.log('Reservation ID:', reservationId);
-        console.log('Admin Approved:', newStatus);
         return response.data;
     } catch (error) {
         LogError('Error updating room reservation:', error);

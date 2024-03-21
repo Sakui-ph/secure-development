@@ -100,9 +100,16 @@ router.post(
     },
 );
 
-router.post('/changeProfilePicture', (req: Request, res: Response) => {
-    res.send('Profile picture changed').status(200);
-});
+router.post(
+    '/changeProfilePicture',
+    express.json(),
+    extendedParser,
+    uploadProfilePicture,
+    inputValidation.checkProfilePicture,
+    (req: Request, res: Response) => {
+        res.send('Profile picture changed').status(200);
+    },
+);
 
 router.get(
     '/getProfilePicture',

@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import '../../styles/home.css';
 import cottageImg from '../../resources/images/cottage.png';
 import { Logout } from '../../api/user';
+import ProfilePictureModal from '../modals/ProfilePictureModal';
 
 // Default website information
 const defaultWebsiteInfo = {
@@ -14,73 +15,95 @@ const defaultWebsiteInfo = {
     email: 'info@resort.com',
 };
 
-const handleLogout = async (e) => {
-    e.preventDefault();
-    await Logout().then(
-        (result) => {
-            window.location.href = '/login';
-        },
-        (error) => {
-            window.location.href = '/home';
-        },
+const HomePage = ({ websiteInfo = defaultWebsiteInfo }) => {
+    const [isProfileModalOpen, setProfileModalOpen] = useState(false);
+
+    const handleLogout = async (e) => {
+        e.preventDefault();
+        await Logout().then(
+            (result) => {
+                window.location.href = '/login';
+            },
+            (error) => {
+                window.location.href = '/home';
+            },
+        );
+    };
+
+    const handleAdminPanel = (e) => {
+        e.preventDefault();
+        window.location.href = '/admin';
+    };
+
+    return (
+        <div className="home">
+            <body>
+                <div className="content">
+                    <img src={cottageImg} alt="cottage" />
+                    <div className="title">
+                        <h1>{websiteInfo.title}</h1>
+                        <p>{websiteInfo.description}</p>
+                    </div>
+                </div>
+                <div className="nav">
+                    <nav className="navbar">
+                        <ul>
+                            <li>
+                                <a href="/home">Home</a>
+                            </li>
+                            <li>
+                                <a href="/roomreservation">Room Reservation</a>
+                            </li>
+                            <li>
+                                <a href="/viewannouncement">Announcements</a>
+                            </li>
+                            <li>
+                                <a href="/viewreservations">
+                                    Check Reservation
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                    <button
+                        onClick={handleLogout}
+                        className="btn"
+                        type="submit"
+                    >
+                        Logout
+                    </button>
+                    <button
+                        onClick={handleAdminPanel}
+                        className="btn"
+                        type="submit"
+                    >
+                        Admin Access
+                    </button>
+                    <button
+                        onClick={() => setProfileModalOpen(true)}
+                        className="btn"
+                        type="button"
+                    >
+                        Profile Picture
+                    </button>
+                    {/* Render ProfilePictureModal */}
+                    <ProfilePictureModal
+                        open={isProfileModalOpen}
+                        handleClose={() => setProfileModalOpen(false)}
+                    />
+                </div>
+            </body>
+
+            <footer className="footer" id="contact">
+                <div className="contact-info">
+                    <p style={{ fontWeight: 'bold' }}>Contact Us</p>
+                    <p>Address: {websiteInfo.address}</p>
+                    <p>Phone: {websiteInfo.phone}</p>
+                    <p>Email: {websiteInfo.email}</p>
+                </div>
+            </footer>
+        </div>
     );
 };
-
-const handleAdminPanel = (e) => {
-    e.preventDefault();
-    window.location.href = '/admin';
-};
-
-const HomePage = ({ websiteInfo = defaultWebsiteInfo }) => (
-    <div className="home">
-        <body>
-            <div className="content">
-                <img src={cottageImg} alt="cottage" />
-                <div className="title">
-                    <h1>{websiteInfo.title}</h1>
-                    <p>{websiteInfo.description}</p>
-                </div>
-            </div>
-            <div className="nav">
-                <nav className="navbar">
-                    <ul>
-                        <li>
-                            <a href="/home">Home</a>
-                        </li>
-                        <li>
-                            <a href="/roomreservation">Room Reservation</a>
-                        </li>
-                        <li>
-                            <a href="/viewannouncement">Announcements</a>
-                        </li>
-                        <li>
-                            <a href="/viewreservations">Check Reservation</a>
-                        </li>
-                    </ul>
-                </nav>
-                <button onClick={handleLogout} className="btn" type="submit">
-                    Logout
-                </button>
-                <button
-                    onClick={handleAdminPanel}
-                    className="btn"
-                    type="submit"
-                >
-                    Admin Access
-                </button>
-            </div>
-        </body>
-
-        <footer className="footer" id="contact">
-            <div className="contact-info">
-                <p style={{ fontWeight: 'bold' }}>Contact Us</p>
-                <p>Address: {websiteInfo.address}</p>
-                <p>Phone: {websiteInfo.phone}</p>
-                <p>Email: {websiteInfo.email}</p>
-            </div>
-        </footer>
-    </div>
-);
 
 HomePage.propTypes = {
     websiteInfo: PropTypes.shape({

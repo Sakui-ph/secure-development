@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getRoomReservations } from '../../api/room';
+import { getRoomReservations, cancelRoomReservation } from '../../api/room';
 import { LogError } from '../../utils/error-handlers/error-logger';
 
 const ViewReservationPage = () => {
@@ -20,6 +20,7 @@ const ViewReservationPage = () => {
 
     const handleCancelReservation = (id) => {
         console.log('Cancel reservation with id:', id);
+        cancelRoomReservation(id);
     };
 
     return (

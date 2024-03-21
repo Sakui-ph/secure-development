@@ -52,3 +52,17 @@ export const updateRoomReservation = async (reservationId, newStatus) => {
         throw error;
     }
 };
+
+export const cancelRoomReservation = async (reservationId) => {
+    try {
+        const response = await createAPIEndpoints(ROOM_ENDPOINTS.cancel).cancel(
+            {
+                id: reservationId,
+            },
+        );
+        return response.data;
+    } catch (error) {
+        LogError('Error cancelling room reservation:', error);
+        throw error;
+    }
+};

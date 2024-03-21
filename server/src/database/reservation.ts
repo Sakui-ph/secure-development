@@ -61,6 +61,22 @@ class ReservationDB {
         }
     };
 
+    updateReservationStatus = async (reservationId: any, status: string) => {
+        const query = `UPDATE reservation SET reservationStatus = ? WHERE id = ?`;
+        const values = [status, reservationId];
+
+        try {
+            await db.queryDatabase(query, values);
+        } catch (e) {
+            LogError(
+                'Error changing reservation status',
+                e as Error,
+                LogType.TRANSACTION,
+            );
+            return (e as Error).message;
+        }
+    };
+    
     delete = async (searchBy: Record<string, any>) => {
         const searchParams = convertSearchByToString(searchBy);
         const query = `DELETE FROM reservation WHERE ${searchParams}`;

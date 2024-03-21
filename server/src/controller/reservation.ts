@@ -144,6 +144,33 @@ module.exports = {
             return false;
         }
     },
+
+    cancelReservation: async (req: Request, res: Response): Promise<any> => {
+        if (req.body.id === undefined) {
+            res.status(400).send('Reservation id is not defined');
+            return;
+        }
+
+        const reservationId = req.body.id;
+        console.log('id: ', req.body.id);
+
+        try {
+            await ReservationDB.updateReservationStatus(
+                reservationId,
+                ReservationStatus[1],
+            );
+            return true;
+        } catch (e) {
+            if (e instanceof Error) {
+                LogError(
+                    'Error cancelling reservation',
+                    e,
+                    LogType.TRANSACTION,
+                );
+            }
+            return false;
+        }
+    },
 };
 
 export default module.exports;

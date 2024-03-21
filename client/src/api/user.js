@@ -81,10 +81,10 @@ export function CreateNewAdmin({
         });
 }
 
-export const UpdatePrefixId = async (newPrefixId) => {
+export const UpdatePrefixId = async (email, newPrefixId) => {
     try {
         await createAPIEndpoints(USER_ENDPOINTS.update_prefix_id)
-            .patch({ newPrefixId })
+            .patch({ email, newPrefixId })
             .then((response) => {
                 if (response.data.success) {
                     console.log('Prefix ID updated successfully');

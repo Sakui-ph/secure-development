@@ -84,8 +84,7 @@ module.exports = {
         };
     },
     updatePrefixId: async (req: Request, res: Response): Promise<any> => {
-        const email = req.session.email;
-        const newPrefixId = req.body.newPrefixId;
+        const { email, newPrefixId } = req.body;
 
         if (!email || !newPrefixId) {
             res.status(400).send('Email and new prefix ID are required');

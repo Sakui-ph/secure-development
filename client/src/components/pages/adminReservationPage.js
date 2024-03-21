@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getAllRoomReservations } from '../../api/room';
+import { getAllRoomReservations, updateRoomReservation } from '../../api/room';
 
 const AdminReservationPage = () => {
     const [reservations, setReservations] = useState([]);
@@ -10,22 +10,37 @@ const AdminReservationPage = () => {
         });
     }, []);
 
-    const handleStatusChange = (reservationId, newStatus) => {
-        setReservations((prevReservations) =>
-            prevReservations.map((reservation) =>
-                reservation.id === reservationId
-                    ? { ...reservation, status: newStatus }
-                    : reservation,
-            ),
+    const handleStatusChange = (id, newStatus) => {
+        setReservations(
+            reservations.map((reservation) => {
+                if (reservation.id === id) {
+                    return { ...reservation, adminApproved: newStatus };
+                }
+                return reservation;
+            }),
         );
     };
 
-    const handleApprove = (reservationId) => {
-        handleStatusChange(reservationId, 'approved');
+    const handleApprove = async (reservation) => {
+        if (!reservation || !reservation.id) {
+            console.error('Invalid reservation object:', reservation);
+            return;
+        }
+
+        handleStatusChange(reservation.id, 'approved');
+        console.log('Reservation:', reservation.id);
+        await updateRoomReservation(reservation.id, 'approved');
     };
 
-    const handleReject = (reservationId) => {
-        handleStatusChange(reservationId, 'rejected');
+    const handleReject = async (reservation) => {
+        if (!reservation || !reservation.id) {
+            console.error('Invalid reservation object:', reservation);
+            return;
+        }
+
+        handleStatusChange(reservation.id, 'rejected');
+        console.log('Reservation:', reservation.id);
+        await updateRoomReservation(reservation.id, 'rejected');
     };
 
     return (
@@ -53,15 +68,13 @@ const AdminReservationPage = () => {
                             <td>
                                 <button
                                     type="button"
-                                    onClick={() =>
-                                        handleApprove(reservation.id)
-                                    }
+                                    onClick={() => handleApprove(reservation)}
                                 >
                                     Approve
                                 </button>
                                 <button
                                     type="button"
-                                    onClick={() => handleReject(reservation.id)}
+                                    onClick={() => handleReject(reservation)}
                                 >
                                     Reject
                                 </button>

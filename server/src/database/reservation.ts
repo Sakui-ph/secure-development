@@ -41,6 +41,22 @@ class ReservationDB {
         }
     };
 
+    update = async (reservation: Reservation, searchBy: Record<string, any>) => {
+        const searchParams = convertSearchByToString(searchBy);
+        const query = `UPDATE reservations SET ? WHERE ${searchParams}`;
+        const values = [
+            reservation.reservation_date,
+            reservation.email,
+            reservation.room,
+            reservation.adminApproved,
+            reservation.clientIdFile,
+            reservation.reservationStatus,
+        ];
+
+        const result = await db.executeDatabase(query, values);
+        return result[0][0];
+    };
+
     delete = async (searchBy: Record<string, any>) => {
         const searchParams = convertSearchByToString(searchBy);
         const query = `DELETE FROM reservations WHERE ${searchParams}`;

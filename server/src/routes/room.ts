@@ -80,4 +80,30 @@ router.get(
     },
 );
 
+router.patch(
+    '/update',
+    express.json(),
+    extendedParser,
+    validateLoggedIn,
+    async (req: Request, res: Response) => {
+        console.log('ROUTER: update');
+        try {
+            const result = await reservationContoller.updateReservationStatus(
+                req,
+                res,
+            );
+            if (!result) {
+                LogInfo('Reservation status updated', LogType.TRANSACTION);
+                //res.send('Reservation status updated').status(200);
+            } else {
+                LogError('Error updating reservation status', result, LogType.TRANSACTION);
+                //res.send('Error updating reservation status').status(500);
+            }
+        } catch (e) {
+            LogError('Error updating reservation status', e as Error, LogType.TRANSACTION);
+            //res.send('Error updating reservation status').status(500);
+        }
+    },
+);
+
 export { router as RoomRoutes };

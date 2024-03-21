@@ -42,10 +42,12 @@ export const getAllRoomReservations = async () => {
 
 export const updateRoomReservation = async (reservationId, newStatus) => {
     try {
-        const response = await createAPIEndpoints(ROOM_ENDPOINTS.patch).update({
+        const response = await createAPIEndpoints(ROOM_ENDPOINTS.patch).patch({
             id: reservationId,
-            status: newStatus,
+            adminApproved: newStatus,
         });
+        console.log('Reservation ID:', reservationId);
+        console.log('Admin Approved:', newStatus);
         return response.data;
     } catch (error) {
         LogError('Error updating room reservation:', error);

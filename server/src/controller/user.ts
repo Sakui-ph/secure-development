@@ -87,7 +87,6 @@ module.exports = {
         };
     },
     updatePrefixId: async (req: Request, res: Response): Promise<any> => {
-        console.log(req.body);
         const { email, newPrefixId } = req.body;
 
         if (!email || !newPrefixId) {

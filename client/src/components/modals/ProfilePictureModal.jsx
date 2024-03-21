@@ -5,13 +5,14 @@ import PropTypes from 'prop-types';
 import ProfilePictureForm from '../forms/ProfilePictureForm';
 import '../../styles/profilePicture.css';
 import defaultProfilePicture from '../../resources/images/default-profile-picture.jpg';
-import { GetProfilePicture } from '../../api/user';
+import { GetProfilePicture, ChangeProfilePicture } from '../../api/user';
 import { LogError } from '../../utils/error-handlers/error-logger';
 import { imageBufferToImage } from '../../utils/parseImage';
 
 export default function ProfilePictureModal({ open, handleClose }) {
     const [previewImage, setPreviewImage] = useState(null);
     const [profilePicture, setProfilePicture] = useState(null);
+    const [submitting, setSubmitting] = useState(false);
 
     useEffect(() => {
         fetchProfilePicture();
@@ -20,15 +21,22 @@ export default function ProfilePictureModal({ open, handleClose }) {
     const fetchProfilePicture = async () => {
         try {
             const response = await GetProfilePicture();
-            console.log('Profile Picture:', response.data);
             const imgUrl = imageBufferToImage(response.data);
-            console.log('Image URL:', imgUrl);
             setPreviewImage(imgUrl);
         } catch (error) {
-            console.log(error);
             LogError(error, 'Error fetching profile picture:');
         }
     };
+
+    useEffect(() => {
+        if (submitting) {
+            ChangeProfilePicture(profilePicture).then(() => {
+                setProfilePicture(null);
+                setSubmitting(false);
+                fetchProfilePicture();
+            });
+        }
+    }, [submitting, profilePicture]);
 
     return (
         <Modal
@@ -51,6 +59,7 @@ export default function ProfilePictureModal({ open, handleClose }) {
                     <ProfilePictureForm
                         setPreviewImage={setPreviewImage}
                         setProfilePicture={setProfilePicture}
+                        setSubmitting={setSubmitting}
                     />
                     <span>
                         {previewImage != null ? (

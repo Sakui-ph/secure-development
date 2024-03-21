@@ -1,14 +1,12 @@
 import { LogError } from './error-handlers/error-logger';
 
 export const imageBufferToImage = (buffer) => {
-    console.log(buffer);
     const hex = `0x${buffer.toString('hex')}`;
     const blob = toBlob(hex);
     if (blob === null) {
         LogError(null, 'Error converting buffer to blob');
         return null;
     }
-    console.log('Blob:', blob);
     return URL.createObjectURL(blob);
 };
 

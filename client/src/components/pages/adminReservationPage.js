@@ -38,7 +38,6 @@ const AdminReservationPage = () => {
         }
 
         handleStatusChange(reservation.id, 'rejected');
-        console.log('Reservation:', reservation.id);
         await updateRoomReservation(reservation.id, 'rejected');
     };
 

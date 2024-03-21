@@ -25,7 +25,6 @@ export default function ReservationForm() {
 
     useEffect(() => {
         if (submitting) {
-            console.log('Form submitted:', formFields);
             setFormFields({
                 date: '',
                 room: '',

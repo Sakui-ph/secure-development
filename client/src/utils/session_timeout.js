@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useIdleTimer } from 'react-idle-timer';
 import { useNavigate, Outlet } from 'react-router-dom';
 import { Logout } from '../api/user';
+import { LogInfo } from './error-handlers/error-logger';
 
 const SessionContext = React.createContext();
 
@@ -36,7 +37,7 @@ export const SessionProvider = () => {
         if (remainingTime === 0) {
             // alert("Time out!");
             Logout().then(() => {
-                console.log('User timed out due to being idle for too long');
+                LogInfo('User logged out due to inactivity');
                 navigate('/');
             });
         }

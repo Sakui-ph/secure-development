@@ -57,12 +57,22 @@ export const CreateNewUser = async ({
         });
 };
 
-export const GetProfilePicture = async (email, profile_picture) => {
+export const GetProfilePicture = async () => {
     const result = await createAPIEndpoints(USER_ENDPOINTS.getProfilePicture)
         .fetch()
         .catch((error) => {
             LogError(error, 'An error occurred while updating profile picture');
         });
-    console.log('Result:', result);
     return result;
+};
+
+export const ChangeProfilePicture = async (profile_picture) => {
+    const formData = new FormData();
+    formData.append('profile_picture', profile_picture);
+
+    await createAPIEndpoints(USER_ENDPOINTS.changeProfilePicture)
+        .patch(formData)
+        .catch((error) => {
+            LogError(error, 'An error occurred while updating profile picture');
+        });
 };

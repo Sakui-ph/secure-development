@@ -100,23 +100,27 @@ router.post(
     },
 );
 
-router.post(
+router.patch(
     '/changeProfilePicture',
     express.json(),
     extendedParser,
     uploadProfilePicture,
     inputValidation.checkProfilePicture,
     (req: Request, res: Response) => {
-        try{
-            const result = userController.updateProfile(req, res);
-            res.send(result).status(200);
+        try {
+            userController.updateProfilePicture(req, res);
+            LogInfo(
+                'Successfully changed profile picture',
+                LogType.TRANSACTION,
+            );
+            res.send('Successfully changed profile picture').status(200);
         } catch (e) {
             LogError(
-                'Error retrieving profile picture',
+                'Error updating profile picture',
                 e as Error,
                 LogType.TRANSACTION,
             );
-            res.send('Error retrieving profile picture').status(500);
+            res.send('Error updating profile picture').status(500);
         }
     },
 );

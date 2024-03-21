@@ -127,22 +127,37 @@ module.exports = {
             res.send('Error getting profile picture').status(500);
         }
     },
-    updateProfile: async (req: Request, res: Response): Promise<any> => {
-        const { email, newProfile } = req.body;
+    updateProfilePicture: async (req: Request, res: Response): Promise<any> => {
+        const profile_picture: Buffer | undefined = req.file?.buffer;
+        const email: string | undefined = req.session.email;
 
-        if (!email || !newProfile) {
-            res.status(400).send('Email and new profile ID are required');
+        if (email === undefined) {
+            LogError(
+                'User not signed in for profile picture change',
+                new Error(),
+                LogType.TRANSACTION,
+            );
+            res.send('User not signed in').status(400);
+            return;
+        }
+
+        if (profile_picture === undefined) {
+            LogError(
+                'A new profile picture is required',
+                new Error(),
+                LogType.TRANSACTION,
+            );
+            res.send('A new profile picture is required').status(400);
             return;
         }
 
         try {
-            const result = await UserDB.updateProfilePicture(newProfile,email);
-            res.send(result).status(200);
+            await UserDB.updateProfilePicture(profile_picture, email);
+            return;
         } catch (e) {
             if (e instanceof Error) {
                 LogError('Error updating profile', e, LogType.TRANSACTION);
             }
-            res.send('Error updating profile').status(500);
         }
     },
 };

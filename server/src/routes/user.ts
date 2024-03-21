@@ -104,18 +104,22 @@ router.post('/changeProfilePicture', (req: Request, res: Response) => {
     res.send('Profile picture changed').status(200);
 });
 
-/*router.patch(
-    '/update',
+router.get(
+    '/getProfilePicture',
     validateLoggedIn,
     urlencodedParser,
-    inputValidation.checkUser,
-    userController.updateUser(
-        [UserParams.FIRST_NAME, UserParams.LAST_NAME, UserParams.PHONE_NUMBER],
-        [UserParams.EMAIL],
-    ),
-    (req: Request, res: Response) => {
-        res.send('User updated').status(200);
+    async (req: Request, res: Response) => {
+        try {
+            const result = await userController.getProfilePicture(req, res);
+            res.send(result).status(200);
+        } catch (e) {
+            LogError(
+                'Error retrieving profile picture',
+                e as Error,
+                LogType.TRANSACTION,
+            );
+            res.send('Error retrieving profile picture').status(500);
+        }
     },
-);*/
-
+);
 export { router as UserRoutes };

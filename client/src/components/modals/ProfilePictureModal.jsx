@@ -1,14 +1,34 @@
 import { Modal, Button } from '@mui/material';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import PropTypes from 'prop-types';
 import ProfilePictureForm from '../forms/ProfilePictureForm';
 import '../../styles/profilePicture.css';
 import defaultProfilePicture from '../../resources/images/default-profile-picture.jpg';
+import { GetProfilePicture } from '../../api/user';
+import { LogError } from '../../utils/error-handlers/error-logger';
+import { imageBufferToImage } from '../../utils/parseImage';
 
 export default function ProfilePictureModal({ open, handleClose }) {
     const [previewImage, setPreviewImage] = useState(null);
     const [profilePicture, setProfilePicture] = useState(null);
+
+    useEffect(() => {
+        fetchProfilePicture();
+    }, []);
+
+    const fetchProfilePicture = async () => {
+        try {
+            const response = await GetProfilePicture();
+            console.log('Profile Picture:', response.data);
+            const imgUrl = imageBufferToImage(response.data);
+            console.log('Image URL:', imgUrl);
+            setPreviewImage(imgUrl);
+        } catch (error) {
+            console.log(error);
+            LogError(error, 'Error fetching profile picture:');
+        }
+    };
 
     return (
         <Modal

@@ -112,38 +112,39 @@ router.patch(
             res.send('Error updating Admin approved status').status(500);
         }
     },
+);
 
-    router.patch(
-        '/updateReservationStatus',
-        express.json(),
-        extendedParser,
-        validateLoggedIn,
-        async (req: Request, res: Response) => {
-            try {
-                const result = await reservationContoller.updateReservationStatus2(
-                    req,
-                    res,
-                );
-                if (result) {
-                    LogInfo('Reservation status updated', LogType.TRANSACTION);
-                    res.send('Reservation status updated').status(200);
-                } else {
-                    LogError(
-                        'Error updating reservation status',
-                        result,
-                        LogType.TRANSACTION,
-                    );
-                    res.send('Error updating reservation status').status(500);
-                }
-            } catch (e) {
+router.patch(
+    '/updateReservationStatus',
+    express.json(),
+    extendedParser,
+    validateLoggedIn,
+    async (req: Request, res: Response) => {
+        try {
+            const result = await reservationContoller.updateReservationStatus2(
+                req,
+                res,
+            );
+            if (result) {
+                LogInfo('Reservation status updated', LogType.TRANSACTION);
+                res.send('Reservation status updated').status(200);
+            } else {
                 LogError(
                     'Error updating reservation status',
-                    e as Error,
+                    result,
                     LogType.TRANSACTION,
                 );
                 res.send('Error updating reservation status').status(500);
             }
-        },
+        } catch (e) {
+            LogError(
+                'Error updating reservation status',
+                e as Error,
+                LogType.TRANSACTION,
+            );
+            res.send('Error updating reservation status').status(500);
+        }
+    },
 );
 
 export { router as RoomRoutes };

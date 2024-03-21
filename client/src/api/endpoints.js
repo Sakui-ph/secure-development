@@ -22,6 +22,7 @@ export const ROOM_ENDPOINTS = {
     create: 'roomreservation/create',
     read: 'roomreservation/read',
     readAll: 'roomreservation/readAll',
+    patch: 'roomreservation/update',
 };
 
 export const ANNOUNCEMENT_ENDPOINTS = {

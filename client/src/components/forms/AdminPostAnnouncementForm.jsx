@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { CreateAnnouncement } from '../../api/announcement';
+import { LogError } from '../../utils/error-handlers/error-logger';
 
 export default function PostAnnouncementForm() {
     const [announcement, setAnnouncement] = useState({
@@ -15,9 +16,8 @@ export default function PostAnnouncementForm() {
 
         try {
             await CreateAnnouncement(announcement);
-            console.log('Announcement created successfully!');
         } catch (error) {
-            console.error('Error creating announcement:', error);
+            LogError(error, 'Error creating announcement:');
         }
         setAnnouncement({ content: '' });
     };

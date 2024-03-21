@@ -68,7 +68,7 @@ class UserDB {
             WHERE email = ?
         `;
         const values = [newPrefixId, email];
-    
+
         try {
             const result = await db.queryDatabase(query, values);
             return result;
@@ -81,7 +81,6 @@ class UserDB {
             return (e as Error).message;
         }
     };
-    
 }
 
 export default new UserDB();

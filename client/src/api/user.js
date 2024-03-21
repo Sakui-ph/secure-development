@@ -89,7 +89,10 @@ export const UpdatePrefixId = async (email, newPrefixId) => {
                 if (response.data.success) {
                     console.log('Prefix ID updated successfully');
                 } else {
-                    console.log('Failed to update prefix ID');
+                    LogError(
+                        'An error occurred while updating prefix ID',
+                        response.data.error,
+                    );
                 }
             });
     } catch (error) {

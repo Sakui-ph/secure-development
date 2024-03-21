@@ -35,14 +35,6 @@ const timestampFormat = 'YYYY-MM-DD hh:mm:ss.SSS';
 
 winston.addColors(colors);
 
-const logHeaders = {
-    error: '[ERROR]',
-    warn: '[WARN]',
-    info: '[INFO]',
-    debug: '[DEBUG]',
-    trace: '[TRACE]',
-};
-
 export enum LogType {
     NONE = 'NONE',
     AUTH = 'AUTH',
@@ -192,9 +184,8 @@ export const LogWarning = (
     generic = 'A warning has occurred',
     type: LogType = LogType.NONE,
 ) => {
-    const time = new Date().toISOString();
-    if (process.env.STATUS !== 'dev') {
-        console.log(`${logHeaders.warn}[${time}] ${generic}`);
+    if (process.env.DEBUG !== 'true') {
+        warning = `${generic}`;
     }
 
     switch (type) {

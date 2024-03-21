@@ -75,7 +75,6 @@ module.exports = {
                 : projection;
             try {
                 const result = await ReservationDB.findAll(sanitizedProjection);
-                console.log('CONTROLLER: ' + result);
                 return result;
             } catch (e) {
                 if (e instanceof Error) {

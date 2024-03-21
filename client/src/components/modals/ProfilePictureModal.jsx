@@ -9,7 +9,6 @@ import defaultProfilePicture from '../../resources/images/default-profile-pictur
 export default function ProfilePictureModal({ open, handleClose }) {
     const [previewImage, setPreviewImage] = useState(null);
     const [profilePicture, setProfilePicture] = useState(null);
-    console.log(open, handleClose);
 
     return (
         <Modal

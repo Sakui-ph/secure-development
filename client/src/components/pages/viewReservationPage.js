@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { getRoomReservations } from '../../api/room';
+import { LogError } from '../../utils/error-handlers/error-logger';
 
 const ViewReservationPage = () => {
     const [reservations, setReservations] = useState([]);
@@ -10,7 +11,7 @@ const ViewReservationPage = () => {
                 const currentReservations = await getRoomReservations();
                 setReservations(currentReservations);
             } catch (error) {
-                console.error('Error fetching reservations:', error);
+                LogError(error, 'Error fetching reservations:');
             }
         };
 

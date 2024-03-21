@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { CreateComment } from '../../api/comment';
+import { LogError } from '../../utils/error-handlers/error-logger';
 
 export default function AnnouncementViewForm({
     fetchCommentData,
@@ -29,7 +30,7 @@ export default function AnnouncementViewForm({
             setSubmittingComment(false);
             fetchCommentData(); // Refresh comments after posting comment
         } catch (error) {
-            console.error('Error posting comment:', error);
+            LogError(error, 'Error posting comment:');
             setSubmittingComment(false);
         }
     };

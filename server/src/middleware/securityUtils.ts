@@ -155,7 +155,6 @@ export const validateAdmin = async (
     next: NextFunction,
 ) => {
     if (req.session.userType === UserType.ADMIN) {
-        console.log('Admin validated');
         next();
         return;
     } else {

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ClientViewAnnouncementForm from '../forms/ClientViewAnnouncementForm';
 import { GetComments } from '../../api/comment';
 import { GetAnnouncement } from '../../api/announcement';
+import { LogError } from '../../utils/error-handlers/error-logger';
 
 export default function ClientViewAnnouncementPage() {
     const [announcement, setAnnouncement] = useState([]);
@@ -15,22 +16,20 @@ export default function ClientViewAnnouncementPage() {
     const fetchAnnouncementData = () => {
         GetAnnouncement()
             .then((data) => {
-                console.log(data);
                 setAnnouncement(data);
             })
             .catch((error) => {
-                console.error('Error fetching announcement:', error);
+                LogError(error, 'Error fetching announcement:');
             });
     };
 
     const fetchCommentData = () => {
         GetComments()
             .then((data) => {
-                console.log(data);
                 setComments(data);
             })
             .catch((error) => {
-                console.error('Error fetching comments:', error);
+                LogError(error, 'Error fetching comments:');
             });
     };
 

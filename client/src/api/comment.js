@@ -15,7 +15,6 @@ export const CreateComment = async ({
     formData.append('createdAt', createdAt);
     formData.append('announcementId', announcementId);
 
-    console.log('Form Data:', formData.get('date'));
     await createAPIEndpoints(COMMENT_ENDPOINTS.create)
         .create(formData)
         .catch((error) => {

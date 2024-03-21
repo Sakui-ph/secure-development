@@ -3,6 +3,7 @@ import axios from 'axios';
 import '../../styles/admin.css';
 import { readAllUsers } from '../../api/admin';
 import { UpdatePrefixId } from '../../api/user';
+import { LogError } from '../../utils/error-handlers/error-logger';
 
 const AdminPanel = () => {
     const [users, setUsers] = useState([]);
@@ -14,10 +15,9 @@ const AdminPanel = () => {
     const fetchUsers = async () => {
         try {
             const response = await readAllUsers();
-            console.log(response.data);
             setUsers(response.data);
         } catch (error) {
-            console.error('Error fetching users:', error);
+            LogError(error, 'Error fetching users:');
         }
     };
 
@@ -29,7 +29,7 @@ const AdminPanel = () => {
             await UpdatePrefixId(email, newPrefixId);
             fetchUsers();
         } catch (error) {
-            console.error('Error updating role:', error);
+            LogError(error, 'Error updating user role:');
         }
     };
 

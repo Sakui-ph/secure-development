@@ -138,12 +138,10 @@ const checkUser = checkSchema({
 });
 
 const sanitizeAll = (data: string) => {
-    console.log(data);
     const result = sanitizeHtml(data, {
         allowedTags: [],
         allowedAttributes: {},
     });
-    console.log(result);
     return result;
 };
 

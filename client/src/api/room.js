@@ -8,7 +8,6 @@ export const CreateRoomReservation = async ({ date, room, clientIdFile }) => {
     formData.append('room', room);
     formData.append('clientIdFile', clientIdFile);
 
-    console.log('Form Data:', formData.get('date'));
     await createAPIEndpoints(ROOM_ENDPOINTS.create)
         .create(formData)
         .catch((error) => {
@@ -34,7 +33,6 @@ export const getAllRoomReservations = async () => {
         const response = await createAPIEndpoints(
             ROOM_ENDPOINTS.readAll,
         ).fetch();
-        console.log('Response:', response);
         return response.data;
     } catch (error) {
         LogError('Error fetching all room reservations:', error);
@@ -48,7 +46,6 @@ export const updateRoomReservation = async (reservationId, newStatus) => {
             id: reservationId,
             status: newStatus,
         });
-        console.log('Response:', response);
         return response.data;
     } catch (error) {
         LogError('Error updating room reservation:', error);

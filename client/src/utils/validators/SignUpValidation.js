@@ -8,7 +8,6 @@ export const SignUpValidation = (inputFields) => {
     errors.profile_picture = validateProfilePicture(
         inputFields.profile_picture,
     );
-    console.log(errors);
     // remove null or undefined errors
     Object.keys(errors).forEach((key) => {
         if (errors[key] === null || errors[key] === undefined) {

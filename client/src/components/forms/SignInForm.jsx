@@ -5,6 +5,7 @@ import { CreateNewUser } from '../../api/user';
 import { SignUpValidation } from '../../utils/validators/SignUpValidation';
 import defaultProfilePicture from '../../resources/images/default-profile-picture.jpg';
 import '../../styles/profilePicture.css';
+import { LogError } from '../../utils/error-handlers/error-logger';
 
 export default function SignupForm() {
     const [initialized, setInitialized] = useState(false);
@@ -38,7 +39,7 @@ export default function SignupForm() {
                 setInputFields({ ...inputFields, profile_picture: file });
             })
             .catch((error) =>
-                console.error('Error fetching image as blob:', error),
+                LogError(error, 'Error setting default profile picture:'),
             );
     }
 

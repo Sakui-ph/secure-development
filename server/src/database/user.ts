@@ -83,6 +83,31 @@ class UserDB {
             return (e as Error).message;
         }
     };
+
+    updateProfilePicture = async (
+        email: string,
+        profile_picture: Blob,
+    ) => {
+
+        const query = `
+            UPDATE users 
+            SET profile_picture = ?
+            WHERE email = ?
+        `;
+        const values = [profile_picture, email];
+    
+        try {
+            const result = await db.queryDatabase(query, values);
+            return result;
+        } catch (e) {
+            LogError(
+                'Error updating profile picture',
+                e as Error,
+                LogType.TRANSACTION,
+            );
+            return (e as Error).message;
+        }
+    };
 }
 
 export default new UserDB();

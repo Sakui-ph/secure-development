@@ -107,7 +107,17 @@ router.post(
     uploadProfilePicture,
     inputValidation.checkProfilePicture,
     (req: Request, res: Response) => {
-        res.send('Profile picture changed').status(200);
+        try{
+            const result = userController.updateProfile(req, res);
+            res.send(result).status(200);
+        } catch (e) {
+            LogError(
+                'Error retrieving profile picture',
+                e as Error,
+                LogType.TRANSACTION,
+            );
+            res.send('Error retrieving profile picture').status(500);
+        }
     },
 );
 

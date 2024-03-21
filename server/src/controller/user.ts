@@ -127,6 +127,24 @@ module.exports = {
             res.send('Error getting profile picture').status(500);
         }
     },
+    updateProfile: async (req: Request, res: Response): Promise<any> => {
+        const { email, newProfile } = req.body;
+
+        if (!email || !newProfile) {
+            res.status(400).send('Email and new profile ID are required');
+            return;
+        }
+
+        try {
+            const result = await UserDB.updateProfilePicture(newProfile,email);
+            res.send(result).status(200);
+        } catch (e) {
+            if (e instanceof Error) {
+                LogError('Error updating profile', e, LogType.TRANSACTION);
+            }
+            res.send('Error updating profile').status(500);
+        }
+    },
 };
 
 export default module.exports;

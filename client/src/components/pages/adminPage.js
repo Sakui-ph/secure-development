@@ -21,10 +21,12 @@ const AdminPanel = () => {
         }
     };
 
-    const handleRoleChange = async (userId, newRole) => {
+    const handleRoleChange = async (email, newRole) => {
+        console.log('Email:', email); // Log email value
+        console.log('New Role:', newRole); // Log newRole value
         try {
-            const newPrefixId = newRole === 'admin' ? 100 : 101;
-            await UpdatePrefixId(newPrefixId);
+            const newPrefixId = newRole === 'admin' ? '100' : '101';
+            await UpdatePrefixId(email, newPrefixId);
             fetchUsers();
         } catch (error) {
             console.error('Error updating role:', error);
@@ -59,7 +61,7 @@ const AdminPanel = () => {
                             <button
                                 type="button"
                                 onClick={() =>
-                                    handleRoleChange(user.id, 'user')
+                                    handleRoleChange(user.email, 'user')
                                 }
                             >
                                 Set as User
@@ -67,7 +69,7 @@ const AdminPanel = () => {
                             <button
                                 type="button"
                                 onClick={() =>
-                                    handleRoleChange(user.id, 'admin')
+                                    handleRoleChange(user.email, 'admin')
                                 }
                             >
                                 Set as Admin

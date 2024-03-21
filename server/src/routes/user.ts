@@ -123,9 +123,9 @@ router.patch(
     '/updatePrefixId',
     validateLoggedIn,
     validateAdmin,
-    validateSession(),
     async (req: Request, res: Response) => {
         console.log('IN ROUTE');
+        console.log(req.body.email, req.body.newPrefixId);
         try {
             const result = await userController.updatePrefixId(req, res);
             res.send(result).status(200);

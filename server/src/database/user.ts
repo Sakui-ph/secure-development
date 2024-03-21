@@ -60,7 +60,7 @@ class UserDB {
 
     updatePrefixId = async (
         email: string,
-        newPrefixId: number, // 100 for admin, 101 for user
+        newPrefixId: string, // 100 for admin, 101 for user
     ) => {
         const query = `
             UPDATE users 

@@ -19,6 +19,7 @@ router.post(
     extendedParser,
     uploadPDF.single('clientIdFile'),
     inputValidation.checkClientIDPDF,
+    inputValidation.sanitizeRoom,
     async (req: Request, res: Response) => {
         try {
             const result = await reservationContoller.createReservation(
@@ -54,17 +55,29 @@ router.get('/read', urlencodedParser, async (req: Request, res: Response) => {
     }
 });
 
-router.get('/readAll', urlencodedParser, async (req: Request, res: Response) => {
-    try {
-        const result = await reservationContoller.getAllReservations(
-            ['reservation_date', 'email', 'room', 'adminApproved', 'clientIdFile'],
-        )(req, res);
-        LogInfo(result, LogType.TRANSACTION);
-        res.send(result);
-    } catch (e) {
-        LogError('Error getting all reservations', e as Error, LogType.TRANSACTION);
-        res.send('Error getting all reservations').status(500);
-    }
-});
+router.get(
+    '/readAll',
+    urlencodedParser,
+    async (req: Request, res: Response) => {
+        try {
+            const result = await reservationContoller.getAllReservations([
+                'reservation_date',
+                'email',
+                'room',
+                'adminApproved',
+                'clientIdFile',
+            ])(req, res);
+            LogInfo(result, LogType.TRANSACTION);
+            res.send(result);
+        } catch (e) {
+            LogError(
+                'Error getting all reservations',
+                e as Error,
+                LogType.TRANSACTION,
+            );
+            res.send('Error getting all reservations').status(500);
+        }
+    },
+);
 
 export { router as RoomRoutes };

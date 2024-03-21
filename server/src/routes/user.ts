@@ -6,6 +6,7 @@ import {
     setSession,
     validateSession,
     validateLoggedIn,
+    validateAdmin,
 } from '../middleware/securityUtils';
 import { UserParams } from '../models/User';
 import inputValidation from '../middleware/inputValidation';
@@ -121,18 +122,22 @@ router.post('/changeProfilePicture', (req: Request, res: Response) => {
 router.patch(
     '/updatePrefixId',
     validateLoggedIn,
+    validateAdmin,
     validateSession(),
     async (req: Request, res: Response) => {
-        console.log("IN ROUTE");
+        console.log('IN ROUTE');
         try {
             const result = await userController.updatePrefixId(req, res);
             res.send(result).status(200);
         } catch (e) {
-            LogError('Error updating prefix ID', e as Error, LogType.TRANSACTION);
+            LogError(
+                'Error updating prefix ID',
+                e as Error,
+                LogType.TRANSACTION,
+            );
             res.send('Error updating prefix ID').status(500);
         }
     },
 );
-
 
 export { router as UserRoutes };

@@ -5,6 +5,7 @@ import asyncify from 'express-asyncify';
 import bodyParser from 'body-parser';
 import { uploadFormdata } from '../utils/multerHandler';
 import { validateLoggedIn } from '../middleware/securityUtils';
+import inputValidation from '../middleware/inputValidation';
 
 const extendedParser = bodyParser.urlencoded({ extended: true });
 
@@ -16,6 +17,7 @@ router.post(
     express.json(),
     extendedParser,
     uploadFormdata,
+    inputValidation.sanitizeComment,
     async (req: Request, res: Response) => {
         try {
             const result = await commentController.createComment(req, res);

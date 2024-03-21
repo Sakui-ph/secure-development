@@ -3,6 +3,7 @@ import { Request, Response, NextFunction } from 'express';
 import { LogError, LogType } from '../utils/logger';
 import fs from 'fs';
 import { deleteFile, deleteTmpFiles } from '../utils/fileManagement';
+import sanitizeHtml from 'sanitize-html';
 
 const PNG_BLOB_SIGNATURE = '89504e470d0a1a0a';
 const JPEG_BLOB_SIGNATURE = 'ffd8ff';
@@ -136,6 +137,16 @@ const checkUser = checkSchema({
     },
 });
 
+const sanitizeAll = (data: string) => {
+    console.log(data);
+    const result = sanitizeHtml(data, {
+        allowedTags: [],
+        allowedAttributes: {},
+    });
+    console.log(result);
+    return result;
+};
+
 module.exports = {
     checkEmail: [
         validateEmail,
@@ -177,6 +188,21 @@ module.exports = {
                 LogError(JSON.stringify(errors.array()), null, LogType.AUTH);
                 return res.status(400).json(errors.array());
             }
+            next();
+        },
+    ],
+    sanitizeComment: [
+        (req: Request, res: Response, next: NextFunction) => {
+            req.body.content = sanitizeAll(req.body.content);
+            req.body.announcementId = sanitizeAll(req.body.announcementId);
+            next();
+        },
+    ],
+    sanitizeRoom: [
+        (req: Request, res: Response, next: NextFunction) => {
+            req.body.room = sanitizeAll(req.body.room);
+            req.body.reservation_date = sanitizeAll(req.body.reservation_date);
+            req.body.email = sanitizeAll(req.body.clientIdFile);
             next();
         },
     ],
